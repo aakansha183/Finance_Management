@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as yup from 'yup';
-import { TextField, Button, Container, Typography } from '@mui/material';
+import { TextField, Button, Container, Typography, Box, Card, CardContent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { User } from '../types/User';
@@ -77,89 +77,109 @@ const Register: React.FC = () => {
     };
 
     return (
-        <Container maxWidth="sm">
-            <form onSubmit={handleSubmit}>
-                <Typography variant="h4" align="center" gutterBottom>
-                    Register
-                </Typography>
-                <TextField
-                    id="username"
-                    name="username"
-                    label="Username"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={formData.username}
-                    onChange={handleChange}
-                    error={Boolean(errors.username)}
-                    helperText={errors.username}
-                />
-                <TextField
-                    id="password"
-                    name="password"
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={formData.password}
-                    onChange={handleChange}
-                    error={Boolean(errors.password)}
-                    helperText={errors.password}
-                />
-                <TextField
-                    id="email"
-                    name="email"
-                    label="Email"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={formData.email}
-                    onChange={handleChange}
-                    error={Boolean(errors.email)}
-                    helperText={errors.email}
-                />
-                <TextField
-                    id="firstName"
-                    name="firstName"
-                    label="First Name"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    error={Boolean(errors.firstName)}
-                    helperText={errors.firstName}
-                />
-                <TextField
-                    id="lastName"
-                    name="lastName"
-                    label="Last Name"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    error={Boolean(errors.lastName)}
-                    helperText={errors.lastName}
-                />
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    size="large"
-                    style={{ marginTop: '1rem' }}
-                >
-                    Register
-                </Button>
-                {registrationError && (
-                    <Typography variant="body1" color="error" style={{ marginTop: '1rem' }}>
-                        {registrationError}
+        <Box
+            sx={{
+                backgroundImage: `url("/backgroundimg.jpg")`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '2rem',
+            }}
+        >
+            <Card sx={{ maxWidth: 400 }}>
+                <CardContent>
+                    <Typography variant="h4" align="center" gutterBottom>
+                        Register
                     </Typography>
-                )}
-            </form>
-        </Container>
+                    <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+                        <TextField
+                            id="username"
+                            name="username"
+                            label="Username"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={formData.username}
+                            onChange={handleChange}
+                            error={Boolean(errors.username)}
+                            helperText={errors.username}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            id="password"
+                            name="password"
+                            label="Password"
+                            type="password"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={formData.password}
+                            onChange={handleChange}
+                            error={Boolean(errors.password)}
+                            helperText={errors.password}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            id="email"
+                            name="email"
+                            label="Email"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={formData.email}
+                            onChange={handleChange}
+                            error={Boolean(errors.email)}
+                            helperText={errors.email}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            id="firstName"
+                            name="firstName"
+                            label="First Name"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            error={Boolean(errors.firstName)}
+                            helperText={errors.firstName}
+                            sx={{ mb: 2 }}
+                        />
+                        <TextField
+                            id="lastName"
+                            name="lastName"
+                            label="Last Name"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={formData.lastName}
+                            onChange={handleChange}
+                            error={Boolean(errors.lastName)}
+                            helperText={errors.lastName}
+                            sx={{ mb: 2 }}
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            size="large"
+                            style={{ marginTop: '1rem' }}
+                        >
+                            Register
+                        </Button>
+                        {registrationError && (
+                            <Typography variant="body1" color="error" style={{ marginTop: '1rem' }}>
+                                {registrationError}
+                            </Typography>
+                        )}
+                    </form>
+                </CardContent>
+            </Card>
+        </Box>
     );
 };
 
