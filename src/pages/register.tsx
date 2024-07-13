@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as yup from 'yup';
-import { TextField, Button, Container, Typography, Box, Card, CardContent } from '@mui/material';
+import { TextField, Button,  Typography, Box, Card, CardContent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { User } from '../types/User';
