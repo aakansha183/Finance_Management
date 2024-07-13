@@ -1,9 +1,14 @@
+
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './slice/userslice';
+import expenseReducer from './slice/expensesSlice';
+import incomeReducer from './slice/incomeSlice'; // Import the new slice
 
 const store = configureStore({
     reducer: {
         users: userReducer,
+        expenses: expenseReducer,
+        incomes: incomeReducer, 
     },
 });
 
