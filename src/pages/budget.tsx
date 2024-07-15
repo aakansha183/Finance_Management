@@ -213,6 +213,607 @@
 // export default BudgetPage;
 
 
+// import React, { useEffect, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { RootState } from '../redux/store';
+// import { addBudget, setBudgets, updateBudget, deleteBudget } from '../redux/slice/budgetSlice';
+// import { loadBudgetsFromStorage, saveBudgetsToStorage } from '../redux/slice/budgetSlice';
+// import { Container, List, Paper } from '@mui/material';
+// import BudgetForm from '../component/budgetForm';
+// import BudgetListItem from '../component/budgetList';
+// import { BudgetFormInput } from '../types/User';
+// const BudgetPage: React.FC = () => {
+//   const dispatch = useDispatch();
+//   const budgets = useSelector((state: RootState) => state.budget.budgets);
+
+//   const [editMode, setEditMode] = useState<boolean>(false);
+//   const [currentEdit, setCurrentEdit] = useState<string>('');
+
+//   useEffect(() => {
+//     const loadBudgets = async () => {
+//       const loadedBudgets = await loadBudgetsFromStorage();
+//       dispatch(setBudgets(loadedBudgets));
+//     };
+//     loadBudgets();
+//   }, [dispatch]);
+
+//   const handleAddOrUpdateBudget = async (data: BudgetFormInput) => {
+//     const existingBudget = budgets.find(b => b.category === data.category);
+//     if (existingBudget) {
+//       await handleUpdateBudget(data);
+//     } else {
+//       dispatch(addBudget(data));
+//       const newBudgets = [...budgets, data];
+//       await saveBudgetsToStorage(newBudgets);
+//       resetForm();
+//     }
+//   };
+
+//   const handleUpdateBudget = async (data: BudgetFormInput) => {
+//     const existingBudget = budgets.find(b => b.category === currentEdit || b.category === data.category);
+//     if (existingBudget) {
+//       const updatedBudget = { ...existingBudget, ...data };
+//       dispatch(updateBudget(updatedBudget));
+//       const newBudgets = budgets.map(b => (b.category === currentEdit || b.category === data.category ? updatedBudget : b));
+//       await saveBudgetsToStorage(newBudgets);
+//       resetForm();
+//     }
+//   };
+
+//   const handleDeleteBudget = async (category: string) => {
+//     dispatch(deleteBudget(category));
+//     const newBudgets = budgets.filter(b => b.category !== category);
+//     await saveBudgetsToStorage(newBudgets);
+//   };
+
+//   const handleEditClick = (budget: BudgetFormInput) => {
+//     setEditMode(true);
+//     setCurrentEdit(budget.category);
+//   };
+
+//   const resetForm = () => {
+//     setEditMode(false);
+//     setCurrentEdit('');
+//   };
+
+//   return (
+//     <div
+//       style={{
+//         backgroundImage: `url(/budget.jpg)`,
+//         backgroundSize: 'cover',
+//         backgroundPosition: 'center',
+//         minHeight: '100vh',
+//         display: 'flex',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//       }}
+//     >
+//       <Container maxWidth="md">
+//         <Paper elevation={3} style={{ padding: '20px', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '10px' }}>
+//           <h1 style={{ textAlign: 'center' }}>Budget Management</h1>
+//           <BudgetForm onSubmit={handleAddOrUpdateBudget} editMode={editMode} defaultValues={budgets.find(b => b.category === currentEdit) || { category: '', amountSet: 0, amountSpent: 0 }} />
+//           <List>
+//             {budgets.map((budget, index) => (
+//               <BudgetListItem key={index} budget={budget} onEdit={handleEditClick} onDelete={handleDeleteBudget} />
+//             ))}
+//           </List>
+//         </Paper>
+//       </Container>
+//     </div>
+//   );
+// };
+
+// export default BudgetPage;
+
+
+
+
+//july 15
+
+// import React, { useEffect, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { RootState } from '../redux/store';
+// import { addBudget, setBudgets, updateBudget, deleteBudget } from '../redux/slice/budgetSlice';
+// import { loadBudgetsFromStorage, saveBudgetsToStorage } from '../redux/slice/budgetSlice';
+// import { Container, List, Paper } from '@mui/material';
+// import BudgetForm from '../component/budgetForm';
+// import BudgetListItem from '../component/budgetList';
+// import { BudgetFormInput } from '../types/User';
+
+// const BudgetPage: React.FC = () => {
+//   const dispatch = useDispatch();
+//   const budgets = useSelector((state: RootState) => state.budget.budgets);
+
+//   const [editMode, setEditMode] = useState<boolean>(false);
+//   const [currentEdit, setCurrentEdit] = useState<string>('');
+//   const [currentBudget, setCurrentBudget] = useState<BudgetFormInput | null>(null);
+
+//   useEffect(() => {
+//     const loadBudgets = async () => {
+//       const loadedBudgets = await loadBudgetsFromStorage();
+//       dispatch(setBudgets(loadedBudgets));
+//     };
+//     loadBudgets();
+//   }, [dispatch]);
+
+//   const handleAddOrUpdateBudget = async (data: BudgetFormInput) => {
+//     const existingBudget = budgets.find(b => b.category === data.category);
+//     if (existingBudget) {
+//       await handleUpdateBudget(data);
+//     } else {
+//       dispatch(addBudget(data));
+//       const newBudgets = [...budgets, data];
+//       await saveBudgetsToStorage(newBudgets);
+//       resetForm();
+//     }
+//   };
+
+//   const handleUpdateBudget = async (data: BudgetFormInput) => {
+//     const existingBudget = budgets.find(b => b.category === currentEdit || b.category === data.category);
+//     if (existingBudget) {
+//       const updatedBudget = { ...existingBudget, ...data };
+//       dispatch(updateBudget(updatedBudget));
+//       const newBudgets = budgets.map(b => (b.category === currentEdit || b.category === data.category ? updatedBudget : b));
+//       await saveBudgetsToStorage(newBudgets);
+//       resetForm();
+//     }
+//   };
+
+//   const handleDeleteBudget = async (category: string) => {
+//     dispatch(deleteBudget(category));
+//     const newBudgets = budgets.filter(b => b.category !== category);
+//     await saveBudgetsToStorage(newBudgets);
+//   };
+
+//   const handleEditClick = (budget: BudgetFormInput) => {
+//     setEditMode(true);
+//     setCurrentEdit(budget.category);
+//     setCurrentBudget(budget);
+//   };
+
+//   const resetForm = () => {
+//     setEditMode(false);
+//     setCurrentEdit('');
+//     setCurrentBudget(null);
+//   };
+
+//   return (
+//     <div
+//       style={{
+//         backgroundImage: `url(/budget.jpg)`,
+//         backgroundSize: 'cover',
+//         backgroundPosition: 'center',
+//         minHeight: '100vh',
+//         display: 'flex',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//       }}
+//     >
+//       <Container maxWidth="md">
+//         <Paper elevation={3} style={{ padding: '20px', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '10px' }}>
+//           <h1 style={{ textAlign: 'center' }}>Budget Management</h1>
+//           <BudgetForm 
+//             onSubmit={handleAddOrUpdateBudget} 
+//             editMode={editMode} 
+//             defaultValues={currentBudget || { category: '', amountSet: 0, amountSpent: 0 }} 
+//           />
+//           <List>
+//             {budgets.map((budget, index) => (
+//               <BudgetListItem 
+//                 key={index} 
+//                 budget={budget} 
+//                 onEdit={handleEditClick} 
+//                 onDelete={handleDeleteBudget} 
+//               />
+//             ))}
+//           </List>
+//         </Paper>
+//       </Container>
+//     </div>
+//   );
+// };
+
+// export default BudgetPage;
+
+
+// pages/BudgetPage.tsx
+
+
+// import React, { useEffect, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { RootState } from '../redux/store';
+// import { addBudget, setBudgets, updateBudget, deleteBudget } from '../redux/slice/budgetSlice';
+// import { loadBudgetsFromStorage, saveBudgetsToStorage } from '../redux/slice/budgetSlice';
+// import { Container, List, Paper } from '@mui/material';
+// import BudgetForm from '../component/budgetForm';
+// import BudgetListItem from '../component/budgetList';
+// import { BudgetFormInput } from '../types/User';
+
+// const BudgetPage: React.FC = () => {
+//   const dispatch = useDispatch();
+//   const currentUser = useSelector((state: RootState) => state.users.currentUser);
+//   const budgets = useSelector((state: RootState) => state.budget.budgets);
+
+//   const [editMode, setEditMode] = useState<boolean>(false);
+//   const [currentEdit, setCurrentEdit] = useState<string>('');
+//   const [currentBudget, setCurrentBudget] = useState<BudgetFormInput | null>(null);
+
+//   useEffect(() => {
+//     if (currentUser) {
+//       const loadBudgets = async () => {
+//         const loadedBudgets = await loadBudgetsFromStorage(currentUser.id);
+//         dispatch(setBudgets(loadedBudgets));
+//       };
+//       loadBudgets();
+//     }
+//   }, [dispatch, currentUser]);
+
+//   const handleAddOrUpdateBudget = async (data: BudgetFormInput) => {
+//     if (!currentUser) return;
+
+//     const budgetData = { ...data, userId: currentUser.id };
+//     const existingBudget = budgets.find(b => b.category === budgetData.category && b.userId === currentUser.id);
+//     if (existingBudget) {
+//       await handleUpdateBudget(budgetData);
+//     } else {
+//       dispatch(addBudget(budgetData));
+//       const newBudgets = [...budgets, budgetData];
+//       await saveBudgetsToStorage(newBudgets);
+//       resetForm();
+//     }
+//   };
+
+//   const handleUpdateBudget = async (data: BudgetFormInput) => {
+//     if (!currentUser) return;
+
+//     const existingBudget = budgets.find(b => b.category === currentEdit && b.userId === currentUser.id);
+//     if (existingBudget) {
+//       const updatedBudget = { ...existingBudget, ...data };
+//       dispatch(updateBudget(updatedBudget));
+//       const newBudgets = budgets.map(b => (b.category === currentEdit && b.userId === currentUser.id ? updatedBudget : b));
+//       await saveBudgetsToStorage(newBudgets);
+//       resetForm();
+//     }
+//   };
+
+//   const handleDeleteBudget = async (category: string) => {
+//     if (!currentUser) return;
+
+//     dispatch(deleteBudget(category));
+//     const newBudgets = budgets.filter(b => b.category !== category || b.userId !== currentUser.id);
+//     await saveBudgetsToStorage(newBudgets);
+//   };
+
+//   const handleEditClick = (budget: BudgetFormInput) => {
+//     setEditMode(true);
+//     setCurrentEdit(budget.category);
+//     setCurrentBudget(budget);
+//   };
+
+//   const resetForm = () => {
+//     setEditMode(false);
+//     setCurrentEdit('');
+//     setCurrentBudget(null);
+//   };
+
+//   if (!currentUser) {
+//     return <div>Please log in to manage your budgets.</div>;
+//   }
+
+//   return (
+//     <div
+//       style={{
+//         backgroundImage: `url(/budget.jpg)`,
+//         backgroundSize: 'cover',
+//         backgroundPosition: 'center',
+//         minHeight: '100vh',
+//         display: 'flex',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//       }}
+//     >
+//       <Container maxWidth="md">
+//         <Paper elevation={3} style={{ padding: '20px', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '10px' }}>
+//           <h1 style={{ textAlign: 'center' }}>Budget Management</h1>
+//           <BudgetForm 
+//             onSubmit={handleAddOrUpdateBudget} 
+//             editMode={editMode} 
+//             defaultValues={currentBudget || { category: '', amountSet: 0, amountSpent: 0, userId: '' }} 
+//           />
+//           <List>
+//             {budgets.map((budget, index) => (
+//               <BudgetListItem 
+//                 key={index} 
+//                 budget={budget} 
+//                 onEdit={handleEditClick} 
+//                 onDelete={handleDeleteBudget} 
+//               />
+//             ))}
+//           </List>
+//         </Paper>
+//       </Container>
+//     </div>
+//   );
+// };
+
+// export default BudgetPage;
+
+
+// import React, { useEffect, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { RootState } from '../redux/store';
+// import { addBudget, setBudgets, updateBudget, deleteBudget } from '../redux/slice/budgetSlice';
+// import { loadBudgetsFromStorage, saveBudgetsToStorage } from '../redux/slice/budgetSlice';
+// import { Container, List, Paper } from '@mui/material';
+// import BudgetForm from '../component/budgetForm';
+// import BudgetListItem from '../component/budgetList';
+// import { BudgetFormInput } from '../types/User';
+
+// const BudgetPage: React.FC = () => {
+//   const dispatch = useDispatch();
+//   const currentUser = useSelector((state: RootState) => state.users.currentUser);
+//   const budgets = useSelector((state: RootState) => state.budget.budgets);
+
+//   const [editMode, setEditMode] = useState<boolean>(false);
+//   const [currentEdit, setCurrentEdit] = useState<string>('');
+//   const [currentBudget, setCurrentBudget] = useState<BudgetFormInput | null>(null);
+
+//   useEffect(() => {
+//     if (currentUser) {
+//       const loadBudgets = async () => {
+//         const loadedBudgets = await loadBudgetsFromStorage(currentUser.id);
+//         dispatch(setBudgets(loadedBudgets));
+//       };
+//       loadBudgets();
+//     }
+//   }, [dispatch, currentUser]);
+
+//   const handleAddOrUpdateBudget = async (data: BudgetFormInput) => {
+//     if (!currentUser) return;
+
+//     const budgetData = { ...data, userId: currentUser.id };
+//     const existingBudget = budgets.find(b => b.category === budgetData.category && b.userId === currentUser.id);
+//     if (existingBudget) {
+//       await handleUpdateBudget(budgetData);
+//     } else {
+//       dispatch(addBudget(budgetData));
+//       const newBudgets = [...budgets, budgetData];
+//       await saveBudgetsToStorage(newBudgets);
+//       resetForm();
+//     }
+//   };
+
+//   const handleUpdateBudget = async (data: BudgetFormInput) => {
+//     if (!currentUser) return;
+
+//     const existingBudget = budgets.find(b => b.category === currentEdit && b.userId === currentUser.id);
+//     if (existingBudget) {
+//       const updatedBudget = { ...existingBudget, ...data };
+//       dispatch(updateBudget(updatedBudget));
+//       const newBudgets = budgets.map(b => (b.category === currentEdit && b.userId === currentUser.id ? updatedBudget : b));
+//       await saveBudgetsToStorage(newBudgets);
+//       resetForm();
+//     }
+//   };
+
+//   const handleDeleteBudget = async (category: string) => {
+//     if (!currentUser) return;
+
+//     dispatch(deleteBudget(category));
+//     const newBudgets = budgets.filter(b => b.category !== category || b.userId !== currentUser.id);
+//     await saveBudgetsToStorage(newBudgets);
+//   };
+
+//   const handleEditClick = (budget: BudgetFormInput) => {
+//     setEditMode(true);
+//     setCurrentEdit(budget.category);
+//     setCurrentBudget(budget);
+//   };
+
+//   const resetForm = () => {
+//     setEditMode(false);
+//     setCurrentEdit('');
+//     setCurrentBudget(null);
+//   };
+
+//   if (!currentUser) {
+//     return <div>Please log in to manage your budgets.</div>;
+//   }
+
+//   const userBudgets = budgets.filter(budget => budget.userId === currentUser.id);
+
+//   return (
+//     <div
+//       style={{
+//         backgroundImage: `url(/budget.jpg)`,
+//         backgroundSize: 'cover',
+//         backgroundPosition: 'center',
+//         minHeight: '100vh',
+//         display: 'flex',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//       }}
+//     >
+//       <Container maxWidth="md">
+//         <Paper elevation={3} style={{ padding: '20px', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '10px' }}>
+//           <h1 style={{ textAlign: 'center' }}>Budget Management</h1>
+//           <BudgetForm 
+//             onSubmit={handleAddOrUpdateBudget} 
+//             editMode={editMode} 
+//             defaultValues={currentBudget || { category: '', amountSet: 0, amountSpent: 0, userId: '' }} 
+//           />
+//           <List>
+//             {userBudgets.map((budget, index) => (
+//               <BudgetListItem 
+//                 key={index} 
+//                 budget={budget} 
+//                 onEdit={handleEditClick} 
+//                 onDelete={handleDeleteBudget} 
+//               />
+//             ))}
+//           </List>
+//         </Paper>
+//       </Container>
+//     </div>
+//   );
+// };
+
+// export default BudgetPage;
+
+//recent
+
+// import React, { useEffect, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { RootState } from '../redux/store';
+// import { addBudget, setBudgets, updateBudget, deleteBudget } from '../redux/slice/budgetSlice';
+// import { loadBudgetsFromStorage, saveBudgetsToStorage } from '../redux/slice/budgetSlice';
+// import { Container, List, Paper } from '@mui/material';
+// import BudgetForm from '../component/budgetForm';
+// import BudgetListItem from '../component/budgetList';
+// import { BudgetFormInput } from '../types/User';
+
+// const BudgetPage: React.FC = () => {
+//   const dispatch = useDispatch();
+//   const currentUser = useSelector((state: RootState) => state.users.currentUser);
+//   const budgets = useSelector((state: RootState) => state.budget.budgets);
+
+//   const [editMode, setEditMode] = useState<boolean>(false);
+//   const [currentEdit, setCurrentEdit] = useState<string>('');
+//   const [currentBudget, setCurrentBudget] = useState<BudgetFormInput | null>(null);
+
+//   useEffect(() => {
+//     const loadBudgets = async () => {
+//       const loadedBudgets = await loadBudgetsFromStorage();
+//       dispatch(setBudgets(loadedBudgets));
+//     };
+//     loadBudgets();
+//   }, [dispatch]);
+
+  
+//   // const handleAddOrUpdateBudget = async (data: BudgetFormInput) => {
+//   //   if (!currentUser) return;
+
+//   //   const budgetData = { ...data, userId: currentUser.id };
+//   //   const existingBudget = budgets.find(b => b.category === budgetData.category && b.userId === currentUser.id);
+//   //   if (existingBudget) {
+//   //     await handleUpdateBudget(budgetData);
+//   //   } else {
+//   //     dispatch(addBudget(budgetData));
+//   //     const newBudgets = [...budgets, budgetData];
+//   //     await saveBudgetsToStorage(newBudgets);
+//   //     resetForm();
+//   //   }
+//   // };
+
+//   const handleAddOrUpdateBudget = async (data: BudgetFormInput) => {
+//     if (!currentUser) return;
+  
+//     const budgetData = { ...data, userId: currentUser.id };
+//     const existingBudgetIndex = budgets.findIndex(b => b.category === budgetData.category && b.userId === currentUser.id);
+    
+//     if (existingBudgetIndex !== -1) {
+//       await handleUpdateBudget(budgetData);
+//     } else {
+//       dispatch(addBudget(budgetData));
+//       const newBudgets = [...budgets, budgetData];
+//       await saveBudgetsToStorage(newBudgets);
+//       resetForm();
+//     }
+//   };
+  
+//   // const handleUpdateBudget = async (data: BudgetFormInput) => {
+//   //   if (!currentUser) return;
+
+//   //   const existingBudget = budgets.find(b => b.category === currentEdit && b.userId === currentUser.id);
+//   //   if (existingBudget) {
+//   //     const updatedBudget = { ...existingBudget, ...data };
+//   //     const newBudgets = budgets.map(b => (b.category === currentEdit && b.userId === currentUser.id ? updatedBudget : b));
+//   //     dispatch(updateBudget(updatedBudget));
+//   //     await saveBudgetsToStorage(newBudgets);
+//   //     resetForm();
+//   //   }
+//   // };
+//   const handleUpdateBudget = async (data: BudgetFormInput) => {
+//     if (!currentUser) return;
+  
+//     const existingBudgetIndex = budgets.findIndex(b => b.category === currentEdit && b.userId === currentUser.id);
+//     if (existingBudgetIndex !== -1) {
+//       const updatedBudget = { ...budgets[existingBudgetIndex], ...data };
+//       const newBudgets = [...budgets];
+//       newBudgets[existingBudgetIndex] = updatedBudget;
+//       dispatch(updateBudget(updatedBudget));
+//       await saveBudgetsToStorage(newBudgets);
+//       resetForm();
+//     }
+//   };
+  
+  
+
+//   const handleDeleteBudget = async (category: string) => {
+//     if (!currentUser) return;
+
+//     const newBudgets = budgets.filter(b => b.category !== category || b.userId !== currentUser.id);
+//     dispatch(deleteBudget({ category, userId: currentUser.id }));
+//     await saveBudgetsToStorage(newBudgets);
+//   };
+
+//   const handleEditClick = (budget: BudgetFormInput) => {
+//     setEditMode(true);
+//     setCurrentEdit(budget.category);
+//     setCurrentBudget(budget);
+//   };
+
+//   const resetForm = () => {
+//     setEditMode(false);
+//     setCurrentEdit('');
+//     setCurrentBudget(null);
+//   };
+
+//   if (!currentUser) {
+//     return <div>Please log in to manage your budgets.</div>;
+//   }
+
+//   const userBudgets = budgets.filter(budget => budget.userId === currentUser.id);
+
+//   return (
+//     <div
+//       style={{
+//         backgroundImage: `url(/budget.jpg)`,
+//         backgroundSize: 'cover',
+//         backgroundPosition: 'center',
+//         minHeight: '100vh',
+//         display: 'flex',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//       }}
+//     >
+//       <Container maxWidth="md">
+//         <Paper elevation={3} style={{ padding: '20px', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '10px' }}>
+//           <h1 style={{ textAlign: 'center' }}>Budget Management</h1>
+//           <BudgetForm 
+//             onSubmit={handleAddOrUpdateBudget} 
+//             editMode={editMode} 
+//             defaultValues={currentBudget || { category: '', amountSet: 0, amountSpent: 0, userId: '' }} 
+//           />
+//           <List>
+//             {userBudgets.map((budget, index) => (
+//               <BudgetListItem 
+//                 key={index} 
+//                 budget={budget} 
+//                 onEdit={handleEditClick} 
+//                 onDelete={handleDeleteBudget} 
+//               />
+//             ))}
+//           </List>
+//         </Paper>
+//       </Container>
+//     </div>
+//   );
+// };
+
+// export default BudgetPage;
+
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -222,12 +823,15 @@ import { Container, List, Paper } from '@mui/material';
 import BudgetForm from '../component/budgetForm';
 import BudgetListItem from '../component/budgetList';
 import { BudgetFormInput } from '../types/User';
+
 const BudgetPage: React.FC = () => {
   const dispatch = useDispatch();
+  const currentUser = useSelector((state: RootState) => state.users.currentUser);
   const budgets = useSelector((state: RootState) => state.budget.budgets);
 
   const [editMode, setEditMode] = useState<boolean>(false);
   const [currentEdit, setCurrentEdit] = useState<string>('');
+  const [currentBudget, setCurrentBudget] = useState<BudgetFormInput | null>(null);
 
   useEffect(() => {
     const loadBudgets = async () => {
@@ -237,44 +841,53 @@ const BudgetPage: React.FC = () => {
     loadBudgets();
   }, [dispatch]);
 
-  const handleAddOrUpdateBudget = async (data: BudgetFormInput) => {
-    const existingBudget = budgets.find(b => b.category === data.category);
-    if (existingBudget) {
-      await handleUpdateBudget(data);
-    } else {
-      dispatch(addBudget(data));
-      const newBudgets = [...budgets, data];
-      await saveBudgetsToStorage(newBudgets);
-      resetForm();
-    }
-  };
-
-  const handleUpdateBudget = async (data: BudgetFormInput) => {
-    const existingBudget = budgets.find(b => b.category === currentEdit || b.category === data.category);
-    if (existingBudget) {
-      const updatedBudget = { ...existingBudget, ...data };
-      dispatch(updateBudget(updatedBudget));
-      const newBudgets = budgets.map(b => (b.category === currentEdit || b.category === data.category ? updatedBudget : b));
-      await saveBudgetsToStorage(newBudgets);
-      resetForm();
-    }
-  };
-
-  const handleDeleteBudget = async (category: string) => {
-    dispatch(deleteBudget(category));
-    const newBudgets = budgets.filter(b => b.category !== category);
-    await saveBudgetsToStorage(newBudgets);
-  };
-
   const handleEditClick = (budget: BudgetFormInput) => {
     setEditMode(true);
     setCurrentEdit(budget.category);
+    setCurrentBudget(budget);
+  };
+
+  const handleAddOrUpdateBudget = async (data: BudgetFormInput) => {
+    if (!currentUser) return;
+  
+    const budgetData = { ...data, userId: currentUser.id };
+    const existingBudgetIndex = budgets.findIndex(b => b.category === budgetData.category && b.userId === currentUser.id);
+  
+    if (existingBudgetIndex !== -1) {
+      const updatedBudget = { ...budgets[existingBudgetIndex], ...budgetData };
+      const newBudgets = [...budgets];
+      newBudgets[existingBudgetIndex] = updatedBudget;
+      dispatch(updateBudget(updatedBudget));
+      await saveBudgetsToStorage(newBudgets);
+    } else {
+      dispatch(addBudget(budgetData));
+      const newBudgets = [...budgets, budgetData];
+      await saveBudgetsToStorage(newBudgets);
+    }
+  
+    resetForm();
+  };
+  
+
+  const handleDeleteBudget = async (category: string) => {
+    if (!currentUser) return;
+
+    const newBudgets = budgets.filter(b => b.category !== category || b.userId !== currentUser.id);
+    dispatch(deleteBudget({ category, userId: currentUser.id }));
+    await saveBudgetsToStorage(newBudgets);
   };
 
   const resetForm = () => {
     setEditMode(false);
     setCurrentEdit('');
+    setCurrentBudget(null);
   };
+
+  if (!currentUser) {
+    return <div>Please log in to manage your budgets.</div>;
+  }
+
+  const userBudgets = budgets.filter(budget => budget.userId === currentUser.id);
 
   return (
     <div
@@ -291,10 +904,19 @@ const BudgetPage: React.FC = () => {
       <Container maxWidth="md">
         <Paper elevation={3} style={{ padding: '20px', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '10px' }}>
           <h1 style={{ textAlign: 'center' }}>Budget Management</h1>
-          <BudgetForm onSubmit={handleAddOrUpdateBudget} editMode={editMode} defaultValues={budgets.find(b => b.category === currentEdit) || { category: '', amountSet: 0, amountSpent: 0 }} />
+          <BudgetForm 
+            onSubmit={handleAddOrUpdateBudget} 
+            editMode={editMode} 
+            defaultValues={currentBudget || { category: '', amountSet: 0, amountSpent: 0, userId: '' }} 
+          />
           <List>
-            {budgets.map((budget, index) => (
-              <BudgetListItem key={index} budget={budget} onEdit={handleEditClick} onDelete={handleDeleteBudget} />
+            {userBudgets.map((budget, index) => (
+              <BudgetListItem 
+                key={index} 
+                budget={budget} 
+                onEdit={handleEditClick} 
+                onDelete={handleDeleteBudget} 
+              />
             ))}
           </List>
         </Paper>

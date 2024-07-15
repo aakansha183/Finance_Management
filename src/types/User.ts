@@ -8,12 +8,19 @@ export interface User {
     lastName:string;
    
 }
-
 export interface BudgetFormInput {
     category: string;
     amountSet: number;
     amountSpent: number;
+    userId?: string;  // Add this line
   }
+  
+
+// export interface BudgetFormInput {
+//     category: string;
+//     amountSet: number;
+//     amountSpent: number;
+//   }
   
   export const categories = ['food', 'transport', 'utilities', 'entertainment', 'health'];
   
