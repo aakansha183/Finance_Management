@@ -148,7 +148,7 @@ const DashboardPage: React.FC = () => {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
+      <CssBaseline /> 
       <Navbar toggleSidebar={toggleSidebar} />
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <Box
