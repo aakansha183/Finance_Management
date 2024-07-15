@@ -1,3 +1,4 @@
+// src/hooks/useAuth.ts
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { setUser } from '../redux/slice/userslice';

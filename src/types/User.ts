@@ -19,3 +19,17 @@ export interface BudgetFormInput {
 
   export const categories = ['food', 'transport', 'utilities', 'entertainment', 'health'];
   
+export interface Expense {
+    amount: number;
+    category: string;
+    date: string;
+    userId: string; 
+  }
+ 
+  export interface Income {
+    amount: number;
+    source: string;
+    date: string;
+    userId: string; 
+  }
+  
