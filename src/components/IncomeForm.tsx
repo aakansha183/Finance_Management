@@ -1,9 +1,8 @@
+
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import {
-  TextField,
-  Button} from '@mui/material';
+import { TextField, Button } from '@mui/material';
 import { Income } from '../types/Income';
 
 interface Props {

@@ -1,11 +1,12 @@
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import localforage from 'localforage';
 
 interface Income {
-  id: number;
   amount: number;
   source: string;
   date: string;
+  userId: string;
 }
 
 interface IncomeState {
@@ -27,13 +28,13 @@ const incomeSlice = createSlice({
       state.incomes.push(action.payload);
     },
     editIncome(state, action: PayloadAction<Income>) {
-      const index = state.incomes.findIndex(income => income.id === action.payload.id);
+      const index = state.incomes.findIndex(income => income.date === action.payload.date && income.userId === action.payload.userId);
       if (index !== -1) {
         state.incomes[index] = action.payload;
       }
     },
-    deleteIncome(state, action: PayloadAction<number>) {
-      state.incomes = state.incomes.filter(income => income.id !== action.payload);
+    deleteIncome(state, action: PayloadAction<{ date: string; userId: string }>) {
+      state.incomes = state.incomes.filter(income => income.date !== action.payload.date || income.userId !== action.payload.userId);
     },
   },
 });
@@ -50,3 +51,4 @@ export const saveIncomesToStorage = async (incomes: Income[]) => {
 };
 
 export default incomeSlice.reducer;
+

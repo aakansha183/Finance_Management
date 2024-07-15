@@ -1,23 +1,21 @@
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { setIncomes, addIncome, editIncome, deleteIncome, loadIncomesFromStorage, saveIncomesToStorage } from '../redux/slice/incomeSlice';
-import {
-  Container,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-} from '@mui/material';
+import {Container,Box,Card,CardContent,Typography,} from '@mui/material';
 import IncomeForm from '../components/IncomeForm';
 import IncomeList from '../components/IncomeList';
 import { Income } from '../types/Income';
+import useAuth from '../hooks/useAuth';
 
 const IncomePage: React.FC = () => {
+  const { currentUser } = useAuth();
   const dispatch = useDispatch();
-  const incomes = useSelector((state: RootState) => state.incomes.incomes);
+  const allIncomes = useSelector((state: RootState) => state.incomes.incomes);
+  const incomes = allIncomes.filter(income => income.userId === currentUser?.id);
   const [editMode, setEditMode] = useState(false);
-  const [currentIncomeId, setCurrentIncomeId] = useState<number | null>(null);
+  const [currentIncome, setCurrentIncome] = useState<Income | null>(null);
 
   useEffect(() => {
     const fetchIncomes = async () => {
@@ -29,39 +27,29 @@ const IncomePage: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    saveIncomesToStorage(incomes);
-  }, [incomes]);
+    saveIncomesToStorage(allIncomes);
+  }, [allIncomes]);
 
   const handleFormSubmit = (values: Income) => {
-    if (editMode && currentIncomeId !== null) {
-      const updatedIncome: Income = {
-        id: currentIncomeId,
-        amount: values.amount,
-        source: values.source,
-        date: values.date,
-      };
-      dispatch(editIncome(updatedIncome));
+    const incomeWithUserId = { ...values, userId: currentUser?.id! };
+
+    if (editMode && currentIncome !== null) {
+      dispatch(editIncome(incomeWithUserId));
     } else {
-      const newIncome: Income = {
-        id: Date.now(),
-        amount: values.amount,
-        source: values.source,
-        date: values.date,
-      };
-      dispatch(addIncome(newIncome));
+      dispatch(addIncome(incomeWithUserId));
     }
 
     setEditMode(false);
-    setCurrentIncomeId(null);
+    setCurrentIncome(null);
   };
 
   const handleEdit = (income: Income) => {
     setEditMode(true);
-    setCurrentIncomeId(income.id);
+    setCurrentIncome(income);
   };
 
-  const handleDelete = (id: number) => {
-    dispatch(deleteIncome(id));
+  const handleDelete = (date: string) => {
+    dispatch(deleteIncome({ date, userId: currentUser?.id! }));
   };
 
   return (
@@ -84,12 +72,7 @@ const IncomePage: React.FC = () => {
               Income Tracker
             </Typography>
             <IncomeForm
-              initialValues={{
-                id: currentIncomeId ?? 0,
-                amount: 0,
-                source: '',
-                date: '',
-              }}
+              initialValues={currentIncome || { amount: 0, source: '', date: '', userId: currentUser?.id! }}
               onSubmit={handleFormSubmit}
               editMode={editMode}
             />
@@ -105,3 +88,4 @@ const IncomePage: React.FC = () => {
 };
 
 export default IncomePage;
+

@@ -1,24 +1,25 @@
+
 import React from 'react';
-import {List,ListItem,ListItemText,IconButton,} from '@mui/material';
+import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { Income } from '../types/Income';
 
 interface Props {
   incomes: Income[];
   onEdit: (income: Income) => void;
-  onDelete: (id: number) => void;
+  onDelete: (date: string, userId: string) => void;
 }
 
 const IncomeList: React.FC<Props> = ({ incomes, onEdit, onDelete }) => {
   return (
     <List>
       {incomes.map((income) => (
-        <ListItem key={income.id} secondaryAction={
+        <ListItem key={income.date} secondaryAction={
           <>
             <IconButton edge="end" aria-label="edit" onClick={() => onEdit(income)}>
               <Edit />
             </IconButton>
-            <IconButton edge="end" aria-label="delete" onClick={() => onDelete(income.id)}>
+            <IconButton edge="end" aria-label="delete" onClick={() => onDelete(income.date, income.userId)}>
               <Delete />
             </IconButton>
           </>
@@ -34,3 +35,4 @@ const IncomeList: React.FC<Props> = ({ incomes, onEdit, onDelete }) => {
 };
 
 export default IncomeList;
+

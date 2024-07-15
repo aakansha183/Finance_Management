@@ -1,25 +1,20 @@
-// ExpensePage.tsx
-
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { setExpenses, addExpense, editExpense, deleteExpense, loadExpensesFromStorage, saveExpensesToStorage } from '../redux/slice/expensesSlice';
-import {
-  Container,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-} from '@mui/material';
+import { Container, Box, Card, CardContent, Typography } from '@mui/material';
 import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
 import { Expense } from '../types/Expense';
+import useAuth from '../hooks/useAuth';
 
 const ExpensePage: React.FC = () => {
+  const { currentUser } = useAuth();
   const dispatch = useDispatch();
-  const expenses = useSelector((state: RootState) => state.expenses.expenses);
+  const allExpenses = useSelector((state: RootState) => state.expenses.expenses);
+  const expenses = allExpenses.filter(expense => expense.userId === currentUser?.id);
   const [editMode, setEditMode] = useState(false);
-  const [currentExpenseId, setCurrentExpenseId] = useState<number | null>(null);
+  const [currentExpense, setCurrentExpense] = useState<Expense | null>(null);
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -31,39 +26,29 @@ const ExpensePage: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    saveExpensesToStorage(expenses);
-  }, [expenses]);
+    saveExpensesToStorage(allExpenses);
+  }, [allExpenses]);
 
   const handleFormSubmit = (values: Expense) => {
-    if (editMode && currentExpenseId !== null) {
-      const updatedExpense: Expense = {
-        id: currentExpenseId, // Ensure 'id' is included
-        amount: values.amount,
-        category: values.category,
-        date: values.date,
-      };
-      dispatch(editExpense(updatedExpense));
+    const expenseWithUserId = { ...values, userId: currentUser?.id! };
+
+    if (editMode && currentExpense !== null) {
+      dispatch(editExpense(expenseWithUserId));
     } else {
-      const newExpense: Expense = {
-        id: Date.now(), // Ensure 'id' is included
-        amount: values.amount,
-        category: values.category,
-        date: values.date,
-      };
-      dispatch(addExpense(newExpense));
+      dispatch(addExpense(expenseWithUserId));
     }
 
     setEditMode(false);
-    setCurrentExpenseId(null);
+    setCurrentExpense(null);
   };
 
   const handleEdit = (expense: Expense) => {
     setEditMode(true);
-    setCurrentExpenseId(expense.id);
+    setCurrentExpense(expense);
   };
 
-  const handleDelete = (id: number) => {
-    dispatch(deleteExpense(id));
+  const handleDelete = (date: string) => {
+    dispatch(deleteExpense({ date, userId: currentUser?.id! }));
   };
 
   return (
@@ -86,12 +71,7 @@ const ExpensePage: React.FC = () => {
               Expense Tracker
             </Typography>
             <ExpenseForm
-              initialValues={{
-                id: currentExpenseId ?? 0, // Initialize 'id' with a default value
-                amount: 0,
-                category: '',
-                date: '',
-              }}
+              initialValues={currentExpense || { amount: 0, category: '', date: '', userId: currentUser?.id! }}
               onSubmit={handleFormSubmit}
               editMode={editMode}
             />

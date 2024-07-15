@@ -1,13 +1,8 @@
-// expensesSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import localforage from 'localforage';
+import { Expense } from '../../types/Expense';
 
-interface Expense {
-  id: number;
-  amount: number;
-  category: string;
-  date: string;
-}
+
 
 interface ExpenseState {
   expenses: Expense[];
@@ -28,13 +23,13 @@ const expenseSlice = createSlice({
       state.expenses.push(action.payload);
     },
     editExpense(state, action: PayloadAction<Expense>) {
-      const index = state.expenses.findIndex(expense => expense.id === action.payload.id);
+      const index = state.expenses.findIndex(expense => expense.date === action.payload.date && expense.userId === action.payload.userId);
       if (index !== -1) {
         state.expenses[index] = action.payload;
       }
     },
-    deleteExpense(state, action: PayloadAction<number>) {
-      state.expenses = state.expenses.filter(expense => expense.id !== action.payload);
+    deleteExpense(state, action: PayloadAction<{ date: string; userId: string }>) {
+      state.expenses = state.expenses.filter(expense => expense.date !== action.payload.date || expense.userId !== action.payload.userId);
     },
   },
 });
