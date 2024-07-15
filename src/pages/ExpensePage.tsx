@@ -7,6 +7,7 @@ import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
 import { Expense } from '../types/User';
 import useAuth from '../hooks/useAuth';
+import Layout from '../component/Layout/Layout';
 
 const ExpensePage: React.FC = () => {
   const { currentUser } = useAuth();
@@ -52,37 +53,55 @@ const ExpensePage: React.FC = () => {
   };
 
   return (
-    <Container>
-      <Box
-        sx={{
-          backgroundImage: `url("/backgroundimg.jpg")`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '2rem',
-        }}
-      >
-        <Card sx={{ maxWidth: 600, width: '100%', padding: '2rem' }}>
-          <CardContent>
-            <Typography variant="h4" align="center" gutterBottom>
-              Expense Tracker
-            </Typography>
-            <ExpenseForm
-              initialValues={currentExpense || { amount: 0, category: '', date: '', userId: currentUser?.id! }}
-              onSubmit={handleFormSubmit}
-              editMode={editMode}
-            />
-            <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '2rem' }}>
-              Expenses
-            </Typography>
-            <ExpenseList expenses={expenses} onEdit={handleEdit} onDelete={handleDelete} />
-          </CardContent>
-        </Card>
-      </Box>
-    </Container>
+    <Layout>
+      <Container>
+        <Box
+          sx={{
+            backgroundImage: `url("/backgroundimg.jpg")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "2rem",
+          }}
+        >
+          <Card sx={{ maxWidth: 600, width: "100%", padding: "2rem" }}>
+            <CardContent>
+              <Typography variant="h4" align="center" gutterBottom>
+                Expense Tracker
+              </Typography>
+              <ExpenseForm
+                initialValues={
+                  currentExpense || {
+                    amount: 0,
+                    category: "",
+                    date: "",
+                    userId: currentUser?.id!,
+                  }
+                }
+                onSubmit={handleFormSubmit}
+                editMode={editMode}
+              />
+              <Typography
+                variant="h5"
+                align="center"
+                gutterBottom
+                sx={{ marginTop: "2rem" }}
+              >
+                Expenses
+              </Typography>
+              <ExpenseList
+                expenses={expenses}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            </CardContent>
+          </Card>
+        </Box>
+      </Container>
+    </Layout>
   );
 };
 

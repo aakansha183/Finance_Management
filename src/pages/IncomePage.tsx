@@ -8,6 +8,7 @@ import IncomeForm from '../components/IncomeForm';
 import IncomeList from '../components/IncomeList';
 import { Income } from '../types/User';
 import useAuth from '../hooks/useAuth';
+import Layout from '../component/Layout/Layout';
 
 const IncomePage: React.FC = () => {
   const { currentUser } = useAuth();
@@ -53,37 +54,55 @@ const IncomePage: React.FC = () => {
   };
 
   return (
-    <Container>
-      <Box
-        sx={{
-          backgroundImage: `url("/backgroundimg.jpg")`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '2rem',
-        }}
-      >
-        <Card sx={{ maxWidth: 600, width: '100%', padding: '2rem' }}>
-          <CardContent>
-            <Typography variant="h4" align="center" gutterBottom>
-              Income Tracker
-            </Typography>
-            <IncomeForm
-              initialValues={currentIncome || { amount: 0, source: '', date: '', userId: currentUser?.id! }}
-              onSubmit={handleFormSubmit}
-              editMode={editMode}
-            />
-            <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '2rem' }}>
-              Incomes
-            </Typography>
-            <IncomeList incomes={incomes} onEdit={handleEdit} onDelete={handleDelete} />
-          </CardContent>
-        </Card>
-      </Box>
-    </Container>
+    <Layout>
+      <Container>
+        <Box
+          sx={{
+            backgroundImage: `url("/backgroundimg.jpg")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "2rem",
+          }}
+        >
+          <Card sx={{ maxWidth: 600, width: "100%", padding: "2rem" }}>
+            <CardContent>
+              <Typography variant="h4" align="center" gutterBottom>
+                Income Tracker
+              </Typography>
+              <IncomeForm
+                initialValues={
+                  currentIncome || {
+                    amount: 0,
+                    source: "",
+                    date: "",
+                    userId: currentUser?.id!,
+                  }
+                }
+                onSubmit={handleFormSubmit}
+                editMode={editMode}
+              />
+              <Typography
+                variant="h5"
+                align="center"
+                gutterBottom
+                sx={{ marginTop: "2rem" }}
+              >
+                Incomes
+              </Typography>
+              <IncomeList
+                incomes={incomes}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            </CardContent>
+          </Card>
+        </Box>
+      </Container>
+    </Layout>
   );
 };
 

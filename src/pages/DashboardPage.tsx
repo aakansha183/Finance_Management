@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, CssBaseline, Container, Typography, Grid } from "@mui/material";
 import Navbar from "../component/Navbar/Navbar";
 import Sidebar from "../component/Sidebar/Sidebar";
@@ -8,13 +8,33 @@ import BarChart from "../component/BarChart/BarChart";
 import PieChartComponent, {
   pieChartData,
 } from "../component/PieChart/PieChart";
+import useAuth from "../hooks/useAuth";
+import { loadIncomesFromStorage } from "../redux/slice/incomeSlice";
 
 const DashboardPage: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [totalIncome, setTotalIncome] = useState(0);
+
+  const { currentUser } = useAuth();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  useEffect(() => {
+    const fetchIncomes = async () => {
+      const incomes = await loadIncomesFromStorage();
+      const userIncomes = incomes.filter(
+        (income) => income.userId === currentUser?.id
+      );
+      const total = userIncomes.reduce((sum, income) => sum + income.amount, 0);
+      setTotalIncome(total);
+    };
+
+    if (currentUser) {
+      fetchIncomes();
+    }
+  }, [currentUser]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -39,21 +59,21 @@ const DashboardPage: React.FC = () => {
             <Grid item xs={12} sm={6} md={4}>
               <SummaryCard
                 title="Total Income"
-                value="$8,500"
+                value={`$${totalIncome.toFixed(2)}`}
                 color="#4caf50"
               />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <SummaryCard
                 title="Total Expenses"
-                value="$2,000"
+                value="$2,000" // Replace with actual expense calculation
                 color="#f44336"
               />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <SummaryCard
                 title="Budget Balance"
-                value="$6,500"
+                value="$6,500" // Replace with actual budget balance calculation
                 color="#2196f3"
               />
             </Grid>
