@@ -1,13 +1,7 @@
-
+// redux/slice/incomeSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import localforage from 'localforage';
-
-interface Income {
-  amount: number;
-  source: string;
-  date: string;
-  userId: string;
-}
+import { Income } from '../../types/User';
 
 interface IncomeState {
   incomes: Income[];
@@ -51,4 +45,3 @@ export const saveIncomesToStorage = async (incomes: Income[]) => {
 };
 
 export default incomeSlice.reducer;
-

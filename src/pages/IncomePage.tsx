@@ -1,9 +1,9 @@
-
+// pages/IncomePage.tsx
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { setIncomes, addIncome, editIncome, deleteIncome, loadIncomesFromStorage, saveIncomesToStorage } from '../redux/slice/incomeSlice';
-import {Container,Box,Card,CardContent,Typography,} from '@mui/material';
+import { Container, Box, Card, CardContent, Typography } from '@mui/material';
 import IncomeForm from '../components/IncomeForm';
 import IncomeList from '../components/IncomeList';
 import { Income } from '../types/User';
@@ -48,8 +48,8 @@ const IncomePage: React.FC = () => {
     setCurrentIncome(income);
   };
 
-  const handleDelete = (date: string) => {
-    dispatch(deleteIncome({ date, userId: currentUser?.id! }));
+  const handleDelete = (date: string, userId: string) => {
+    dispatch(deleteIncome({ date, userId }));
   };
 
   return (
@@ -88,4 +88,3 @@ const IncomePage: React.FC = () => {
 };
 
 export default IncomePage;
-
