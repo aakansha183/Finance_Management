@@ -1,11 +1,11 @@
-
+// components/IncomeForm.tsx
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { TextField, Button } from '@mui/material';
 import { Income } from '../types/User';
 
-interface Props {
+interface IncomeFormProps {
   initialValues: Income;
   onSubmit: (values: Income) => void;
   editMode: boolean;
@@ -17,13 +17,15 @@ const validationSchema = yup.object({
   date: yup.string().required('Date is required'),
 });
 
-const IncomeForm: React.FC<Props> = ({ initialValues, onSubmit, editMode }) => {
+const IncomeForm: React.FC<IncomeFormProps> = ({ initialValues, onSubmit, editMode }) => {
   const formik = useFormik({
-    initialValues: initialValues,
-    validationSchema: validationSchema,
+    initialValues,
+    validationSchema,
     onSubmit: (values) => {
       onSubmit(values);
+      formik.resetForm();
     },
+    enableReinitialize: true,
   });
 
   return (
