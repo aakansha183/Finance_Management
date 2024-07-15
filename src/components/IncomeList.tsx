@@ -2,7 +2,7 @@
 import React from 'react';
 import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
-import { Income } from '../types/Income';
+import { Income } from '../types/User';
 
 interface Props {
   incomes: Income[];

@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
-import { Expense } from '../types/Expense';
+import { Expense } from '../types/User';
 
 interface Props {
   expenses: Expense[];

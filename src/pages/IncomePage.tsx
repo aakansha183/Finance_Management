@@ -6,7 +6,7 @@ import { setIncomes, addIncome, editIncome, deleteIncome, loadIncomesFromStorage
 import {Container,Box,Card,CardContent,Typography,} from '@mui/material';
 import IncomeForm from '../components/IncomeForm';
 import IncomeList from '../components/IncomeList';
-import { Income } from '../types/Income';
+import { Income } from '../types/User';
 import useAuth from '../hooks/useAuth';
 
 const IncomePage: React.FC = () => {

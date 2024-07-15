@@ -3,7 +3,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { TextField, Button } from '@mui/material';
-import { Income } from '../types/Income';
+import { Income } from '../types/User';
 
 interface Props {
   initialValues: Income;

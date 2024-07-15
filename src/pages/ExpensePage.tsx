@@ -5,7 +5,7 @@ import { setExpenses, addExpense, editExpense, deleteExpense, loadExpensesFromSt
 import { Container, Box, Card, CardContent, Typography } from '@mui/material';
 import ExpenseForm from '../components/ExpenseForm';
 import ExpenseList from '../components/ExpenseList';
-import { Expense } from '../types/Expense';
+import { Expense } from '../types/User';
 import useAuth from '../hooks/useAuth';
 
 const ExpensePage: React.FC = () => {

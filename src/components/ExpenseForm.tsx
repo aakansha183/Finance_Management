@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { Expense } from '../types/Expense';
+import { Expense } from '../types/User';
 
 interface ExpenseFormProps {
   initialValues: Expense;

@@ -8,3 +8,17 @@ export interface User {
     lastName:string;
    
 }
+export interface Expense {
+    amount: number;
+    category: string;
+    date: string;
+    userId: string; 
+  }
+ 
+  export interface Income {
+    amount: number;
+    source: string;
+    date: string;
+    userId: string; 
+  }
+  
