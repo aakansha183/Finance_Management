@@ -10,11 +10,11 @@ import {
   CardContent,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import * as yup from "yup";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
+import * as yup from "yup";
 
-const validationSchema = yup.object({
+export const validationSchema = yup.object({
   username: yup.string().required("Username is required"),
   password: yup.string().required("Password is required"),
 });
@@ -73,7 +73,7 @@ const Login: React.FC = () => {
       const success = await login(username, password);
       if (success) {
         navigate("/dashboard");
-        toast.success("Successfully Logged In"); 
+        toast.success("Successfully Logged In");
       } else {
         setError("Invalid username or password");
       }
