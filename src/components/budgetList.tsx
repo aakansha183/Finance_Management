@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   ListItem,
@@ -9,11 +10,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { BudgetFormInput } from "../utils/interface/types";
 
+
 interface BudgetListItemProps {
   budget: BudgetFormInput;
   onEdit: (budget: BudgetFormInput) => void;
   onDelete: (category: string) => void;
 }
+
 
 const BudgetListItem: React.FC<BudgetListItemProps> = ({
   budget,
@@ -30,6 +33,7 @@ const BudgetListItem: React.FC<BudgetListItemProps> = ({
         position: "relative",
       }}
     >
+
       <ListItemText
         primary={`Category: ${budget.category}`}
         secondary={
@@ -39,6 +43,7 @@ const BudgetListItem: React.FC<BudgetListItemProps> = ({
           </>
         }
       />
+
       <LinearProgress
         variant="determinate"
         value={(budget.amountSpent / budget.amountSet) * 100}
@@ -54,6 +59,7 @@ const BudgetListItem: React.FC<BudgetListItemProps> = ({
         onClick={() => onDelete(budget.category)}
         style={{ position: "absolute", right: "10px" }}
       >
+
         <DeleteIcon />
       </IconButton>
     </ListItem>

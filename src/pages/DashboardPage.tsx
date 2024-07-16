@@ -5,11 +5,13 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import SummaryCard from "../components/SummaryCard";
 import LineChart from "../components/LineChart";
 import BarChart from "../components/BarChart";
+
 import PieChartComponent from "../components/PieChart";
 import useAuth from "../hooks/useAuth";
 import { loadIncomesFromStorage } from "../redux/slice/incomeSlice";
 import { loadExpensesFromStorage } from "../redux/slice/expensesSlice";
 import { loadBudgetsFromStorage } from "../redux/slice/budgetSlice";
+
 
 const DashboardPage: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

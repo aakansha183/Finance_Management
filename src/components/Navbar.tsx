@@ -11,8 +11,10 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
+
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
+
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -21,6 +23,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { logout, currentUser } = useAuth();
+
   const navigate = useNavigate();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,6 +33,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
 
   const handleProfile = () => {
     if (currentUser?.id) {
@@ -54,6 +58,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
     ? currentUser.username.charAt(0).toUpperCase()
     : "";
 
+
   return (
     <AppBar position="fixed">
       <Toolbar>
@@ -70,7 +75,9 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
         </Typography>
         <Box>
           <IconButton color="inherit" onClick={handleMenu}>
+
             <Avatar>{userInitial} </Avatar>
+
           </IconButton>
           <Menu
             anchorEl={anchorEl}
@@ -81,7 +88,9 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
+
             <MenuItem onClick={handleProfile}>Profile</MenuItem>
+
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Box>

@@ -7,11 +7,12 @@ import { TextField, Button, Select, MenuItem } from '@mui/material';
 import { BudgetFormInput, categories } from '../utils/interface/types';
 import { toast } from 'react-toastify';
 
+
 interface BudgetFormProps {
   onSubmit: (data: BudgetFormInput) => void;
   editMode: boolean;
   defaultValues?: BudgetFormInput;
-  
+
 }
 
 const schema = yup.object().shape({

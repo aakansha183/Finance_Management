@@ -2,6 +2,7 @@ import React from "react";
 import { Drawer, List, ListItem, ListItemText, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
+
 interface SidebarProps {
   isOpen: boolean;
   toggleSidebar: () => void;
@@ -30,6 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         <List>
           {[
             { text: "Dashboard", path: "/dashboard" },
+
             { text: "Income Tracker", path: "/incomes" },
             { text: "Expense Tracker", path: "/expenses" },
             { text: "Budget Management", path: "/budget" },
@@ -37,6 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           ].map(({ text, path }, index) => (
             <ListItem button key={text} component={Link} to={path}>
               <ListItemText primary={text} />
+
             </ListItem>
           ))}
         </List>
