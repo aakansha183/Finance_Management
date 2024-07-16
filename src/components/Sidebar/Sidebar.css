@@ -1,10 +1,8 @@
-/* 
-.sidebar {
+/* .sidebar {
   width: 240px;
   height: 100vh;
   background-color: #fff;
   position: fixed;
-  top: 0;
   left: 0;
   box-shadow: 3px 0 5px rgba(0, 0, 0, 0.2);
   transition: left 0.3s ease;
@@ -17,3 +15,24 @@
 .sidebar.closed {
   left: -240px;
 } */
+
+@media (max-width: 884px) {
+  .sidebar {
+    width: 230px;
+    height: 100vh;
+    background-color: #fff;
+    position: fixed;
+    margin-top: 6px;
+    left: 0;
+    box-shadow: 3px 0 5px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .sidebar.closed {
+    left: -240px;
+  }
+}

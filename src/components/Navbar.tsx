@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 
-
 interface NavbarProps {
   toggleSidebar: () => void;
 }
@@ -34,7 +33,6 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
     setAnchorEl(null);
   };
 
-
   const handleProfile = () => {
     if (currentUser?.id) {
       navigate(`/profile/${currentUser.id}`);
@@ -48,7 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
     try {
       await logout();
       toast.success("Successfully Logged Out");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
       toast.error("Error logging out");
@@ -57,7 +55,6 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
   const userInitial = currentUser
     ? currentUser.username.charAt(0).toUpperCase()
     : "";
-
 
   return (
     <AppBar position="fixed">
@@ -75,9 +72,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
         </Typography>
         <Box>
           <IconButton color="inherit" onClick={handleMenu}>
-
             <Avatar>{userInitial} </Avatar>
-
           </IconButton>
           <Menu
             anchorEl={anchorEl}
@@ -88,7 +83,6 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-
             <MenuItem onClick={handleProfile}>Profile</MenuItem>
 
             <MenuItem onClick={handleLogout}>Logout</MenuItem>

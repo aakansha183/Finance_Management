@@ -81,6 +81,7 @@ const Profile: React.FC = () => {
             value={formData.username}
             onChange={handleChange}
             variant="outlined"
+            disabled
           />
           <TextField
             fullWidth
@@ -90,6 +91,7 @@ const Profile: React.FC = () => {
             value={formData.email}
             onChange={handleChange}
             variant="outlined"
+            disabled
           />
           <TextField
             fullWidth

@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Box, CssBaseline, Container, Typography, Grid } from "@mui/material";
+import {
+  Box,
+  CssBaseline,
+  Container,
+  Typography,
+  Grid,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import SummaryCard from "../components/SummaryCard";
 import LineChart from "../components/LineChart";
 import BarChart from "../components/BarChart";
-
 import PieChartComponent from "../components/PieChart";
 import useAuth from "../hooks/useAuth";
 import { loadIncomesFromStorage } from "../redux/slice/incomeSlice";
@@ -14,6 +21,7 @@ import { loadBudgetsFromStorage } from "../redux/slice/budgetSlice";
 
 
 const DashboardPage: React.FC = () => {
+   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
@@ -35,6 +43,8 @@ const DashboardPage: React.FC = () => {
   });
 
   const { currentUser } = useAuth();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -146,14 +156,17 @@ const DashboardPage: React.FC = () => {
         sx={{
           flexGrow: 1,
           p: 3,
-          marginLeft: isSidebarOpen ? "240px" : "0",
+          marginLeft: isSidebarOpen ? (isMobile ? "0" : "240px") : "0",
           transition: "margin 0.3s ease",
+          maxWidth: "100%",
+          bgcolor: theme.palette.background.default,
+          marginTop:7,
         }}
       >
         <Container maxWidth="lg">
-          <Typography variant="h4" gutterBottom>
-            Welcome to your Dashboard
-          </Typography>
+          {/* <Typography variant="h4" gutterBottom >
+            <strong> Dashboard</strong>
+          </Typography> */}
           <Grid container spacing={3}>
             {/* Summary Cards */}
             <Grid item xs={12} sm={6} md={4}>

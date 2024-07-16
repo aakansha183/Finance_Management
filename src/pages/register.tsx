@@ -82,21 +82,21 @@ const Register: React.FC = () => {
     <Box
       sx={{
         backgroundImage: `url("/backgroundimg.jpg")`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2rem',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        //padding: '2rem',
       }}
     >
       <Card sx={{ maxWidth: 400 }}>
         <CardContent>
           <Typography variant="h4" align="center" gutterBottom>
-            Register
+            <strong>Register</strong>
           </Typography>
-          <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
             <TextField
               id="username"
               name="username"
@@ -169,12 +169,16 @@ const Register: React.FC = () => {
               color="primary"
               fullWidth
               size="large"
-              style={{ marginTop: '1rem' }}
+              style={{ marginTop: "1rem" }}
             >
               Register
             </Button>
             {registrationError && (
-              <Typography variant="body1" color="error" style={{ marginTop: '1rem' }}>
+              <Typography
+                variant="body1"
+                color="error"
+                style={{ marginTop: "1rem" }}
+              >
                 {registrationError}
               </Typography>
             )}
