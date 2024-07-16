@@ -1,11 +1,7 @@
 import React from "react";
 import { Card, CardContent, Typography } from "@mui/material";
+import { SummaryCardProps } from "../utils/interface/types";
 
-interface SummaryCardProps {
-  title: string;
-  value: string;
-  color: string;
-}
 
 const SummaryCard: React.FC<SummaryCardProps> = ({ title, value, color }) => {
   return (

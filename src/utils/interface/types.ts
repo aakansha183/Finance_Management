@@ -46,3 +46,13 @@ export interface Income {
   userId: string;
 }
   
+export interface SummaryCardProps {
+  title: string;
+  value: string;
+  color: string;
+}
+export 
+interface UserState {
+  users: User[];
+  currentUser: User | null;
+}

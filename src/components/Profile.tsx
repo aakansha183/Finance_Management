@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import { User } from "../utils/interface/types";
-import { getUserFromLocalStorage, updateUser } from "../redux/slice/userslice";
+import { updateUser, setUser } from "../redux/slice/userslice";
 import Layout from "./Layout";
 import { toast } from "react-toastify";
+import { RootState } from "../redux/store";
 
 const Profile: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { id } = useParams<{ id?: string }>();
-  const [user, setUser] = useState<User | null>(null);
+  const currentUser = useSelector(
+    (state: RootState) => state.users.currentUser
+  );
   const [formData, setFormData] = useState<User>({
     id: "",
     username: "",
@@ -24,23 +29,14 @@ const Profile: React.FC = () => {
   });
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        if (id) {
-          const userData = await getUserFromLocalStorage();
-          //console.log("=>:", userData);
-          if (userData) {
-            setUser(userData);
-            setFormData(userData);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
+    if (currentUser) {
+      if (id && currentUser.id === id) {
+        setFormData(currentUser);
+      } else {
+        navigate("/dashboard");
       }
-    };
-
-    fetchUserData();
-  }, [id, navigate]);
+    }
+  }, [id, currentUser, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,18 +48,21 @@ const Profile: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      if (id) {
-        await updateUser(formData);
-        setUser(formData);
-        toast.success("Successfully Changes");
+      if (formData.id) {
+        await dispatch(updateUser(formData));
+        dispatch(setUser(formData));
+        toast.success("Profile updated successfully");
         navigate("/dashboard");
+      } else {
+        toast.error("User ID is missing");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
+      toast.error("Failed to update profile");
     }
   };
 
-  if (!user) {
+  if (!currentUser) {
     return <Typography variant="h5">Loading...</Typography>;
   }
 
@@ -115,6 +114,7 @@ const Profile: React.FC = () => {
             margin="dense"
             label="Password"
             name="password"
+            type="password"
             value={formData.password}
             onChange={handleChange}
             variant="outlined"

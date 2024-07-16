@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../utils/interface/types";
+import { User, UserState } from "../../utils/interface/types";
 
-interface UserState {
-  users: User[];
-  currentUser: User | null;
-}
 
 export const getUserFromLocalStorage = (): User | null => {
   const storedUser = localStorage.getItem("currentUser");

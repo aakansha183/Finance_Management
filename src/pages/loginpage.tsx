@@ -73,7 +73,7 @@ const Login: React.FC = () => {
       const success = await login(username, password);
       if (success) {
         navigate("/dashboard");
-        toast.success("Successfully Logged In"); // Ensure this line is correct
+        toast.success("Successfully Logged In"); 
       } else {
         setError("Invalid username or password");
       }
