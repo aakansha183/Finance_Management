@@ -12,10 +12,11 @@ import {
   saveBudgetsToStorage,
 } from "../redux/slice/budgetSlice";
 import { Container, List, Paper } from "@mui/material";
-import BudgetForm from "../component/budgetForm";
-import BudgetListItem from "../component/budgetList";
-import { BudgetFormInput } from "../types/User";
-import Layout from "../component/Layout/Layout";
+import BudgetForm from "../components/budgetForm";
+import BudgetListItem from "../components/budgetList";
+import Layout from "../components/Layout";
+import { toast } from "react-toastify";
+import { BudgetFormInput } from "../utils/interface/types";
 
 const BudgetPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -56,11 +57,13 @@ const BudgetPage: React.FC = () => {
       const updatedBudget = { ...budgets[existingBudgetIndex], ...budgetData };
       const newBudgets = [...budgets];
       newBudgets[existingBudgetIndex] = updatedBudget;
+      toast.success("Succesfully UpdateBudget Added");
       dispatch(updateBudget(updatedBudget));
       await saveBudgetsToStorage(newBudgets);
     } else {
       dispatch(addBudget(budgetData));
       const newBudgets = [...budgets, budgetData];
+      toast.success("Succesfully Budget Added");
       await saveBudgetsToStorage(newBudgets);
     }
 

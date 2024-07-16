@@ -1,8 +1,7 @@
-// src/hooks/useAuth.ts
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { setUser } from '../redux/slice/userslice';
-import { User } from '../types/User';
+import { User } from '../utils/interface/types';
 import * as yup from 'yup';
 import localforage from 'localforage';
 

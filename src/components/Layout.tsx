@@ -1,8 +1,7 @@
-
 import React, { useState } from "react";
 import { Box, CssBaseline } from "@mui/material";
-import Navbar from "../Navbar/Navbar";
-import Sidebar from "../Sidebar/Sidebar";
+import Navbar from "../components/Navbar";
+import Sidebar from "./Sidebar/Sidebar";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,7 +15,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <Box sx={{ display: "flex"  ,marginTop:15}}>
+    <Box sx={{ display: "flex", marginTop: 8 }}>
       <CssBaseline />
       <Navbar toggleSidebar={toggleSidebar} />
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />

@@ -1,20 +1,28 @@
-// pages/IncomePage.tsx
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { setIncomes, addIncome, editIncome, deleteIncome, loadIncomesFromStorage, saveIncomesToStorage } from '../redux/slice/incomeSlice';
-import { Container, Box, Card, CardContent, Typography } from '@mui/material';
-import IncomeForm from '../components/IncomeForm';
-import IncomeList from '../components/IncomeList';
-import { Income } from '../types/User';
-import useAuth from '../hooks/useAuth';
-import Layout from '../component/Layout/Layout';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import {
+  setIncomes,
+  addIncome,
+  editIncome,
+  deleteIncome,
+  loadIncomesFromStorage,
+  saveIncomesToStorage,
+} from "../redux/slice/incomeSlice";
+import { Container, Box, Card, CardContent, Typography } from "@mui/material";
+import IncomeForm from "../components/IncomeForm";
+import IncomeList from "../components/IncomeList";
+import useAuth from "../hooks/useAuth";
+import Layout from "../components/Layout";
+import { Income } from "../utils/interface/types";
 
 const IncomePage: React.FC = () => {
   const { currentUser } = useAuth();
   const dispatch = useDispatch();
   const allIncomes = useSelector((state: RootState) => state.incomes.incomes);
-  const incomes = allIncomes.filter(income => income.userId === currentUser?.id);
+  const incomes = allIncomes.filter(
+    (income) => income.userId === currentUser?.id
+  );
   const [editMode, setEditMode] = useState(false);
   const [currentIncome, setCurrentIncome] = useState<Income | null>(null);
 

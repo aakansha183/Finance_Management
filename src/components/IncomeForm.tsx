@@ -3,7 +3,8 @@ import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { TextField, Button, MenuItem } from "@mui/material";
-import { Income } from "../types/User";
+import { Income } from "../utils/interface/types";
+import { toast, ToastContainer } from "react-toastify";
 interface IncomeFormProps {
   initialValues: Income;
   onSubmit: (values: Income) => void;
@@ -33,6 +34,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({
     onSubmit: (values) => {
       onSubmit(values);
       formik.resetForm();
+       toast.success("Income Successfully Added");
     },
     enableReinitialize: true,
   });

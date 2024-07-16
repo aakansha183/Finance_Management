@@ -1,19 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { Box, CssBaseline, Container, Typography, Grid } from "@mui/material";
-import Navbar from "../component/Navbar/Navbar";
-import Sidebar from "../component/Sidebar/Sidebar";
-import SummaryCard from "../component/SummaryCard/SummaryCard";
-import LineChart from "../component/LineChart/LineChart";
-import BarChart from "../component/BarChart/BarChart";
-import PieChartComponent, {
-  pieChartData,
-} from "../component/PieChart/PieChart";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar/Sidebar";
+import SummaryCard from "../components/SummaryCard";
+import LineChart from "../components/LineChart";
+import BarChart from "../components/BarChart";
+import PieChartComponent from "../components/PieChart";
 import useAuth from "../hooks/useAuth";
 import { loadIncomesFromStorage } from "../redux/slice/incomeSlice";
+import { loadExpensesFromStorage } from "../redux/slice/expensesSlice";
+import { loadBudgetsFromStorage } from "../redux/slice/budgetSlice";
 
 const DashboardPage: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpense, setTotalExpense] = useState(0);
+  const [totalBudget, setTotalBudget] = useState(0);
+  const [budgetData, setBudgetData] = useState<
+    { name: string; value: number }[]
+  >([]);
+  const [lineChartData, setLineChartData] = useState<{
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      borderColor: string;
+      backgroundColor: string;
+    }[];
+  }>({
+    labels: [],
+    datasets: [],
+  });
 
   const { currentUser } = useAuth();
 
@@ -22,18 +39,99 @@ const DashboardPage: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchIncomes = async () => {
-      const incomes = await loadIncomesFromStorage();
-      const userIncomes = incomes.filter(
-        (income) => income.userId === currentUser?.id
-      );
-      const total = userIncomes.reduce((sum, income) => sum + income.amount, 0);
-      setTotalIncome(total);
+    const fetchData = async () => {
+      if (currentUser) {
+        // Fetching Income
+        const incomes = await loadIncomesFromStorage();
+        const userIncomes = incomes.filter(
+          (income) => income.userId === currentUser?.id
+        );
+        const totalIncome = userIncomes.reduce(
+          (sum, income) => sum + income.amount,
+          0
+        );
+        setTotalIncome(totalIncome);
+
+        // Prepare Data for Line Chart
+        const monthlyIncome = Array(12).fill(0);
+        userIncomes.forEach((income) => {
+          const month = new Date(income.date).getMonth();
+          monthlyIncome[month] += income.amount;
+        });
+
+        const lineChartData = {
+          labels: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ],
+          datasets: [
+            {
+              label: "Monthly Income",
+              data: monthlyIncome,
+              borderColor: "#4caf50",
+              backgroundColor: "rgba(76, 175, 80, 0.2)",
+            },
+          ],
+        };
+
+        setLineChartData(lineChartData);
+
+        // Fetching Expense
+        const expenses = await loadExpensesFromStorage();
+        const userExpenses = expenses.filter(
+          (expense) => expense.userId === currentUser?.id
+        );
+        const totalExpense = userExpenses.reduce(
+          (sum, expense) => sum + expense.amount,
+          0
+        );
+        setTotalExpense(totalExpense);
+
+        // Fetching Budget
+        const budgets = await loadBudgetsFromStorage();
+        const userBudgets = budgets.filter(
+          (budget) => budget.userId === currentUser?.id
+        );
+        const totalBudget = userBudgets.reduce(
+          (sum, budget) => sum + budget.amountSet,
+          0
+        );
+        setTotalBudget(totalBudget);
+
+        // Preparing Data for Pie Chart
+        const budgetDistribution = userBudgets.reduce(
+          (acc: { [key: string]: number }, budget) => {
+            if (!acc[budget.category]) {
+              acc[budget.category] = 0;
+            }
+            acc[budget.category] += budget.amountSet;
+            return acc;
+          },
+          {}
+        );
+
+        const pieChartData = Object.keys(budgetDistribution).map(
+          (category) => ({
+            name: category,
+            value: budgetDistribution[category],
+          })
+        );
+
+        setBudgetData(pieChartData);
+      }
     };
 
-    if (currentUser) {
-      fetchIncomes();
-    }
+    fetchData();
   }, [currentUser]);
 
   return (
@@ -66,14 +164,14 @@ const DashboardPage: React.FC = () => {
             <Grid item xs={12} sm={6} md={4}>
               <SummaryCard
                 title="Total Expenses"
-                value="$2,000" // Replace with actual expense calculation
+                value={`$${totalExpense.toFixed(2)}`}
                 color="#f44336"
               />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <SummaryCard
                 title="Budget Balance"
-                value="$6,500" // Replace with actual budget balance calculation
+                value={`$${totalBudget.toFixed(2)}`}
                 color="#2196f3"
               />
             </Grid>
@@ -84,7 +182,7 @@ const DashboardPage: React.FC = () => {
                 <Typography variant="h6" gutterBottom>
                   Monthly Income
                 </Typography>
-                <LineChart />
+                <LineChart data={lineChartData} />
               </Box>
             </Grid>
 
@@ -94,17 +192,16 @@ const DashboardPage: React.FC = () => {
                 <Typography variant="h6" gutterBottom>
                   Expenses Breakdown
                 </Typography>
-                <BarChart />
+                <BarChart userId={currentUser?.id!} />
               </Box>
             </Grid>
-
             {/* PieChart for Budget */}
             <Grid item xs={12} md={6}>
               <Box sx={{ p: 2, bgcolor: "background.paper" }}>
                 <Typography variant="h6" gutterBottom>
                   Budget Distribution
                 </Typography>
-                <PieChartComponent data={pieChartData} />
+                <PieChartComponent data={budgetData} />
               </Box>
             </Grid>
           </Grid>

@@ -3,7 +3,8 @@ import * as yup from 'yup';
 import { TextField, Button, Typography, Box, Card, CardContent } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import { User } from '../types/User';
+import { User } from '../utils/interface/types';
+import { toast } from 'react-toastify';
 
 const validationSchema = yup.object({
   username: yup.string().required('Username is required'),
@@ -58,6 +59,7 @@ const Register: React.FC = () => {
       };
 
       await register(newUser);
+      toast.success(" Successfully Register")
       navigate('/login');
     } catch (error) {
       if (error instanceof yup.ValidationError) {

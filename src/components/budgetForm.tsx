@@ -4,12 +4,14 @@ import { useForm, Controller } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { TextField, Button, Select, MenuItem } from '@mui/material';
-import { BudgetFormInput, categories } from '../types/User';
+import { BudgetFormInput, categories } from '../utils/interface/types';
+import { toast } from 'react-toastify';
 
 interface BudgetFormProps {
   onSubmit: (data: BudgetFormInput) => void;
   editMode: boolean;
   defaultValues?: BudgetFormInput;
+  
 }
 
 const schema = yup.object().shape({
