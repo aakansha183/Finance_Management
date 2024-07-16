@@ -6,9 +6,10 @@ import { RootState } from '../redux/store';
 import { addBudget, setBudgets, updateBudget, deleteBudget } from '../redux/slice/budgetSlice';
 import { loadBudgetsFromStorage, saveBudgetsToStorage } from '../redux/slice/budgetSlice';
 import { Container, List, Paper } from '@mui/material';
-import BudgetForm from '../component/budgetForm';
-import BudgetListItem from '../component/budgetList';
+import BudgetForm from '../components/budgetForm';
 import { BudgetFormInput } from '../types/User';
+import BudgetListItem from '../components/budgetList';
+
 
 const BudgetPage: React.FC = () => {
   const dispatch = useDispatch();

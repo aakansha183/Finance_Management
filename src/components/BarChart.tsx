@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { BarChartOptions } from "../../utils/ChartOptions/ChartOptions";
+import { BarChartOptions } from "../utils/ChartOptions/ChartOptions";
 
 ChartJS.register(
   BarElement,

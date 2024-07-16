@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Box, CssBaseline, Container, Typography, Grid } from "@mui/material";
-import Navbar from "../component/Navbar/Navbar";
-import Sidebar from "../component/Sidebar/Sidebar";
-import SummaryCard from "../component/SummaryCard/SummaryCard";
-import LineChart from "../component/LineChart/LineChart";
-import BarChart from "../component/BarChart/BarChart";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar/Sidebar";
+import SummaryCard from "../components/SummaryCard";
+import LineChart from "../components/LineChart";
+import BarChart from "../components/BarChart";
 import PieChartComponent, {
   pieChartData,
-} from "../component/PieChart/PieChart";
+} from "../components/PieChart";
 
 const DashboardPage: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

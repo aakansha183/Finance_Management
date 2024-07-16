@@ -1,8 +1,8 @@
 
 import React, { useState } from "react";
 import { Box, CssBaseline } from "@mui/material";
-import Navbar from "../Navbar/Navbar";
-import Sidebar from "../Sidebar/Sidebar";
+import Navbar from "./Navbar";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 interface LayoutProps {
   children: React.ReactNode;
