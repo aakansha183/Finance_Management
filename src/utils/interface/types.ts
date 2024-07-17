@@ -40,7 +40,7 @@ export interface Expense {
 }
 
 export interface Income {
-  amount: number;
+  amount: string;
   source: string;
   date: string;
   userId: string;
