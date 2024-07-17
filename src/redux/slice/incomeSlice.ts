@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import localforage from "localforage";
 import { Income } from "../../utils/interface/types";
+=======
+// redux/slice/incomeSlice.ts
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import localforage from 'localforage';
+import { Income } from '../../utils/interface/types';
+>>>>>>> 3b13b41 (added trandsaction page and its functionality)
 
 interface IncomeState {
   incomes: Income[];
