@@ -16,7 +16,7 @@ interface BudgetFormProps {
 }
 
 const schema = yup.object().shape({
- 
+
   category: yup.string().required('Category is required'),
   amountSet: yup.number().min(1, 'Amount Set must be greater than zero').required('Amount Set is required'),
   amountSpent: yup.number().min(0, 'Amount Spent must be zero or more').max(yup.ref('amountSet'), 'Amount Spent must be less than or equal to Amount Set').required('Amount Spent is required'),
@@ -34,7 +34,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ onSubmit, editMode, defaultValu
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
-    
+
       <Controller
         name="category"
         control={control}
