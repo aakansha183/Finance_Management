@@ -48,6 +48,11 @@ export interface UserState {
   users: User[];
   currentUser: User | null;
 }
+export interface SummaryCardProps {
+  title: string;
+  value: string;
+  color: string;
+}
 export interface Transaction {
   amount: string;
   category: string;
