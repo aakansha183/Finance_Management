@@ -44,7 +44,7 @@ const BarChart: React.FC<BarChartProps> = ({ userId }) => {
           if (!acc[expense.category]) {
             acc[expense.category] = 0;
           }
-          acc[expense.category] += expense.amount;
+          acc[`${expense?.category}`] += parseInt(expense.amount);
           return acc;
         },
         {}

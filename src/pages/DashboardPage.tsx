@@ -59,7 +59,8 @@ const DashboardPage: React.FC = () => {
           (income) => income.userId === currentUser?.id
         );
         const totalIncome = userIncomes.reduce(
-          (sum, income) => sum + income.amount,
+          
+          (sum, income) => sum + parseInt(income.amount),
           0
         );
         setTotalIncome(totalIncome);
@@ -104,7 +105,7 @@ const DashboardPage: React.FC = () => {
           (expense) => expense.userId === currentUser?.id
         );
         const totalExpense = userExpenses.reduce(
-          (sum, expense) => sum + expense.amount,
+          (sum, expense) => sum + parseInt(expense.amount),
           0
         );
         setTotalExpense(totalExpense);
@@ -148,7 +149,7 @@ const DashboardPage: React.FC = () => {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
+      <CssBaseline /> 
       <Navbar toggleSidebar={toggleSidebar} />
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <Box

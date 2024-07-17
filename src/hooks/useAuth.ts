@@ -77,3 +77,4 @@ const useAuth = (): AuthState => {
 };
 
 export default useAuth;
+
