@@ -1,19 +1,28 @@
-
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { setIncomes, addIncome, editIncome, deleteIncome, loadIncomesFromStorage, saveIncomesToStorage } from '../redux/slice/incomeSlice';
-import {Container,Box,Card,CardContent,Typography,} from '@mui/material';
-import IncomeForm from '../components/IncomeForm';
-import IncomeList from '../components/IncomeList';
-import { Income } from '../types/User';
-import useAuth from '../hooks/useAuth';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import {
+  setIncomes,
+  addIncome,
+  editIncome,
+  deleteIncome,
+  loadIncomesFromStorage,
+  saveIncomesToStorage,
+} from "../redux/slice/incomeSlice";
+import { Container, Box, Card, CardContent, Typography } from "@mui/material";
+import IncomeForm from "../components/IncomeForm";
+import IncomeList from "../components/IncomeList";
+import useAuth from "../hooks/useAuth";
+import Layout from "../components/Layout";
+import { Income } from "../utils/interface/types";
 
 const IncomePage: React.FC = () => {
   const { currentUser } = useAuth();
   const dispatch = useDispatch();
   const allIncomes = useSelector((state: RootState) => state.incomes.incomes);
-  const incomes = allIncomes.filter(income => income.userId === currentUser?.id);
+  const incomes = allIncomes.filter(
+    (income) => income.userId === currentUser?.id
+  );
   const [editMode, setEditMode] = useState(false);
   const [currentIncome, setCurrentIncome] = useState<Income | null>(null);
 
@@ -48,44 +57,61 @@ const IncomePage: React.FC = () => {
     setCurrentIncome(income);
   };
 
-  const handleDelete = (date: string) => {
-    dispatch(deleteIncome({ date, userId: currentUser?.id! }));
+  const handleDelete = (date: string, userId: string) => {
+    dispatch(deleteIncome({ date, userId }));
   };
 
   return (
-    <Container>
-      <Box
-        sx={{
-          backgroundImage: `url("/backgroundimg.jpg")`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '2rem',
-        }}
-      >
-        <Card sx={{ maxWidth: 600, width: '100%', padding: '2rem' }}>
-          <CardContent>
-            <Typography variant="h4" align="center" gutterBottom>
-              Income Tracker
-            </Typography>
-            <IncomeForm
-              initialValues={currentIncome || { amount: 0, source: '', date: '', userId: currentUser?.id! }}
-              onSubmit={handleFormSubmit}
-              editMode={editMode}
-            />
-            <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '2rem' }}>
-              Incomes
-            </Typography>
-            <IncomeList incomes={incomes} onEdit={handleEdit} onDelete={handleDelete} />
-          </CardContent>
-        </Card>
-      </Box>
-    </Container>
+    <Layout>
+      <Container>
+        <Box
+          sx={{
+            backgroundImage: `url("/backgroundimg.jpg")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "2rem",
+          }}
+        >
+          <Card sx={{ maxWidth: 600, width: "100%", padding: "2rem" }}>
+            <CardContent>
+              <Typography variant="h4" align="center" gutterBottom>
+                Income Tracker
+              </Typography>
+              <IncomeForm
+                initialValues={
+                  currentIncome || {
+                    amount: 0,
+                    source: "",
+                    date: "",
+                    userId: currentUser?.id!,
+                  }
+                }
+                onSubmit={handleFormSubmit}
+                editMode={editMode}
+              />
+              <Typography
+                variant="h5"
+                align="center"
+                gutterBottom
+                sx={{ marginTop: "2rem" }}
+              >
+                Incomes
+              </Typography>
+              <IncomeList
+                incomes={incomes}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            </CardContent>
+          </Card>
+        </Box>
+      </Container>
+    </Layout>
   );
 };
 
 export default IncomePage;
-

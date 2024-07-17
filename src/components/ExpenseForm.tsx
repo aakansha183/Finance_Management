@@ -2,7 +2,8 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { Expense } from '../types/User';
+import { Expense } from '../utils/interface/types';
+import { toast } from 'react-toastify';
 
 interface ExpenseFormProps {
   initialValues: Expense;
@@ -23,6 +24,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSubmit, edit
     onSubmit: (values) => {
       onSubmit(values);
       formik.resetForm();
+      toast.success("Expense Successfully Added");
     },
     enableReinitialize: true,
   });

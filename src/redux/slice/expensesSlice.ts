@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import localforage from 'localforage';
-import { Expense } from '../../types/User';
+import { Expense } from '../../utils/interface/types';
 
 
 

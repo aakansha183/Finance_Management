@@ -1,43 +1,46 @@
-import React, { useState } from 'react';
-import * as yup from 'yup';
-import { TextField, Button, Typography, Box, Card, CardContent } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
-import { User } from '../types/User';
-
-const validationSchema = yup.object({
-  username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required'),
-  email: yup.string().email('Enter a valid email').required('Email is required'),
-  firstName: yup.string().required('First name is required'),
-  lastName: yup.string().required('Last name is required'),
-});
+import React, { useState } from "react";
+import * as yup from "yup";
+import {
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Card,
+  CardContent,
+  Paper,
+  Container,
+} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import { User } from "../utils/interface/types";
+import { toast } from "react-toastify";
+import { validationSchema } from "../utils/validationSchema/validationSchema";
 
 const Register: React.FC = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-    email: '',
-    firstName: '',
-    lastName: '',
+    username: "",
+    password: "",
+    email: "",
+    firstName: "",
+    lastName: "",
   });
 
   const [errors, setErrors] = useState({
-    username: '',
-    password: '',
-    email: '',
-    firstName: '',
-    lastName: '',
+    username: "",
+    password: "",
+    email: "",
+    firstName: "",
+    lastName: "",
   });
 
-  const [registrationError, setRegistrationError] = useState<string>('');
+  const [registrationError, setRegistrationError] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -58,11 +61,12 @@ const Register: React.FC = () => {
       };
 
       await register(newUser);
-      navigate('/login');
+      toast.success("Successfully Registered");
+      navigate("/login");
     } catch (error) {
       if (error instanceof yup.ValidationError) {
         const newErrors: any = {};
-        error.inner.forEach(err => {
+        error.inner.forEach((err) => {
           newErrors[err.path as keyof typeof formData] = err.message;
         });
         setErrors(newErrors);
@@ -70,31 +74,25 @@ const Register: React.FC = () => {
         if (error instanceof Error) {
           setRegistrationError(error.message);
         } else {
-          setRegistrationError('An unknown error occurred');
+          setRegistrationError("An unknown error occurred");
         }
       }
     }
   };
 
   return (
-    <Box
-      sx={{
-        backgroundImage: `url("/backgroundimg.jpg")`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2rem',
-      }}
-    >
-      <Card sx={{ maxWidth: 400 }}>
-        <CardContent>
-          <Typography variant="h4" align="center" gutterBottom>
+    <Container maxWidth="xs">
+      <Paper elevation={4} style={{ padding: "16px", marginTop: "16px" }}>
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Typography
+            variant="h4"
+            gutterBottom
+            align="center"
+            sx={{ marginTop: "6px" }}
+          >
             Register
           </Typography>
-          <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
             <TextField
               id="username"
               name="username"
@@ -106,7 +104,6 @@ const Register: React.FC = () => {
               onChange={handleChange}
               error={Boolean(errors.username)}
               helperText={errors.username}
-              sx={{ mb: 2 }}
             />
             <TextField
               id="password"
@@ -120,7 +117,6 @@ const Register: React.FC = () => {
               onChange={handleChange}
               error={Boolean(errors.password)}
               helperText={errors.password}
-              sx={{ mb: 2 }}
             />
             <TextField
               id="email"
@@ -133,7 +129,6 @@ const Register: React.FC = () => {
               onChange={handleChange}
               error={Boolean(errors.email)}
               helperText={errors.email}
-              sx={{ mb: 2 }}
             />
             <TextField
               id="firstName"
@@ -146,7 +141,6 @@ const Register: React.FC = () => {
               onChange={handleChange}
               error={Boolean(errors.firstName)}
               helperText={errors.firstName}
-              sx={{ mb: 2 }}
             />
             <TextField
               id="lastName"
@@ -159,7 +153,6 @@ const Register: React.FC = () => {
               onChange={handleChange}
               error={Boolean(errors.lastName)}
               helperText={errors.lastName}
-              sx={{ mb: 2 }}
             />
             <Button
               type="submit"
@@ -167,21 +160,34 @@ const Register: React.FC = () => {
               color="primary"
               fullWidth
               size="large"
-              style={{ marginTop: '1rem' }}
+              style={{ marginTop: "1rem" }}
             >
               Register
             </Button>
+
             {registrationError && (
-              <Typography variant="body1" color="error" style={{ marginTop: '1rem' }}>
+              <Typography
+                variant="body1"
+                color="error"
+                style={{ marginTop: "1rem" }}
+                align="center"
+              >
                 {registrationError}
               </Typography>
             )}
+            <Typography
+              variant="body2"
+              sx={{
+                textAlign: "center",
+              }}
+            >
+              Already registered? <Link to="/login">Click here</Link>
+            </Typography>
           </form>
-        </CardContent>
-      </Card>
-    </Box>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 
 export default Register;
-
