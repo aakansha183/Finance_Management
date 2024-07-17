@@ -1,30 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import {
-  setExpenses,
-  addExpense,
-  editExpense,
-  deleteExpense,
-  loadExpensesFromStorage,
-  saveExpensesToStorage,
-} from "../redux/slice/expensesSlice";
-import { Container, Box, Card, CardContent, Typography, Divider } from "@mui/material";
-import ExpenseForm from "../components/ExpenseForm";
-import ExpenseList from "../components/ExpenseList";
-import { Expense } from "../utils/interface/types";
-import useAuth from "../hooks/useAuth";
-import Layout from "../components/Layout";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { setExpenses, addExpense, editExpense, deleteExpense, loadExpensesFromStorage, saveExpensesToStorage } from '../redux/slice/expensesSlice';
+import { Container, Box, Card, CardContent, Typography, Divider } from '@mui/material';
+import ExpenseForm from '../components/ExpenseForm';
+import ExpenseList from '../components/ExpenseList';
+import useAuth from '../hooks/useAuth';
+import { Expense } from '../utils/interface/types';
+import Layout from '../components/Layout';
 
 const ExpensePage: React.FC = () => {
   const { currentUser } = useAuth();
   const dispatch = useDispatch();
-  const allExpenses = useSelector(
-    (state: RootState) => state.expenses.expenses
-  );
-  const expenses = allExpenses.filter(
-    (expense) => expense.userId === currentUser?.id
-  );
+  const allExpenses = useSelector((state: RootState) => state.expenses.expenses);
+  const expenses = allExpenses.filter(expense => expense.userId === currentUser?.id);
   const [editMode, setEditMode] = useState(false);
   const [currentExpense, setCurrentExpense] = useState<Expense | null>(null);
 
@@ -65,49 +54,48 @@ const ExpensePage: React.FC = () => {
 
   return (
     <Layout>
-    <Box
-      sx={{
-        backgroundImage: `url("/bg4.jpg")`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2rem',
-        
-      }}
-    >
-      <Container
+      <Box
         sx={{
+          minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          padding: '2rem',
         }}
       >
-        <Card sx={{ maxWidth: 600, width: '100%', padding: '2rem',borderRadius:'16px' }}>
-          <CardContent>
-            <Typography variant="h4" align="center" gutterBottom>
-              Expense Tracker
-            </Typography>
-            <ExpenseForm
-              initialValues={currentExpense || { amount: '', category: '', date: '', userId: currentUser?.id! }}
-              onSubmit={handleFormSubmit}
-              editMode={editMode}
-            />
-            <Divider sx={{ marginY: '2rem' }} />
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h5" gutterBottom>
-                Expenses
+        <Container
+          maxWidth="md"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Card sx={{ width: '100%', padding: '2rem' }}>
+            <CardContent>
+              <Typography variant="h4" align="center" gutterBottom>
+                Expense Tracker
               </Typography>
-              <ExpenseList expenses={expenses} onEdit={handleEdit} onDelete={handleDelete} />
-            </Box>
-          </CardContent>
-        </Card>
-      </Container>
+              <ExpenseForm
+                initialValues={currentExpense || { amount: '', category: '', date: '', userId: currentUser?.id! }}
+                onSubmit={handleFormSubmit}
+                editMode={editMode}
+              />
+              <Divider sx={{ marginY: '2rem' }} />
+              <Box sx={{ textAlign: 'center' }}>
+                <Typography variant="h5" gutterBottom>
+                  Expenses
+                </Typography>
+                <ExpenseList expenses={expenses} onEdit={handleEdit} onDelete={handleDelete} />
+              </Box>
+            </CardContent>
+          </Card>
+        </Container>
       </Box>
-      </Layout>
+    </Layout>
   );
 };
 
 export default ExpensePage;
+
+
