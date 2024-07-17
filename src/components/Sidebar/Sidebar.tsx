@@ -41,6 +41,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             { text: "Transaction History", path: "/transaction-history" },
           ].map(({ text, path }, index) => (
             <ListItem button key={text} component={Link} to={path}>
+              
               <ListItemText primary={text} />
             </ListItem>
           ))}

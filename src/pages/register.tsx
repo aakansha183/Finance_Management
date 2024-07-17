@@ -82,13 +82,13 @@ const Register: React.FC = () => {
 
   return (
     <Container maxWidth="xs">
-      <Paper elevation={4} style={{ padding: "16px", marginTop: "30px" }}>
+      <Paper elevation={4} style={{ padding: "16px", marginTop: "16px" }}>
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography
             variant="h4"
             gutterBottom
             align="center"
-            sx={{ marginTop: "8px" }}
+            sx={{ marginTop: "6px" }}
           >
             Register
           </Typography>

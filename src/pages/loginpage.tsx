@@ -6,8 +6,8 @@ import {
   Grid,
   Link,
   Box,
-  Card,
-  CardContent,
+  Container,
+  Paper,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
@@ -65,11 +65,10 @@ const Login: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const isValid = await validationSchema.isValid({ username, password });
-      if (!isValid) {
-        setTouched({ username: true, password: true });
-        return;
-      }
+      await validationSchema.validate(
+        { username, password },
+        { abortEarly: false }
+      );
       const success = await login(username, password);
       if (success) {
         navigate("/dashboard");
@@ -78,26 +77,30 @@ const Login: React.FC = () => {
         setError("Invalid username or password");
       }
     } catch (error: any) {
-      setError(error.message || "An error occurred during login.");
+      if (error.inner) {
+        const formErrors: { username?: string; password?: string } = {};
+        error.inner.forEach((err: yup.ValidationError) => {
+          if (err.path === "username") formErrors.username = err.message;
+          if (err.path === "password") formErrors.password = err.message;
+        });
+        setErrors(formErrors);
+        setTouched({ username: true, password: true });
+      } else {
+        setError(error.message || "An error occurred during login.");
+      }
     }
   };
 
   return (
-    <Box
-      sx={{
-        backgroundImage: `url("/backgroundimg.jpg")`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "2rem",
-      }}
-    >
-      <Card>
-        <CardContent>
-          <Typography variant="h4" align="center" gutterBottom>
+    <Container maxWidth="xs">
+      <Paper elevation={3} style={{ padding: "16px", marginTop: "50px" }}>
+        <Box display="flex" flexDirection="column" alignItems="center">
+          <Typography
+            variant="h4"
+            gutterBottom
+            align="center"
+            sx={{ marginTop: "8px" }}
+          >
             Login
           </Typography>
           <form onSubmit={handleSubmit}>
@@ -166,9 +169,9 @@ const Login: React.FC = () => {
               </Link>
             </Grid>
           </Grid>
-        </CardContent>
-      </Card>
-    </Box>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 
