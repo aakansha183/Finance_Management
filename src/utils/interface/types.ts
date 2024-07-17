@@ -53,3 +53,10 @@ export interface UserState{
   users:User[];
   currentUser:User| null;
 }
+export interface Transaction {
+  amount: string;
+  category: string;
+  date: string;
+  type: "income" | "expense";
+  userId: string;
+}

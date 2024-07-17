@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> 8ef2ac1 (removed commented code)
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import localforage from "localforage";
 import { BudgetFormInput } from "../../utils/interface/types";
