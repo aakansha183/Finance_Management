@@ -9,7 +9,7 @@ import {
   loadIncomesFromStorage,
   saveIncomesToStorage,
 } from "../redux/slice/incomeSlice";
-import { Container, Box, Card, CardContent, Typography } from "@mui/material";
+import { Container, Box, Card, CardContent, Typography, Divider } from "@mui/material";
 import IncomeForm from "../components/IncomeForm";
 import IncomeList from "../components/IncomeList";
 import useAuth from "../hooks/useAuth";
@@ -81,7 +81,14 @@ const IncomePage: React.FC = () => {
           justifyContent: 'center',
         }}
       >
-        <Card sx={{ maxWidth: 600, width: '100%', padding: '2rem' }}>
+        <Card
+          sx={{
+            maxWidth: 600,
+            width: '100%',
+            padding: '2rem', 
+            borderRadius: '16px',
+          }}
+        >
           <CardContent>
             <Typography variant="h4" align="center" gutterBottom>
               Income Tracker
@@ -91,10 +98,13 @@ const IncomePage: React.FC = () => {
               onSubmit={handleFormSubmit}
               editMode={editMode}
             />
-            <Typography variant="h5" align="center" gutterBottom sx={{ marginTop: '2rem' }}>
-              Incomes
-            </Typography>
-            <IncomeList incomes={incomes} onEdit={handleEdit} onDelete={handleDelete} />
+            <Divider sx={{ marginY: '2rem' }} />
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography variant="h5" gutterBottom>
+                Incomes
+              </Typography>
+              <IncomeList incomes={incomes} onEdit={handleEdit} onDelete={handleDelete} />
+            </Box>
           </CardContent>
         </Card>
       </Container>

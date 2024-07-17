@@ -59,7 +59,8 @@ const DashboardPage: React.FC = () => {
           (income) => income.userId === currentUser?.id
         );
         const totalIncome = userIncomes.reduce(
-          (sum, income) => sum + income.amount,
+          
+          (sum, income) => sum + parseInt(income.amount),
           0
         );
         setTotalIncome(totalIncome);

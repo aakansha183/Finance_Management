@@ -65,31 +65,17 @@ const Register: React.FC = () => {
       navigate("/login");
     } catch (error) {
       if (error instanceof yup.ValidationError) {
-<<<<<<< HEAD
         const newErrors: any = {};
-=======
-        const newErrors = {
-          username: '',
-          password: '',
-          email: '',
-          firstName: '',
-          lastName: '',
-        };
->>>>>>> cadbafe (Changes Typescript)
         error.inner.forEach((err) => {
           newErrors[err.path as keyof typeof formData] = err.message;
         });
         setErrors(newErrors);
       } else {
-<<<<<<< HEAD
         if (error instanceof Error) {
           setRegistrationError(error.message);
         } else {
           setRegistrationError("An unknown error occurred");
         }
-=======
-        setRegistrationError(error instanceof Error ? error.message : 'Username or email already exist');
->>>>>>> cadbafe (Changes Typescript)
       }
     }
   };
@@ -174,26 +160,18 @@ const Register: React.FC = () => {
               color="primary"
               fullWidth
               size="large"
-<<<<<<< HEAD
               style={{ marginTop: "1rem" }}
-=======
-              sx={{ marginTop: '1rem' }}
->>>>>>> cadbafe (Changes Typescript)
             >
               Register
             </Button>
 
             {registrationError && (
-<<<<<<< HEAD
               <Typography
                 variant="body1"
                 color="error"
                 style={{ marginTop: "1rem" }}
                 align="center"
               >
-=======
-              <Typography variant="body1" color="error" sx={{ marginTop: '1rem' }}>
->>>>>>> cadbafe (Changes Typescript)
                 {registrationError}
               </Typography>
             )}
@@ -213,8 +191,3 @@ const Register: React.FC = () => {
 };
 
 export default Register;
-<<<<<<< HEAD
-=======
-
-
->>>>>>> cadbafe (Changes Typescript)

@@ -4,13 +4,13 @@ import { List, ListItem, ListItemText, IconButton } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { Income } from "../utils/interface/types";
 
-interface Props {
+interface IncomeListProps {
   incomes: Income[];
   onEdit: (income: Income) => void;
   onDelete: (date: string, userId: string) => void;
 }
 
-const IncomeList: React.FC<Props> = ({ incomes, onEdit, onDelete }) => {
+const IncomeList: React.FC<IncomeListProps> = ({ incomes, onEdit, onDelete }) => {
   return (
     <List>
       {incomes.map((income) => (
