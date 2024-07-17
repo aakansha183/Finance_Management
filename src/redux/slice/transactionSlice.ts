@@ -1,15 +1,9 @@
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import localforage from 'localforage';
-import { Expense, Income } from '../../utils/interface/types';
+import { Expense, Income, Transaction } from '../../utils/interface/types';
 
-export interface Transaction {
-    amount: number;
-    category: string;
-    date: string;
-    type: 'income' | 'expense';
-    userId: string;
-}
+
 
 interface TransactionState {
     transactions: Transaction[];
@@ -64,7 +58,7 @@ export const loadTransactionsFromStorage = async (): Promise<Transaction[]> => {
 
     if (incomes) {
         incomes.forEach((income) =>
-            transactions.push({ ...income, type: 'income', category: income.source }) // Transforming source to category for incomes
+            transactions.push({ ...income, type: 'income', category: ((income.source)) }) // Transforming source to category for incomes
         );
     }
 
