@@ -8,6 +8,22 @@ export interface User {
     lastName:string;
    
 }
+export interface SummaryCardProps {
+  title: string;
+  value: string;
+  color: string;
+}
+export interface LineChartProps {
+  data: {
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      borderColor: string;
+      backgroundColor: string;
+    }[];
+  };
+}
 export interface BudgetFormInput {
     category: string;
     amountSet: number;

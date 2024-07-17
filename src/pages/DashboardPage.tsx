@@ -105,7 +105,7 @@ const DashboardPage: React.FC = () => {
           (expense) => expense.userId === currentUser?.id
         );
         const totalExpense = userExpenses.reduce(
-          (sum, expense) => sum + expense.amount,
+          (sum, expense) => sum + parseInt(expense.amount),
           0
         );
         setTotalExpense(totalExpense);
