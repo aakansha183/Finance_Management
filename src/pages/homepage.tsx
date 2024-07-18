@@ -17,10 +17,11 @@ const HomePage: React.FC = () => {
         justifyContent: "center",
         alignItems: "center",
         textAlign: "center",
-        color: "Black",
-        px: { xs: 2, sm: 4, md: 6 },
-        py: { xs: 4, sm: 6, md: 8 },
-        overflow:"hidden",
+        color: "black",
+        padding: { xs: 2, sm: 3, md: 4 },
+        boxSizing: "border-box",
+        overflow: "hidden",
+
       }}
     >
       <Container maxWidth="md">
@@ -29,7 +30,8 @@ const HomePage: React.FC = () => {
           gutterBottom
           sx={{
             mb: 2,
-            fontSize: { xs: "2rem", sm: "3rem", md: "4rem" },
+            fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+            
             fontWeight: "bold",
           }}
         >
@@ -39,37 +41,36 @@ const HomePage: React.FC = () => {
           variant="h6"
           gutterBottom
           sx={{
-            mb: 4,
-            fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" },
+            mb: 3,
+            fontSize: { xs: "1rem", sm: "1.125rem", md: "1.25rem" },
+           
           }}
         >
           Manage your finances effortlessly. Kindly login or register to get started.
         </Typography>
         <Grid container spacing={2} justifyContent="center">
-          <Grid item>
+          <Grid item xs={12} sm={6} md={3}>
             <Button
               variant="contained"
               color="primary"
-              size="large"
+              size="small"
+              fullWidth
               sx={{
-                px: { xs: 2, sm: 3, md: 4 },
-                py: { xs: 1, sm: 1.5, md: 1.3 },
-                fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
+                fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
               }}
               onClick={() => navigate("/login")}
             >
               Login
             </Button>
           </Grid>
-          <Grid item>
+          <Grid item xs={12} sm={6} md={3}>
             <Button
               variant="contained"
               color="secondary"
-              size="large"
+              size="small"
+              fullWidth
               sx={{
-                px: { xs: 2, sm: 3, md: 4 },
-                py: { xs: 1, sm: 1.5, md: 1.3 },
-                fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
+                fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
               }}
               onClick={() => navigate("/register")}
             >
@@ -81,17 +82,23 @@ const HomePage: React.FC = () => {
           <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
             Features
           </Typography>
-          <Grid container spacing={4} justifyContent="center">
+          <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12} sm={6} md={4}>
               <Box
                 sx={{
-                  p: 3,
+                  p: 2,
                   bgcolor: "rgba(255, 255, 255, 0.8)",
                   borderRadius: 2,
                   textAlign: "left",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
                 }}
               >
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+
+         
                   Income Tracking
                 </Typography>
                 <Typography>
@@ -102,13 +109,19 @@ const HomePage: React.FC = () => {
             <Grid item xs={12} sm={6} md={4}>
               <Box
                 sx={{
-                  p: 3,
+
+                  p: 2,
                   bgcolor: "rgba(255, 255, 255, 0.8)",
                   borderRadius: 2,
                   textAlign: "left",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
                 }}
               >
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+
                   Expense Management
                 </Typography>
                 <Typography>
@@ -116,33 +129,23 @@ const HomePage: React.FC = () => {
                 </Typography>
               </Box>
             </Grid>
+  
             <Grid item xs={12} sm={6} md={4}>
               <Box
                 sx={{
-                  p: 3,
+                  p: 2,
                   bgcolor: "rgba(255, 255, 255, 0.8)",
                   borderRadius: 2,
                   textAlign: "left",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
                 }}
               >
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  Transaction History
-                </Typography>
-                <Typography>
-                  View and analyze your past transactions with ease.
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Box
-                sx={{
-                  p: 3,
-                  bgcolor: "rgba(255, 255, 255, 0.8)",
-                  borderRadius: 2,
-                  textAlign: "left",
-                }}
-              >
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+
+           
                   Budget Planning
                 </Typography>
                 <Typography>
@@ -150,23 +153,8 @@ const HomePage: React.FC = () => {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Box
-                sx={{
-                  p: 3,
-                  bgcolor: "rgba(255, 255, 255, 0.8)",
-                  borderRadius: 2,
-                  textAlign: "left",
-                }}
-              >
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  Dashboard
-                </Typography>
-                <Typography>
-                  Get a comprehensive overview of your financial status at a glance.
-                </Typography>
-              </Box>
-            </Grid>
+
+           
           </Grid>
         </Box>
       </Container>
@@ -175,3 +163,4 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
+

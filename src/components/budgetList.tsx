@@ -27,7 +27,7 @@ const BudgetListItem: React.FC<BudgetListItemProps> = ({
     <ListItem
       style={{
         marginBottom: "10px",
-        backgroundColor: "white",
+        backgroundColor: "#F5F5F5",
         borderRadius: "5px",
         padding: "10px",
         position: "relative",
