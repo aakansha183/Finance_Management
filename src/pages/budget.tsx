@@ -136,8 +136,8 @@ const BudgetPage: React.FC = () => {
                 defaultValues={
                   currentBudget || {
                     category: "",
-                    amountSet: 0,
-                    amountSpent: 0,
+                    amountSet: "",
+                    amountSpent: "",
                     userId: "",
                   }
                 }

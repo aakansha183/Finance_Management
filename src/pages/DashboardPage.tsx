@@ -111,7 +111,7 @@ const DashboardPage: React.FC = () => {
           (budget) => budget.userId === currentUser?.id
         );
         const totalBudget = userBudgets.reduce(
-          (sum, budget) => sum + budget.amountSet,
+          (sum, budget) => sum + parseInt(budget.amountSet),
           0
         );
         setTotalBudget(totalBudget);
@@ -122,7 +122,7 @@ const DashboardPage: React.FC = () => {
             if (!acc[budget.category]) {
               acc[budget.category] = 0;
             }
-            acc[budget.category] += budget.amountSet;
+            acc[parseInt(budget.category)] += parseInt(budget.amountSet);
             return acc;
           },
           {}
