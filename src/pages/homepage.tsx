@@ -11,7 +11,7 @@ const HomePage: React.FC = () => {
         backgroundImage: `url("/backgroundimg.jpg")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        minHeight: "100vh",
+        minHeight: "86.7vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -21,6 +21,7 @@ const HomePage: React.FC = () => {
         padding: { xs: 2, sm: 3, md: 4 },
         boxSizing: "border-box",
         overflow: "hidden",
+
       }}
     >
       <Container maxWidth="md">
@@ -30,6 +31,7 @@ const HomePage: React.FC = () => {
           sx={{
             mb: 2,
             fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+            
             fontWeight: "bold",
           }}
         >
@@ -41,6 +43,7 @@ const HomePage: React.FC = () => {
           sx={{
             mb: 3,
             fontSize: { xs: "1rem", sm: "1.125rem", md: "1.25rem" },
+           
           }}
         >
           Manage your finances effortlessly. Kindly login or register to get started.
@@ -94,6 +97,8 @@ const HomePage: React.FC = () => {
                 }}
               >
                 <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+
+         
                   Income Tracking
                 </Typography>
                 <Typography>
@@ -104,6 +109,7 @@ const HomePage: React.FC = () => {
             <Grid item xs={12} sm={6} md={4}>
               <Box
                 sx={{
+
                   p: 2,
                   bgcolor: "rgba(255, 255, 255, 0.8)",
                   borderRadius: 2,
@@ -115,6 +121,7 @@ const HomePage: React.FC = () => {
                 }}
               >
                 <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+
                   Expense Management
                 </Typography>
                 <Typography>
@@ -137,6 +144,8 @@ const HomePage: React.FC = () => {
                 }}
               >
                 <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+
+           
                   Budget Planning
                 </Typography>
                 <Typography>
@@ -144,6 +153,8 @@ const HomePage: React.FC = () => {
                 </Typography>
               </Box>
             </Grid>
+
+           
           </Grid>
         </Box>
       </Container>

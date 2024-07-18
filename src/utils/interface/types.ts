@@ -18,11 +18,20 @@ export interface User {
   lastName: string;
 }
 export interface BudgetFormInput {
-  category: string;
-  amountSet: number;
-  amountSpent: number;
-  userId?: string;
-}
+    category: string;
+    amountSet: number;
+    amountSpent: number;
+    userId?: string;  
+  }
+  
+  export interface FormData {
+    username: string;
+    password: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+  }
+  
 export const categories = [
   "food",
   "transport",
@@ -59,4 +68,12 @@ export interface Transaction {
   date: string;
   type: "income" | "expense";
   userId: string;
+}
+export interface BarChartData {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    backgroundColor: string[];
+  }[];
 }

@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect } from "react";
-
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -13,9 +11,7 @@ import {
 } from "chart.js";
 import { BarChartOptions } from "../utils/ChartOptions/ChartOptions";
 import { loadExpensesFromStorage } from "../redux/slice/expensesSlice";
-import { Expense } from "../utils/interface/types";
-
-
+import { BarChartData } from "../utils/interface/types";
 ChartJS.register(
   BarElement,
   CategoryScale,
@@ -28,9 +24,8 @@ ChartJS.register(
 interface BarChartProps {
   userId: string;
 }
-
 const BarChart: React.FC<BarChartProps> = ({ userId }) => {
-  const [barChartData, setBarChartData] = useState<any>(null);
+  const [barChartData, setBarChartData] = useState<BarChartData | null>(null);
 
   useEffect(() => {
     const fetchExpenseData = async () => {
@@ -44,7 +39,7 @@ const BarChart: React.FC<BarChartProps> = ({ userId }) => {
           if (!acc[expense.category]) {
             acc[expense.category] = 0;
           }
-          acc[`${expense?.category}`] += parseInt(expense.amount);
+          acc[expense.category] += parseInt(expense.amount);
           return acc;
         },
         {}

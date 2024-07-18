@@ -1,8 +1,7 @@
-
-import React from "react";
-import { List, ListItem, ListItemText, IconButton } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
-import { Income } from "../utils/interface/types";
+import React from 'react';
+import { List, ListItemText, IconButton, Paper, Box } from '@mui/material';
+import { Edit, Delete } from '@mui/icons-material';
+import { Income } from '../utils/interface/types';
 
 interface IncomeListProps {
   incomes: Income[];
@@ -14,35 +13,40 @@ const IncomeList: React.FC<IncomeListProps> = ({ incomes, onEdit, onDelete }) =>
   return (
     <List>
       {incomes.map((income) => (
-        <ListItem
+        <Paper
           key={income.date}
-          secondaryAction={
-            <>
-              <IconButton
-                edge="end"
-                aria-label="edit"
-                onClick={() => onEdit(income)}
-              >
+          sx={{
+            marginBottom: '1rem',
+            padding: '1rem',
+            backgroundColor: '#f5f5f5', 
+            borderRadius: '8px',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <ListItemText
+              primary={`Amount: $${income.amount}`}
+              secondary={`Source: ${income.source} | Date: ${income.date}`}
+            />
+            <Box>
+              <IconButton edge="end" aria-label="edit" onClick={() => onEdit(income)}>
                 <Edit />
               </IconButton>
-              <IconButton
-                edge="end"
-                aria-label="delete"
-                onClick={() => onDelete(income.date, income.userId)}
-              >
+              <IconButton edge="end" aria-label="delete" onClick={() => onDelete(income.date, income.userId)}>
                 <Delete />
               </IconButton>
-            </>
-          }
-        >
-          <ListItemText
-            primary={`${income.amount} - ${income.source}`}
-            secondary={income.date}
-          />
-        </ListItem>
+            </Box>
+          </Box>
+        </Paper>
       ))}
     </List>
   );
 };
 
 export default IncomeList;
+
