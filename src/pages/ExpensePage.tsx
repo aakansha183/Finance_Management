@@ -54,24 +54,17 @@ const ExpensePage: React.FC = () => {
 
   return (
     <Layout>
-      <Box
-        sx={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '2rem',
-        }}
-      >
         <Container
-          maxWidth="md"
           sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <Card sx={{ width: '100%', padding: '2rem' }}>
+          <Card sx={{ maxWidth: 600,
+              width: "100%",
+              padding: "0.2rem",
+              borderRadius: "8px", }}>
             <CardContent>
               <Typography variant="h4" align="center" gutterBottom>
                 Expense Tracker
@@ -91,7 +84,6 @@ const ExpensePage: React.FC = () => {
             </CardContent>
           </Card>
         </Container>
-      </Box>
     </Layout>
   );
 };

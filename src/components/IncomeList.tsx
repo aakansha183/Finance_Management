@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, ListItem, ListItemText, IconButton, Paper, Box } from '@mui/material';
+import { List, ListItemText, IconButton, Paper, Box } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { Income } from '../utils/interface/types';
 
@@ -18,8 +18,8 @@ const IncomeList: React.FC<IncomeListProps> = ({ incomes, onEdit, onDelete }) =>
           sx={{
             marginBottom: '1rem',
             padding: '1rem',
-            backgroundColor: '#f5f5f5', // Light grey background
-            borderRadius: '8px', // Rounded corners
+            backgroundColor: '#f5f5f5', 
+            borderRadius: '8px',
           }}
         >
           <Box
