@@ -31,7 +31,13 @@ export interface BudgetFormInput {
     userId?: string;  
   }
   
-
+  export interface FormData {
+    username: string;
+    password: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+  }
 
   export const categories = ['food', 'transport', 'utilities', 'entertainment', 'health'];
   

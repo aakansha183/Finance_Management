@@ -18,8 +18,8 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete })
           sx={{
             marginBottom: '1rem',
             padding: '1rem',
-            backgroundColor: '#f5f5f5', // Light grey background
-            borderRadius: '8px', // Rounded corners
+            backgroundColor: '#f5f5f5',
+            borderRadius: '8px',
           }}
         >
           <Box
