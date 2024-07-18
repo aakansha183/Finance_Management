@@ -18,13 +18,11 @@ export interface User {
   lastName: string;
 }
 export interface BudgetFormInput {
-  category: string;
-  amountSet: number;
-  amountSpent: number;
-  userId?: string;
-}
-
-    
+    category: string;
+    amountSet: string;
+    amountSpent: string;
+    userId?: string;  
+  }
   
   export interface FormData {
     username: string;
