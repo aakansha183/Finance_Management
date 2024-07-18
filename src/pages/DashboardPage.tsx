@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  CssBaseline,
-  Container,
-  Typography,
-  Grid,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import SummaryCard from "../components/SummaryCard";
@@ -19,9 +17,7 @@ import { loadIncomesFromStorage } from "../redux/slice/incomeSlice";
 import { loadExpensesFromStorage } from "../redux/slice/expensesSlice";
 import { loadBudgetsFromStorage } from "../redux/slice/budgetSlice";
 
-
 const DashboardPage: React.FC = () => {
-   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
@@ -59,7 +55,6 @@ const DashboardPage: React.FC = () => {
           (income) => income.userId === currentUser?.id
         );
         const totalIncome = userIncomes.reduce(
-          
           (sum, income) => sum + parseInt(income.amount),
           0
         );
@@ -149,7 +144,7 @@ const DashboardPage: React.FC = () => {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline /> 
+      <CssBaseline />
       <Navbar toggleSidebar={toggleSidebar} />
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <Box
@@ -161,7 +156,7 @@ const DashboardPage: React.FC = () => {
           transition: "margin 0.3s ease",
           maxWidth: "100%",
           bgcolor: theme.palette.background.default,
-          marginTop:7,
+          marginTop: 7,
         }}
       >
         <Container maxWidth="lg">
