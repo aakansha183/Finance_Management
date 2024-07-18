@@ -14,14 +14,9 @@ interface AuthState {
 
 const useAuth = (): AuthState => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(
-    (state: RootState) => state.users.currentUser
-  );
+  const currentUser = useSelector((state: RootState) => state.users.currentUser);
 
-  const login = async (
-    username: string,
-    password: string
-  ): Promise<boolean> => {
+  const login = async (username: string, password: string): Promise<boolean> => {
     try {
       await loginSchema.validate({ username, password }, { abortEarly: false });
 
@@ -39,9 +34,14 @@ const useAuth = (): AuthState => {
       } else {
         throw new Error("Invalid username or password");
       }
-    } catch (error: any) {
-      console.error("Login error:", error.message || error);
-      throw error;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Login error:", error.message);
+        throw error;
+      } else {
+        console.error("Unknown error during login");
+        throw new Error("Unknown error during login");
+      }
     }
   };
 
@@ -77,4 +77,3 @@ const useAuth = (): AuthState => {
 };
 
 export default useAuth;
-

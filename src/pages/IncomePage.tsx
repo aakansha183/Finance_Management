@@ -54,18 +54,6 @@ const IncomePage: React.FC = () => {
 
   return (
     <Layout>
-      <Box
-        sx={{
-          backgroundImage: `url("backgroundimg.jpg")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "2rem",
-        }}
-      >
         <Container
           sx={{
             display: "flex",
@@ -77,8 +65,9 @@ const IncomePage: React.FC = () => {
             sx={{
               maxWidth: 600,
               width: "100%",
-              padding: "2rem",
-              borderRadius: "16px",
+              padding: "0.2rem",
+              borderRadius: "8px",
+              
             }}
           >
             <CardContent>
@@ -100,10 +89,8 @@ const IncomePage: React.FC = () => {
             </CardContent>
           </Card>
         </Container>
-      </Box>
     </Layout>
   );
 };
 
 export default IncomePage;
-

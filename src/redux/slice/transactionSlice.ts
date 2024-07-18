@@ -58,7 +58,7 @@ export const loadTransactionsFromStorage = async (): Promise<Transaction[]> => {
 
     if (incomes) {
         incomes.forEach((income) =>
-            transactions.push({ ...income, type: 'income', category: ((income.source)) }) // Transforming source to category for incomes
+            transactions.push({ ...income, type: 'income', category: ((income.source)) }) 
         );
     }
 
@@ -74,7 +74,7 @@ export const loadTransactionsFromStorage = async (): Promise<Transaction[]> => {
 export const saveTransactionsToStorage = async (transactions: Transaction[]) => {
     const incomes = transactions
         .filter((transaction) => transaction.type === 'income')
-        .map(({ amount, date, userId, category }) => ({ amount, date, userId, source: category })); // Transforming back category to source for incomes
+        .map(({ amount, date, userId, category }) => ({ amount, date, userId, source: category })); 
     const expenses = transactions.filter((transaction) => transaction.type === 'expense');
 
     await localforage.setItem('incomes', incomes);
