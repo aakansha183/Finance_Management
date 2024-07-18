@@ -19,8 +19,8 @@ export interface User {
 }
 export interface BudgetFormInput {
     category: string;
-    amountSet: number;
-    amountSpent: number;
+    amountSet: string;
+    amountSpent: string;
     userId?: string;  
   }
   
