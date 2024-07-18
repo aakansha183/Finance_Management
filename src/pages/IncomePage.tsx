@@ -75,27 +75,16 @@ const IncomePage: React.FC = () => {
                 Income Tracker
               </Typography>
               <IncomeForm
-                initialValues={
-                  currentIncome || {
-                    amount: "",
-                    source: "",
-                    date: "",
-                    userId: currentUser?.id!,
-                  }
-                }
+                initialValues={currentIncome || { amount: '', source: '', date: '', userId: currentUser?.id! }}
                 onSubmit={handleFormSubmit}
                 editMode={editMode}
               />
-              <Divider sx={{ marginY: "2rem" }} />
-              <Box sx={{ textAlign: "center" }}>
+              <Divider sx={{ marginY: '2rem' }} />
+              <Box sx={{ textAlign: 'center' }}>
                 <Typography variant="h5" gutterBottom>
                   Incomes
                 </Typography>
-                <IncomeList
-                  incomes={incomes}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                />
+                <IncomeList incomes={incomes} onEdit={handleEdit} onDelete={handleDelete} />
               </Box>
             </CardContent>
           </Card>

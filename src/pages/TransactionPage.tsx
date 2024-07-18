@@ -1,5 +1,4 @@
 
-
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -23,7 +22,6 @@ const Container = styled(Box)({
     justifyContent: 'center',
     margin: '20px 0',
     padding: '20px',
-    // backgroundImage: 'url("/transaction.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     minHeight: '100vh',
@@ -58,6 +56,7 @@ const TransactionHistory: React.FC = () => {
     const transactions = useSelector(
         (state: RootState) => state.transactions.transactions
     );
+    const currentUser = useSelector((state: RootState) => state.users.currentUser);
     const { control } = useForm();
 
     const [category, setCategory] = useState<string>('');
@@ -86,15 +85,15 @@ const TransactionHistory: React.FC = () => {
         const matchesType = type ? transaction.type === type : true;
         const matchesCategory = category ? transaction.category === category : true;
         const matchesQuery = transaction.category.toLowerCase().includes(query.toLowerCase());
+        const matchesUser = transaction.userId === currentUser?.id;
 
-        return matchesType && matchesCategory && matchesQuery;
+        return matchesType && matchesCategory && matchesQuery && matchesUser;
     });
 
     return (
         <Layout>
             <Container>
                 <ContentWrapper>
-
                     <StyledCard>
                         <Title variant="h4">Transaction History</Title>
                         <CardContent>

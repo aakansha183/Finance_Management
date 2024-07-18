@@ -1,18 +1,3 @@
-export interface User {
-    
-    id: string;
-    username: string;
-    password: string;
-    email:string;
-    firstName:string;
-    lastName:string;
-   
-}
-export interface SummaryCardProps {
-  title: string;
-  value: string;
-  color: string;
-}
 export interface LineChartProps {
   data: {
     labels: string[];
@@ -23,6 +8,14 @@ export interface LineChartProps {
       backgroundColor: string;
     }[];
   };
+}
+export interface User {
+  id: string;
+  username: string;
+  password: string;
+  email: string;
+  firstName: string;
+  lastName: string;
 }
 export interface BudgetFormInput {
     category: string;
@@ -38,26 +31,36 @@ export interface BudgetFormInput {
     firstName: string;
     lastName: string;
   }
-
-  export const categories = ['food', 'transport', 'utilities', 'entertainment', 'health'];
   
+export const categories = [
+  "food",
+  "transport",
+  "utilities",
+  "entertainment",
+  "health",
+];
 export interface Expense {
-    amount: string;
-    category: string;
-    date: string;
-    userId: string; 
-  }
- 
-  export interface Income {
-    amount: string;
-    source: string;
-    date: string;
-    userId: string; 
-  }
-  
-export interface UserState{
-  users:User[];
-  currentUser:User| null;
+  amount: string;
+  category: string;
+  date: string;
+  userId: string;
+}
+
+export interface Income {
+  amount: string;
+  source: string;
+  date: string;
+  userId: string;
+}
+
+export interface UserState {
+  users: User[];
+  currentUser: User | null;
+}
+export interface SummaryCardProps {
+  title: string;
+  value: string;
+  color: string;
 }
 export interface Transaction {
   amount: string;
