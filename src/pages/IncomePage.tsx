@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import {
-  setIncomes,
-  addIncome,
-  editIncome,
-  deleteIncome,
-  loadIncomesFromStorage,
-  saveIncomesToStorage,
-} from "../redux/slice/incomeSlice";
-import { Container, Box, Card, CardContent, Typography, Divider } from "@mui/material";
-import IncomeForm from "../components/IncomeForm";
-import IncomeList from "../components/IncomeList";
-import useAuth from "../hooks/useAuth";
-import Layout from "../components/Layout";
-import { Income } from "../utils/interface/types";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { setIncomes, addIncome, editIncome, deleteIncome, loadIncomesFromStorage, saveIncomesToStorage } from '../redux/slice/incomeSlice';
+import { Container, Box, Card, CardContent, Typography, Divider } from '@mui/material';
+import IncomeForm from '../components/IncomeForm';
+import IncomeList from '../components/IncomeList';
+import useAuth from '../hooks/useAuth';
+import { Income } from '../utils/interface/types';
+import Layout from '../components/Layout';
 
 const IncomePage: React.FC = () => {
   const { currentUser } = useAuth();
   const dispatch = useDispatch();
   const allIncomes = useSelector((state: RootState) => state.incomes.incomes);
-  const incomes = allIncomes.filter(
-    (income) => income.userId === currentUser?.id
-  );
+  const incomes = allIncomes.filter(income => income.userId === currentUser?.id);
   const [editMode, setEditMode] = useState(false);
   const [currentIncome, setCurrentIncome] = useState<Income | null>(null);
 
@@ -63,18 +54,6 @@ const IncomePage: React.FC = () => {
 
   return (
     <Layout>
-      <Box
-        sx={{
-          backgroundImage: `url("backgroundimg.jpg")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "2rem",
-        }}
-      >
         <Container
           sx={{
             display: "flex",
@@ -86,8 +65,9 @@ const IncomePage: React.FC = () => {
             sx={{
               maxWidth: 600,
               width: "100%",
-              padding: "2rem",
-              borderRadius: "16px",
+              padding: "0.2rem",
+              borderRadius: "8px",
+              
             }}
           >
             <CardContent>
@@ -109,10 +89,8 @@ const IncomePage: React.FC = () => {
             </CardContent>
           </Card>
         </Container>
-      </Box>
     </Layout>
   );
 };
 
 export default IncomePage;
-

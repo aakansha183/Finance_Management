@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from "react";
-
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -13,9 +12,6 @@ import {
 } from "chart.js";
 import { BarChartOptions } from "../utils/ChartOptions/ChartOptions";
 import { loadExpensesFromStorage } from "../redux/slice/expensesSlice";
-import { Expense } from "../utils/interface/types";
-
-
 ChartJS.register(
   BarElement,
   CategoryScale,
