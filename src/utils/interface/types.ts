@@ -66,3 +66,11 @@ export interface Transaction {
   type: "income" | "expense";
   userId: string;
 }
+export interface BarChartData {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    backgroundColor: string[];
+  }[];
+}

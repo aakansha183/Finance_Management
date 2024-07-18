@@ -28,7 +28,7 @@ const useAuth = (): AuthState => {
       );
 
       if (user) {
-        await localforage.setItem("currentUser", user);
+        await sessionStorage.setItem("currentUser", JSON.stringify(user));
         dispatch(setUser(user));
         return true;
       } else {

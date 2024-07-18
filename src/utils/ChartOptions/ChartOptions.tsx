@@ -1,13 +1,15 @@
-export const LineChartOptions = {
+import { ChartOptions, TooltipItem } from "chart.js";
+
+export const LineChartOptions: ChartOptions<"line"> = {
   responsive: true,
   plugins: {
     legend: {
       display: true,
-      position: "top" as const,
+      position: "top",
     },
     tooltip: {
       callbacks: {
-        label: (context: any) => {
+        label: (context: TooltipItem<"line">) => {
           return `${context.dataset.label}: $${context.raw}`;
         },
       },
@@ -15,16 +17,16 @@ export const LineChartOptions = {
   },
 };
 
-export const BarChartOptions = {
+export const BarChartOptions: ChartOptions<"bar"> = {
   responsive: true,
   plugins: {
     legend: {
       display: true,
-      position: "top" as const,
+      position: "top",
     },
     tooltip: {
       callbacks: {
-        label: (context: any) => {
+        label: (context: TooltipItem<"bar">) => {
           return `${context.dataset.label}: $${context.raw}`;
         },
       },
