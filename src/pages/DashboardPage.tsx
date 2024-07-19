@@ -107,6 +107,7 @@ const DashboardPage: React.FC = () => {
 
         // Fetching Budget
         const budgets = await loadBudgetsFromStorage();
+
         const userBudgets = budgets.filter(
           (budget) => budget.userId === currentUser?.id
         );
@@ -122,7 +123,7 @@ const DashboardPage: React.FC = () => {
             if (!acc[budget.category]) {
               acc[budget.category] = 0;
             }
-            acc[parseInt(budget.category)] += parseInt(budget.amountSet);
+            acc[(budget.category)] += parseInt(budget.amountSet);
             return acc;
           },
           {}
