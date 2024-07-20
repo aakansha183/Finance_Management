@@ -20,7 +20,6 @@ export interface User {
 export interface BudgetFormInput {
     category: string;
     amountSet: string;
-    amountSpent: string;
     userId?: string;  
   }
   
