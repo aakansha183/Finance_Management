@@ -1,28 +1,12 @@
-
 import React from "react";
 import { useFormik } from "formik";
-import * as yup from "yup";
-import { TextField, Button, MenuItem } from "@mui/material";
-import { Income } from "../utils/interface/types";
+import {IncomeFormProps } from "../utils/interface/types";
+import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
-interface IncomeFormProps {
-  initialValues: Income;
-  onSubmit: (values: Income) => void;
-  editMode: boolean;
-}
-const validationSchema = yup.object({
-  amount: yup.number().required("Amount is required"),
-  source: yup.string().required("Source is required"),
-  date: yup.string().required("Date is required"),
-});
+import { validationSchemaIncome } from "../utils/validationSchema/validationSchema";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
 
-const incomeSources = [
-  { value: "Freelancing", label: "Freelancing" },
-  { value: "Business", label: "Business" },
-  { value: "Investment", label: "Investment" },
-  { value: "Salary", label: "Salary" },
-  { value: "Other sources", label: "Other sources" },
-];
 const IncomeForm: React.FC<IncomeFormProps> = ({
   initialValues,
   onSubmit,
@@ -30,7 +14,7 @@ const IncomeForm: React.FC<IncomeFormProps> = ({
 }) => {
   const formik = useFormik({
     initialValues,
-    validationSchema,
+    validationSchema:validationSchemaIncome,
     onSubmit: (values) => {
       onSubmit(values);
       formik.resetForm();
@@ -38,6 +22,13 @@ const IncomeForm: React.FC<IncomeFormProps> = ({
     },
     enableReinitialize: true,
   });
+   const incomeSources = [
+    { value: "Freelancing", label: "Freelancing" },
+    { value: "Business", label: "Business" },
+    { value: "Investment", label: "Investment" },
+    { value: "Salary", label: "Salary" },
+    { value: "Other sources", label: "Other sources" },
+  ];
   return (
     <form onSubmit={formik.handleSubmit}>
       <TextField

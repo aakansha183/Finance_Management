@@ -1,29 +1,19 @@
 import React, { useState } from "react";
-import {TextField,
-  Button,
-  Typography,
-  Grid,
-  Link,
-  Box,
-  Container,
-  Paper,
-} from "@mui/material";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useFormik, FormikErrors } from "formik";
-
-interface LoginFormValues {
-  username: string;
-  password: string;
-}
-
-const validationSchema = yup.object({
-  username: yup.string().required("Username is required"),
-  password: yup.string().required("Password is required"),
-});
-
+import { validationSchemaLogin } from "../utils/validationSchema/validationSchema";
+import { LoginFormValues } from "../utils/interface/types";
 const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -34,8 +24,8 @@ const Login: React.FC = () => {
       username: "",
       password: "",
     },
-    validationSchema,
-    onSubmit: async (values, { setSubmitting, setErrors }) => {
+    validationSchema: validationSchemaLogin,
+    onSubmit: async (values, { setSubmitting }) => {
       try {
         const success = await login(values.username, values.password);
         if (success) {
@@ -52,7 +42,7 @@ const Login: React.FC = () => {
     },
     validate: async (values) => {
       try {
-        await validationSchema.validate(values, { abortEarly: false });
+        await validationSchemaLogin.validate(values, { abortEarly: false });
         return {};
       } catch (validationErrors) {
         const errors: FormikErrors<LoginFormValues> = {};
@@ -72,12 +62,7 @@ const Login: React.FC = () => {
     <Container maxWidth="xs">
       <Paper elevation={3} style={{ padding: "16px", marginTop: "50px" }}>
         <Box display="flex" flexDirection="column" alignItems="center">
-          <Typography
-            variant="h4"
-            gutterBottom
-            align="center"
-            sx={{ marginTop: "8px" }}
-          >
+          <Typography variant="h4" gutterBottom align="center" sx={{ marginTop: "8px" }}>
             Login
           </Typography>
           <form onSubmit={formik.handleSubmit}>
@@ -127,22 +112,14 @@ const Login: React.FC = () => {
             </Grid>
           </form>
           {error && (
-            <Typography
-              variant="body1"
-              color="error"
-              style={{ marginTop: "1rem" }}
-            >
+            <Typography variant="body1" color="error" style={{ marginTop: "1rem" }}>
               {error}
             </Typography>
           )}
           <Grid container justifyContent="center" style={{ marginTop: "1rem" }}>
             <Grid item>
               Don’t have an account?{" "}
-              <Link
-                component="button"
-                variant="body2"
-                onClick={() => navigate("/register")}
-              >
+              <Link component="button" variant="body2" onClick={() => navigate("/register")}>
                 Register
               </Link>
             </Grid>
@@ -152,6 +129,4 @@ const Login: React.FC = () => {
     </Container>
   );
 };
-
 export default Login;
-
