@@ -24,3 +24,8 @@ export const validationSchemaIncome = yup.object({
   source: yup.string().required("Source is required"),
   date: yup.string().required("Date is required"),
 });
+
+export const ValidationSchemaBudget = yup.object().shape({
+  category: yup.string().required('Category is required'),
+  amountSet: yup.string().required('Amount Set is required').min(1, 'Amount Set must be greater than zero'),
+});

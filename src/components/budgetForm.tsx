@@ -1,24 +1,18 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { TextField, Button, Select, MenuItem } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import { BudgetFormInput, categories } from '../utils/interface/types';
+import { BudgetFormProps } from '../utils/interface/types';
+import { ValidationSchemaBudget } from '../utils/validationSchema/validationSchema';
 
-interface BudgetFormProps {
-  onSubmit: (data: BudgetFormInput) => void;
-  editMode: boolean;
-  defaultValues?: BudgetFormInput;
-}
-
-const schema = yup.object().shape({
-  category: yup.string().required('Category is required'),
-  amountSet: yup.string().required('Amount Set is required').min(1, 'Amount Set must be greater than zero'),
-});
 
 const BudgetForm: React.FC<BudgetFormProps> = ({ onSubmit, editMode, defaultValues }) => {
   const { control, handleSubmit, reset } = useForm<BudgetFormInput>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(ValidationSchemaBudget),
     defaultValues,
   });
 
