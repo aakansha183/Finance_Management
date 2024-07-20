@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -12,13 +11,46 @@ import {
   loadBudgetsFromStorage,
   saveBudgetsToStorage,
 } from "../redux/slice/budgetSlice";
-import { Container, List, Paper } from "@mui/material";
+import { List, Paper, Typography, Box, Card, CardContent } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import BudgetForm from "../components/budgetForm";
 import BudgetListItem from "../components/budgetList";
 import Layout from "../components/Layout";
 import { toast } from "react-toastify";
 import { BudgetFormInput } from "../utils/interface/types";
 
+// Styled Components
+const Container = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  minHeight: "65vh",
+  backgroundColor: "rgba(255, 255, 255, 0.9)",
+});
+
+const ContentWrapper = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "100%",
+});
+
+const StyledCard = styled(Card)(({ theme }) => ({
+  width: "90%",
+  maxWidth: "600px",
+  backgroundColor: "white",
+  opacity: 0.9,
+}));
+
+const Title = styled(Typography)({
+  textAlign: "center",
+  margin: "3px",
+  color: "black",
+});
 
 const BudgetPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -26,7 +58,6 @@ const BudgetPage: React.FC = () => {
     (state: RootState) => state.users.currentUser
   );
   const budgets = useSelector((state: RootState) => state.budget.budgets);
-
   const [editMode, setEditMode] = useState<boolean>(false);
   const [, setCurrentEdit] = useState<string>("");
   const [currentBudget, setCurrentBudget] = useState<BudgetFormInput | null>(
@@ -49,32 +80,28 @@ const BudgetPage: React.FC = () => {
 
   const handleAddOrUpdateBudget = async (data: BudgetFormInput) => {
     if (!currentUser) return;
-
     const budgetData = { ...data, userId: currentUser.id };
     const existingBudgetIndex = budgets.findIndex(
       (b) => b.category === budgetData.category && b.userId === currentUser.id
     );
-
     if (existingBudgetIndex !== -1) {
       const updatedBudget = { ...budgets[existingBudgetIndex], ...budgetData };
       const newBudgets = [...budgets];
       newBudgets[existingBudgetIndex] = updatedBudget;
-      toast.success("Succesfully UpdateBudget Added");
+      toast.success("Successfully Updated Budget");
       dispatch(updateBudget(updatedBudget));
       await saveBudgetsToStorage(newBudgets);
     } else {
       dispatch(addBudget(budgetData));
       const newBudgets = [...budgets, budgetData];
-      toast.success("Succesfully Budget Added");
+      toast.success("Successfully Added Budget");
       await saveBudgetsToStorage(newBudgets);
     }
-
     resetForm();
   };
 
   const handleDeleteBudget = async (category: string) => {
     if (!currentUser) return;
-
     const newBudgets = budgets.filter(
       (b) => b.category !== category || b.userId !== currentUser.id
     );
@@ -98,52 +125,39 @@ const BudgetPage: React.FC = () => {
 
   return (
     <Layout>
-      <div
-        style={{
-          backgroundImage: `url(/budget.jpg)`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          minHeight: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Container maxWidth="md">
-          <Paper
-            elevation={3}
-            style={{
-              padding: "20px",
-              backgroundColor: "rgba(255, 255, 255, 0.8)",
-              borderRadius: "10px",
-            }}
-          >
-            <h1 style={{ textAlign: "center" }}>Budget Management</h1>
-            <BudgetForm
-              onSubmit={handleAddOrUpdateBudget}
-              editMode={editMode}
-              defaultValues={
-                currentBudget || {
-                  category: "",
-                  amountSet: 0,
-                  amountSpent: 0,
-                  userId: "",
+      <Container>
+        <ContentWrapper>
+          <StyledCard>
+            <Title variant="h4">Budget Management</Title>
+            <CardContent>
+              <BudgetForm
+                onSubmit={handleAddOrUpdateBudget}
+                editMode={editMode}
+                defaultValues={
+                  currentBudget || {
+                    category: "",
+                    amountSet: "",
+                    amountSpent: "",
+                    userId: "",
+                  }
                 }
-              }
-            />
-            <List>
-              {userBudgets.map((budget, index) => (
-                <BudgetListItem
-                  key={index}
-                  budget={budget}
-                  onEdit={handleEditClick}
-                  onDelete={handleDeleteBudget}
-                />
-              ))}
-            </List>
-          </Paper>
-        </Container>
-      </div>
+              />
+            </CardContent>
+            <CardContent>
+              <List>
+                {userBudgets.map((budget, index) => (
+                  <BudgetListItem
+                    key={index}
+                    budget={budget}
+                    onEdit={handleEditClick}
+                    onDelete={handleDeleteBudget}
+                  />
+                ))}
+              </List>
+            </CardContent>
+          </StyledCard>
+        </ContentWrapper>
+      </Container>
     </Layout>
   );
 };

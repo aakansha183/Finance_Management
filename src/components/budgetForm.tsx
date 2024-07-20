@@ -12,11 +12,11 @@ interface BudgetFormProps {
 
 }
 const schema = yup.object().shape({
-
   category: yup.string().required('Category is required'),
-  amountSet: yup.number().min(1, 'Amount Set must be greater than zero').required('Amount Set is required'),
-  amountSpent: yup.number().min(0, 'Amount Spent must be zero or more').max(yup.ref('amountSet'), 'Amount Spent must be less than or equal to Amount Set').required('Amount Spent is required'),
+  amountSet: yup.string().required('Amount Set is required').min(1, 'Amount Set must be greater than zero'),
+  amountSpent: yup.string().required('Amount Spent is required').min(0, 'Amount Spent must be zero or more').max(yup.ref('amountSet'), 'Amount Spent must be less than or equal to Amount Set'),
 });
+
 
 const BudgetForm: React.FC<BudgetFormProps> = ({ onSubmit, editMode, defaultValues }) => {
   const { control, handleSubmit, reset } = useForm<BudgetFormInput>({
@@ -32,51 +32,60 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ onSubmit, editMode, defaultValu
     <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off">
 
       <Controller
-        name="category"
-        control={control}
-        render={({ field, fieldState }) => (
-          <Select {...field} fullWidth margin="dense" error={!!fieldState.error} displayEmpty>
-            <MenuItem value="" disabled>
-              Choose the category
-            </MenuItem>
-            {categories.map((category, index) => (
-              <MenuItem key={index} value={category}>{category}</MenuItem>
-            ))}
-          </Select>
-        )}
-      />
-      <Controller
-        name="amountSet"
-        control={control}
-        render={({ field, fieldState }) => (
-          <TextField
-            {...field}
-            label="Amount Set"
-            type="number"
-            fullWidth
-            margin="normal"
-            error={!!fieldState.error}
-            helperText={fieldState.error ? fieldState.error.message : null}
-            inputProps={{ min: 1 }}
-          />
-        )}
-      />
-      <Controller
-        name="amountSpent"
-        control={control}
-        render={({ field, fieldState }) => (
-          <TextField
-            {...field}
-            label="Amount Spent"
-            type="number"
-            fullWidth
-            margin="normal"
-            error={!!fieldState.error}
-            helperText={fieldState.error ? fieldState.error.message : null}
-            inputProps={{ min: 0 }}
-          />
-        )}
-      />
+  name="category"
+  control={control}
+  render={({ field, fieldState }) => (
+    <Select
+      {...field}
+      fullWidth
+      margin="dense"
+      error={!!fieldState.error}
+      displayEmpty
+    >
+      <MenuItem value="" disabled>
+        Choose the category
+      </MenuItem>
+      {categories.map((category, index) => (
+        <MenuItem key={index} value={category}>{category}</MenuItem>
+      ))}
+    </Select>
+  )}
+/>
+
+<Controller
+  name="amountSet"
+  control={control}
+  render={({ field, fieldState }) => (
+    <TextField
+      {...field}
+      label="Amount Set"
+      type="string"
+      fullWidth
+      margin="normal"
+      error={!!fieldState.error}
+      helperText={fieldState.error ? fieldState.error.message : null}
+      inputProps={{ min: 1 }}
+    />
+  )}
+/>
+
+<Controller
+  name="amountSpent"
+  control={control}
+  render={({ field, fieldState }) => (
+    <TextField
+      {...field}
+      label="Amount Spent"
+      type="string"
+      fullWidth
+      margin="normal"
+      error={!!fieldState.error}
+      helperText={fieldState.error ? fieldState.error.message : null}
+      inputProps={{ min: 0 }}
+    />
+  )}
+/>
+
       <Button type="submit" variant="contained" color="primary" fullWidth>
         {editMode ? 'Update Budget' : 'Add Budget'}
       </Button>

@@ -18,20 +18,20 @@ export interface User {
   lastName: string;
 }
 export interface BudgetFormInput {
-  category: string;
-  amountSet: number;
-  amountSpent: number;
-  userId?: string;
-}
-
-export interface FormData {
-  username: string;
-  password: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-}
-
+    category: string;
+    amountSet: string;
+    amountSpent: string;
+    userId?: string;  
+  }
+  
+  export interface FormData {
+    username: string;
+    password: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+  }
+  
 export const categories = [
   "food",
   "transport",
