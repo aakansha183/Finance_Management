@@ -1,3 +1,71 @@
+// import React from "react";
+// import {
+//   ListItem,
+//   ListItemText,
+//   LinearProgress,
+//   IconButton,
+// } from "@mui/material";
+// import EditIcon from "@mui/icons-material/Edit";
+// import DeleteIcon from "@mui/icons-material/Delete";
+// import { BudgetFormInput } from "../utils/interface/types";
+
+// interface BudgetListItemProps {
+//   budget: BudgetFormInput;
+//   onEdit: (budget: BudgetFormInput) => void;
+//   onDelete: (category: string) => void;
+// }
+
+// const BudgetListItem: React.FC<BudgetListItemProps> = ({
+//   budget,
+//   onEdit,
+//   onDelete,
+// }) => {
+//   const amountSet = parseInt(budget.amountSet);
+//   const amountSpent = parseInt(budget.amountSpent);
+//   const progress = isNaN(amountSet) || amountSet === 0 ? 0 : (amountSpent / amountSet) * 100;
+
+//   return (
+//     <ListItem
+//       style={{
+//         marginBottom: "10px",
+//         backgroundColor: "#F5F5F5",
+//         borderRadius: "5px",
+//         padding: "10px",
+//         position: "relative",
+//       }}
+//     >
+//       <ListItemText
+//         primary={`Category: ${budget.category}`}
+//         secondary={
+//           <>
+//             <div>Amount Set: ${budget.amountSet}</div>
+//             <div>Amount Spent: ${budget.amountSpent}</div>
+//           </>
+//         }
+//       />
+//       <LinearProgress
+//         variant="determinate"
+//         value={progress}
+//         style={{ marginTop: "5px" }}
+//       />
+//       <IconButton
+//         onClick={() => onEdit(budget)}
+//         style={{ position: "absolute", right: "50px" }}
+//       >
+//         <EditIcon />
+//       </IconButton>
+//       <IconButton
+//         onClick={() => onDelete(budget.category)}
+//         style={{ position: "absolute", right: "10px" }}
+//       >
+//         <DeleteIcon />
+//       </IconButton>
+//     </ListItem>
+//   );
+// };
+
+// export default BudgetListItem;
+
 import React from "react";
 import {
   ListItem,
@@ -21,8 +89,7 @@ const BudgetListItem: React.FC<BudgetListItemProps> = ({
   onDelete,
 }) => {
   const amountSet = parseInt(budget.amountSet);
-  const amountSpent = parseInt(budget.amountSpent);
-  const progress = isNaN(amountSet) || amountSet === 0 ? 0 : (amountSpent / amountSet) * 100;
+  const progress = isNaN(amountSet) || amountSet === 0 ? 0 : 100;
 
   return (
     <ListItem
@@ -36,12 +103,7 @@ const BudgetListItem: React.FC<BudgetListItemProps> = ({
     >
       <ListItemText
         primary={`Category: ${budget.category}`}
-        secondary={
-          <>
-            <div>Amount Set: ${budget.amountSet}</div>
-            <div>Amount Spent: ${budget.amountSpent}</div>
-          </>
-        }
+        secondary={`Amount Set: $${budget.amountSet}`}
       />
       <LinearProgress
         variant="determinate"
@@ -65,3 +127,5 @@ const BudgetListItem: React.FC<BudgetListItemProps> = ({
 };
 
 export default BudgetListItem;
+
+
