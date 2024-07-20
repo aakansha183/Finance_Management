@@ -77,3 +77,20 @@ export interface BarChartData {
     backgroundColor: string[];
   }[];
 }
+
+
+export interface BudgetFormProps {
+  onSubmit: (data: BudgetFormInput) => void;
+  editMode: boolean;
+  defaultValues?: BudgetFormInput;
+}
+
+export interface BudgetListItemProps {
+  budget: BudgetFormInput;
+  onEdit: (budget: BudgetFormInput) => void;
+  onDelete: (category: string) => void;
+}
+
+export interface TransactionListProps {
+  transactions: Transaction[];
+}

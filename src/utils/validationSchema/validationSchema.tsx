@@ -15,3 +15,8 @@ export const loginSchema = yup.object().shape({
   username: yup.string().required("Username is required"),
   password: yup.string().required("Password is required"),
 });
+
+export const ValidationSchemaBudget = yup.object().shape({
+  category: yup.string().required('Category is required'),
+  amountSet: yup.string().required('Amount Set is required').min(1, 'Amount Set must be greater than zero'),
+});

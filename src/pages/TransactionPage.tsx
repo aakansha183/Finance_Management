@@ -11,7 +11,10 @@ import TransactionFilters from '../components/TransactionFilters';
 import TransactionSearch from '../components/TransactionSearch';
 import { SelectChangeEvent } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { Box, Card, CardContent, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import Layout from '../components/Layout';
 const Container = styled(Box)({
@@ -19,8 +22,6 @@ const Container = styled(Box)({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    // marginTop: '5px',
-    // padding: '2px',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     minHeight: '65vh',
@@ -32,12 +33,10 @@ const ContentWrapper = styled(Box)({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    // padding: '10px 0',
 });
 const StyledCard = styled(Card)(({ theme }) => ({
     width: '90%',
     maxWidth: '600px',
-    //margin: '10px 0',
     backgroundColor: 'white',
     opacity: 0.9,
 }));
