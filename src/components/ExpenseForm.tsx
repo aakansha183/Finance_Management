@@ -1,26 +1,18 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { Expense } from '../utils/interface/types';
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { categories, ExpenseFormProps } from '../utils/interface/types';
 import { toast } from 'react-toastify';
-import { categories } from '../utils/interface/types'; 
-interface ExpenseFormProps {
-  initialValues: Expense;
-  onSubmit: (values: Expense) => void;
-  editMode: boolean;
-}
-
-const validationSchema = yup.object({
-  amount: yup.number().required('Amount is required'),
-  category: yup.string().required('Category is required'),
-  date: yup.string().required('Date is required'),
-});
-
+import { validationSchemaExpense } from '../utils/validationSchema/validationSchema';
 const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSubmit, editMode }) => {
   const formik = useFormik({
     initialValues,
-    validationSchema,
+    validationSchema: validationSchemaExpense,
     onSubmit: (values) => {
       onSubmit(values);
       formik.resetForm();
@@ -94,3 +86,5 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSubmit, edit
 };
 
 export default ExpenseForm;
+
+

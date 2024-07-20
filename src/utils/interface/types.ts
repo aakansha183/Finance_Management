@@ -77,7 +77,30 @@ export interface BarChartData {
     backgroundColor: string[];
   }[];
 }
-
+export interface ExpenseFormProps {
+  initialValues: Expense;
+  onSubmit: (values: Expense) => void;
+  editMode: boolean;
+}
+export interface ExpenseListProps {
+  expenses: Expense[];
+  onEdit: (expense: Expense) => void;
+  onDelete: (date: string, userId: string) => void;
+}
+export interface IncomeFormProps {
+  initialValues: Income;
+  onSubmit: (values: Income) => void;
+  editMode: boolean;
+}
+export interface IncomeListProps {
+  incomes: Income[];
+  onEdit: (income: Income) => void;
+  onDelete: (date: string, userId: string) => void;
+}
+export interface LoginFormValues {
+  username: string;
+  password: string;
+}
 
 export interface BudgetFormProps {
   onSubmit: (data: BudgetFormInput) => void;

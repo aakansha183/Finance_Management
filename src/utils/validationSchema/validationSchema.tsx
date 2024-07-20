@@ -1,6 +1,5 @@
 import * as yup from "yup";
-
-export const validationSchema = yup.object({
+export const validationSchemaRegister = yup.object({
   username: yup.string().required("Username is required"),
   password: yup
     .string()
@@ -14,9 +13,19 @@ export const validationSchema = yup.object({
   lastName: yup.string().required("Last name is required"),
 });
 
-export const loginSchema = yup.object().shape({
+export const validationSchemaLogin = yup.object().shape({
   username: yup.string().required("Username is required"),
   password: yup.string().required("Password is required"),
+});
+export const validationSchemaExpense = yup.object({
+  amount: yup.number().required('Amount is required'),
+  category: yup.string().required('Category is required'),
+  date: yup.string().required('Date is required'),
+});
+export const validationSchemaIncome = yup.object({
+  amount: yup.number().required("Amount is required"),
+  source: yup.string().required("Source is required"),
+  date: yup.string().required("Date is required"),
 });
 
 export const ValidationSchemaBudget = yup.object().shape({

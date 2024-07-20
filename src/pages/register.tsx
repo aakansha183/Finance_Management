@@ -1,78 +1,51 @@
 import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Paper,
-  Container,
-  Grid,
-  Link,
-} from "@mui/material";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
-import * as yup from "yup";
-import { useFormik, FormikErrors } from "formik";
 import { User, FormData } from "../utils/interface/types";
-import { validationSchema } from "../utils/validationSchema/validationSchema";
-
+import { validationSchemaRegister } from "../utils/validationSchema/validationSchema";
 
 const Register: React.FC = () => {
-  const { register } = useAuth();
+  const { register: registerUser } = useAuth();
   const navigate = useNavigate();
   const [registrationError, setRegistrationError] = useState<string>("");
 
-  const formik = useFormik<FormData>({
-    initialValues: {
-      username: "",
-      password: "",
-      email: "",
-      firstName: "",
-      lastName: "",
-    },
-    validationSchema,
-    onSubmit: async (values, { setSubmitting, setErrors }) => {
-      try {
-        const newUser: User = {
-          id: Date.now().toString(),
-          username: values.username,
-          password: values.password,
-          email: values.email,
-          firstName: values.firstName,
-          lastName: values.lastName,
-        };
-
-        await register(newUser);
-        toast.success("Successfully Registered");
-        navigate("/login");
-      } catch (err) {
-        if (err instanceof Error) {
-          setRegistrationError(err.message);
-        } else {
-          setRegistrationError("An unknown error occurred");
-        }
-      } finally {
-        setSubmitting(false);
-      }
-    },
-    validate: async (values) => {
-      try {
-        await validationSchema.validate(values, { abortEarly: false });
-        return {};
-      } catch (validationErrors) {
-        const errors: FormikErrors<FormData> = {};
-        if (validationErrors instanceof yup.ValidationError) {
-          validationErrors.inner.forEach((error) => {
-            if (error.path) {
-              (errors as FormikErrors<FormData>)[error.path as keyof FormData] = error.message;
-            }
-          });
-        }
-        return errors;
-      }
-    },
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
+    resolver: yupResolver(validationSchemaRegister)
   });
+
+  const onSubmit: SubmitHandler<FormData> = async (values) => {
+    try {
+      const newUser: User = {
+        id: Date.now().toString(),
+        username: values.username,
+        password: values.password,
+        email: values.email,
+        firstName: values.firstName,
+        lastName: values.lastName,
+      };
+
+      await registerUser(newUser);
+      toast.success("Successfully Registered");
+      navigate("/login");
+    } catch (err) {
+      if (err instanceof Error) {
+        setRegistrationError(err.message);
+      } else {
+        setRegistrationError("An unknown error occurred");
+      }
+    }
+  };
 
   return (
     <Container maxWidth="xs">
@@ -86,82 +59,67 @@ const Register: React.FC = () => {
           >
             Register
           </Typography>
-          <form onSubmit={formik.handleSubmit} style={{ width: "100%" }}>
+          <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
             <Grid container spacing={2} justifyContent="center">
               <Grid item xs={12}>
                 <TextField
                   id="username"
-                  name="username"
                   label="Username"
                   variant="outlined"
                   fullWidth
                   margin="normal"
-                  value={formik.values.username}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.username && Boolean(formik.errors.username)}
-                  helperText={formik.touched.username && formik.errors.username}
+                  {...register("username")}
+                  error={!!errors.username}
+                  helperText={errors.username?.message}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   id="password"
-                  name="password"
                   label="Password"
                   type="password"
                   variant="outlined"
                   fullWidth
                   margin="normal"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.password && Boolean(formik.errors.password)}
-                  helperText={formik.touched.password && formik.errors.password}
+                  {...register("password")}
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   id="email"
-                  name="email"
                   label="Email"
                   variant="outlined"
                   fullWidth
                   margin="normal"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email}
+                  {...register("email")}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   id="firstName"
-                  name="firstName"
                   label="First Name"
                   variant="outlined"
                   fullWidth
                   margin="normal"
-                  value={formik.values.firstName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-                  helperText={formik.touched.firstName && formik.errors.firstName}
+                  {...register("firstName")}
+                  error={!!errors.firstName}
+                  helperText={errors.firstName?.message}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   id="lastName"
-                  name="lastName"
                   label="Last Name"
                   variant="outlined"
                   fullWidth
                   margin="normal"
-                  value={formik.values.lastName}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-                  helperText={formik.touched.lastName && formik.errors.lastName}
+                  {...register("lastName")}
+                  error={!!errors.lastName}
+                  helperText={errors.lastName?.message}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -172,7 +130,7 @@ const Register: React.FC = () => {
                   fullWidth
                   size="large"
                   style={{ marginTop: "1rem" }}
-                  disabled={formik.isSubmitting}
+                  disabled={isSubmitting}
                 >
                   Register
                 </Button>

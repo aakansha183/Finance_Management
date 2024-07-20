@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { setIncomes, addIncome, editIncome, deleteIncome, loadIncomesFromStorage, saveIncomesToStorage } from '../redux/slice/incomeSlice';
-import { Container, Box, Card, CardContent, Typography, Divider } from '@mui/material';
 import IncomeForm from '../components/IncomeForm';
 import IncomeList from '../components/IncomeList';
 import useAuth from '../hooks/useAuth';
 import { Income } from '../utils/interface/types';
 import Layout from '../components/Layout';
+import Container from '@mui/material/Container';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
 
 const IncomePage: React.FC = () => {
   const { currentUser } = useAuth();
