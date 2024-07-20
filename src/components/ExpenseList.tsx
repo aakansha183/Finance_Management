@@ -1,14 +1,8 @@
 import React from 'react';
-import { List, ListItem, ListItemText, IconButton, Paper, Box } from '@mui/material';
-import { Edit, Delete } from '@mui/icons-material';
-import { Expense } from '../utils/interface/types';
-
-interface ExpenseListProps {
-  expenses: Expense[];
-  onEdit: (expense: Expense) => void;
-  onDelete: (date: string, userId: string) => void;
-}
-
+import { List, ListItemText, IconButton, Paper, Box } from '@mui/material';
+import {  ExpenseListProps } from '../utils/interface/types';
+import Edit from '@mui/icons-material/Edit';
+import Delete from '@mui/icons-material/Delete';
 const ExpenseList: React.FC<ExpenseListProps> = ({ expenses, onEdit, onDelete }) => {
   return (
     <List>
