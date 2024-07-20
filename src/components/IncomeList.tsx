@@ -1,8 +1,12 @@
 import React from 'react';
-import { List, ListItemText, IconButton, Paper, Box } from '@mui/material';
 import {IncomeListProps } from '../utils/interface/types';
 import Delete from '@mui/icons-material/Delete';
 import Edit from '@mui/icons-material/Edit';
+import List from '@mui/material/List';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import ListItemText from '@mui/material/ListItemText';
+import IconButton from '@mui/material/IconButton';
 const IncomeList: React.FC<IncomeListProps> = ({ incomes, onEdit, onDelete }) => {
   return (
     <List>
