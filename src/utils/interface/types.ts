@@ -32,12 +32,13 @@ export interface BudgetFormInput {
   }
   
 export const categories = [
-  "food",
-  "transport",
-  "utilities",
-  "entertainment",
-  "health",
+  { value: "Food", label: "Food" },
+  { value: "Transport", label: "Transport" },
+  { value: "Utilities", label: "Utilities" },
+  { value: "Entertainment", label: "Entertainment" },
+  { value: "Health", label: "Health" },
 ];
+
 export interface Expense {
   amount: string;
   category: string;
