@@ -1,19 +1,11 @@
 import React from "react";
-import {
-  ListItem,
-  ListItemText,
-  LinearProgress,
-  IconButton,
-} from "@mui/material";
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import LinearProgress from '@mui/material/LinearProgress';
+import IconButton from '@mui/material/IconButton';
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { BudgetFormInput } from "../utils/interface/types";
-
-interface BudgetListItemProps {
-  budget: BudgetFormInput;
-  onEdit: (budget: BudgetFormInput) => void;
-  onDelete: (category: string) => void;
-}
+import { BudgetListItemProps } from "../utils/interface/types";
 
 const BudgetListItem: React.FC<BudgetListItemProps> = ({
   budget,
