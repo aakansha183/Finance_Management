@@ -117,3 +117,13 @@ export interface BudgetListItemProps {
 export interface TransactionListProps {
   transactions: Transaction[];
 }
+export interface ProfileFormData {
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+}
+export interface BarChartProps {
+  userId: string;
+}
