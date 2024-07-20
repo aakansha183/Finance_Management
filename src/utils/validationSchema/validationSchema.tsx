@@ -19,6 +19,10 @@ export const loginSchema = yup.object().shape({
   password: yup.string().required("Password is required"),
 });
 
+export const ValidationSchemaBudget = yup.object().shape({
+  category: yup.string().required('Category is required'),
+  amountSet: yup.string().required('Amount Set is required').min(1, 'Amount Set must be greater than zero'),
+});
 export const validationSchemaForProfile = yup.object({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),

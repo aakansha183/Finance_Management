@@ -11,7 +11,11 @@ import {
   loadBudgetsFromStorage,
   saveBudgetsToStorage,
 } from "../redux/slice/budgetSlice";
-import { List, Paper, Typography, Box, Card, CardContent } from "@mui/material";
+import List from '@mui/material/List';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import { styled } from "@mui/material/styles";
 import BudgetForm from "../components/budgetForm";
 import BudgetListItem from "../components/budgetList";
@@ -137,7 +141,6 @@ const BudgetPage: React.FC = () => {
                   currentBudget || {
                     category: "",
                     amountSet: "",
-                    amountSpent: "",
                     userId: "",
                   }
                 }
@@ -163,3 +166,4 @@ const BudgetPage: React.FC = () => {
 };
 
 export default BudgetPage;
+

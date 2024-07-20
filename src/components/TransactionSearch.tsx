@@ -1,5 +1,6 @@
 import React from 'react';
-import { TextField, Box } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
 interface TransactionSearchProps {
     query: string;

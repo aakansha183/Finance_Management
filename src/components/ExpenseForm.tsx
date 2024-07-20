@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { Expense } from '../utils/interface/types';
 import { toast } from 'react-toastify';
-
+import { categories } from '../utils/interface/types'; 
 interface ExpenseFormProps {
   initialValues: Expense;
   onSubmit: (values: Expense) => void;
@@ -56,11 +56,11 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSubmit, edit
           <MenuItem value="">
             <em>Select Category</em>
           </MenuItem>
-          <MenuItem value="Food">Food</MenuItem>
-          <MenuItem value="Transport">Transport</MenuItem>
-          <MenuItem value="Utilities">Utilities</MenuItem>
-          <MenuItem value="Entertainment">Entertainment</MenuItem>
-          <MenuItem value="Health">Health</MenuItem>
+          {categories.map((category, index) => (
+            <MenuItem key={index} value={category.value}>
+              {category.label}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
       <TextField
