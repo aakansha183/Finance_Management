@@ -15,17 +15,8 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import { useFormik, FormikErrors } from "formik";
 import { User, FormData } from "../utils/interface/types";
+import { validationSchema } from "../utils/validationSchema/validationSchema";
 
-const validationSchema = yup.object({
-  username: yup.string().required("Username is required"),
-  password: yup.string().required("Password is required"),
-  email: yup
-    .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
-});
 
 const Register: React.FC = () => {
   const { register } = useAuth();

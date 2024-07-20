@@ -11,7 +11,7 @@ import {
 } from "chart.js";
 import { BarChartOptions } from "../utils/ChartOptions/ChartOptions";
 import { loadExpensesFromStorage } from "../redux/slice/expensesSlice";
-import { BarChartData } from "../utils/interface/types";
+import { BarChartData, BarChartProps } from "../utils/interface/types";
 ChartJS.register(
   BarElement,
   CategoryScale,
@@ -21,9 +21,7 @@ ChartJS.register(
   Legend
 );
 
-interface BarChartProps {
-  userId: string;
-}
+
 const BarChart: React.FC<BarChartProps> = ({ userId }) => {
   const [barChartData, setBarChartData] = useState<BarChartData | null>(null);
 

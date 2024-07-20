@@ -77,3 +77,13 @@ export interface BarChartData {
     backgroundColor: string[];
   }[];
 }
+export interface ProfileFormData {
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+}
+export interface BarChartProps {
+  userId: string;
+}
