@@ -1,6 +1,11 @@
 import React from "react";
-import { Drawer, List, ListItem, ListItemText, Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material";
+import { Link, useLocation } from "react-router-dom";
 import "./Sidebar.css";
 
 interface SidebarProps {
@@ -9,6 +14,9 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const theme = useTheme();
   return (
     <Drawer
       anchor="left"
@@ -39,9 +47,29 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             { text: "Expense Tracker", path: "/expenses" },
             { text: "Budget Management", path: "/budget" },
             { text: "Transaction History", path: "/transaction-history" },
-          ].map(({ text, path }, index) => (
-            <ListItem button key={text} component={Link} to={path}>
-              
+          ].map(({ text, path }) => (
+            <ListItem
+              button
+              key={text}
+              component={Link}
+              to={path}
+              sx={{
+                backgroundColor:
+                  currentPath === path
+                    ? theme.palette.primary.main
+                    : "transparent",
+                color:
+                  currentPath === path
+                    ? theme.palette.primary.contrastText
+                    : theme.palette.text.primary,
+                "&:hover": {
+                  backgroundColor:
+                    currentPath === path
+                      ? "rgba(0, 0, 0, 0.12)"
+                      : "rgba(0, 0, 0, 0.04)",
+                },
+              }}
+            >
               <ListItemText primary={text} />
             </ListItem>
           ))}
