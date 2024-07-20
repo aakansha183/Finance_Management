@@ -1,19 +1,11 @@
 import React from "react";
-import {
-  ListItem,
-  ListItemText,
-  LinearProgress,
-  IconButton,
-} from "@mui/material";
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import LinearProgress from '@mui/material/LinearProgress';
+import IconButton from '@mui/material/IconButton';
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { BudgetFormInput } from "../utils/interface/types";
-
-interface BudgetListItemProps {
-  budget: BudgetFormInput;
-  onEdit: (budget: BudgetFormInput) => void;
-  onDelete: (category: string) => void;
-}
+import { BudgetListItemProps } from "../utils/interface/types";
 
 const BudgetListItem: React.FC<BudgetListItemProps> = ({
   budget,
@@ -21,8 +13,7 @@ const BudgetListItem: React.FC<BudgetListItemProps> = ({
   onDelete,
 }) => {
   const amountSet = parseInt(budget.amountSet);
-  const amountSpent = parseInt(budget.amountSpent);
-  const progress = isNaN(amountSet) || amountSet === 0 ? 0 : (amountSpent / amountSet) * 100;
+  const progress = isNaN(amountSet) || amountSet === 0 ? 0 : 100;
 
   return (
     <ListItem
@@ -36,12 +27,7 @@ const BudgetListItem: React.FC<BudgetListItemProps> = ({
     >
       <ListItemText
         primary={`Category: ${budget.category}`}
-        secondary={
-          <>
-            <div>Amount Set: ${budget.amountSet}</div>
-            <div>Amount Spent: ${budget.amountSpent}</div>
-          </>
-        }
+        secondary={`Amount Set: $${budget.amountSet}`}
       />
       <LinearProgress
         variant="determinate"
@@ -65,3 +51,5 @@ const BudgetListItem: React.FC<BudgetListItemProps> = ({
 };
 
 export default BudgetListItem;
+
+
