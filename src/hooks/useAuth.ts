@@ -3,7 +3,7 @@ import { RootState } from "../redux/store";
 import { setUser } from "../redux/slice/userslice";
 import { User } from "../utils/interface/types";
 import localforage from "localforage";
-import { loginSchema } from "../utils/validationSchema/validationSchema";
+import { validationSchemaLogin } from "../utils/validationSchema/validationSchema";
 
 interface AuthState {
   currentUser: User | null;
@@ -18,7 +18,7 @@ const useAuth = (): AuthState => {
 
   const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      await loginSchema.validate({ username, password }, { abortEarly: false });
+      await validationSchemaLogin.validate({ username, password }, { abortEarly: false });
 
       const storedUsers = await localforage.getItem<User[]>("users");
       const parsedUsers: User[] = storedUsers || [];
