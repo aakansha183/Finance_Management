@@ -6,9 +6,10 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { ExpenseFormProps } from '../utils/interface/types';
+import { categories, ExpenseFormProps } from '../utils/interface/types';
 import { toast } from 'react-toastify';
 import { validationSchemaExpense } from '../utils/validationSchema/validationSchema';
+
 const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSubmit, editMode }) => {
   const formik = useFormik({
     initialValues,
@@ -48,11 +49,11 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSubmit, edit
           <MenuItem value="">
             <em>Select Category</em>
           </MenuItem>
-          <MenuItem value="Food">Food</MenuItem>
-          <MenuItem value="Transport">Transport</MenuItem>
-          <MenuItem value="Utilities">Utilities</MenuItem>
-          <MenuItem value="Entertainment">Entertainment</MenuItem>
-          <MenuItem value="Health">Health</MenuItem>
+          {categories.map((category, index) => (
+            <MenuItem key={index} value={category.value}>
+              {category.label}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
       <TextField
