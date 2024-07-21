@@ -51,7 +51,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ onSubmit, editMode, defaultValu
           <TextField
             {...field}
             label="Amount Set"
-            type="string"
+            type="number"
             fullWidth
             margin="normal"
             error={!!fieldState.error}
