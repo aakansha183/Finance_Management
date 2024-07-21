@@ -1,5 +1,5 @@
-import React from 'react';
-import { useFormik } from 'formik';
+import React from "react";
+import { useFormik } from "formik";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -24,19 +24,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSubmit, edit
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <TextField
-        id="amount"
-        name="amount"
-        label="Amount"
-        type="number"
-        fullWidth
-        variant="outlined"
-        value={formik.values.amount}
-        onChange={formik.handleChange}
-        error={formik.touched.amount && Boolean(formik.errors.amount)}
-        helperText={formik.touched.amount && formik.errors.amount}
-      />
-      <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+      <FormControl fullWidth variant="outlined">
         <InputLabel id="category-label">Category</InputLabel>
         <Select
           id="category"
@@ -56,6 +44,20 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSubmit, edit
           ))}
         </Select>
       </FormControl>
+      <TextField
+        id="amount"
+        name="amount"
+        label="Amount"
+        type="number"
+        fullWidth
+        variant="outlined"
+        value={formik.values.amount}
+        onChange={formik.handleChange}
+        error={formik.touched.amount && Boolean(formik.errors.amount)}
+        helperText={formik.touched.amount && formik.errors.amount}
+        sx={{ mt: 2 }}
+      />
+
       <TextField
         id="date"
         name="date"
@@ -80,12 +82,10 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSubmit, edit
         size="large"
         sx={{ mt: 2 }}
       >
-        {editMode ? 'Update Expense' : 'Add Expense'}
+        {editMode ? "Update Expense" : "Add Expense"}
       </Button>
     </form>
   );
 };
 
 export default ExpenseForm;
-
-
