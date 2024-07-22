@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
-import {IncomeFormProps } from "../utils/interface/types";
+import { IncomeFormProps } from "../utils/interface/types";
 import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
 import { validationSchemaIncome } from "../utils/validationSchema/validationSchema";
@@ -14,15 +14,15 @@ const IncomeForm: React.FC<IncomeFormProps> = ({
 }) => {
   const formik = useFormik({
     initialValues,
-    validationSchema:validationSchemaIncome,
+    validationSchema: validationSchemaIncome,
     onSubmit: (values) => {
       onSubmit(values);
       formik.resetForm();
-       toast.success("Income Successfully Added");
+      toast.success("Income Successfully Added");
     },
     enableReinitialize: true,
   });
-   const incomeSources = [
+  const incomeSources = [
     { value: "Freelancing", label: "Freelancing" },
     { value: "Business", label: "Business" },
     { value: "Investment", label: "Investment" },
@@ -31,18 +31,6 @@ const IncomeForm: React.FC<IncomeFormProps> = ({
   ];
   return (
     <form onSubmit={formik.handleSubmit}>
-      <TextField
-        id="amount"
-        name="amount"
-        label="Amount"
-        type="number"
-        fullWidth
-        variant="outlined"
-        value={formik.values.amount}
-        onChange={formik.handleChange}
-        error={formik.touched.amount && Boolean(formik.errors.amount)}
-        helperText={formik.touched.amount && formik.errors.amount}
-      />
       <TextField
         id="source"
         name="source"
@@ -54,7 +42,6 @@ const IncomeForm: React.FC<IncomeFormProps> = ({
         onChange={formik.handleChange}
         error={formik.touched.source && Boolean(formik.errors.source)}
         helperText={formik.touched.source && formik.errors.source}
-        sx={{ mt: 2 }}
       >
         {incomeSources.map((option) => (
           <MenuItem key={option.value} value={option.value}>
@@ -62,6 +49,19 @@ const IncomeForm: React.FC<IncomeFormProps> = ({
           </MenuItem>
         ))}
       </TextField>
+      <TextField
+        id="amount"
+        name="amount"
+        label="Amount"
+        type="number"
+        fullWidth
+        variant="outlined"
+        value={formik.values.amount}
+        onChange={formik.handleChange}
+        error={formik.touched.amount && Boolean(formik.errors.amount)}
+        helperText={formik.touched.amount && formik.errors.amount}
+        sx={{ mt: 2 }}
+      />
       <TextField
         id="date"
         name="date"
