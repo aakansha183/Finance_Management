@@ -1,28 +1,12 @@
-
 import React from "react";
 import { useFormik } from "formik";
-import * as yup from "yup";
-import { TextField, Button, MenuItem } from "@mui/material";
-import { Income } from "../utils/interface/types";
-import { toast, ToastContainer } from "react-toastify";
-interface IncomeFormProps {
-  initialValues: Income;
-  onSubmit: (values: Income) => void;
-  editMode: boolean;
-}
-const validationSchema = yup.object({
-  amount: yup.number().required("Amount is required"),
-  source: yup.string().required("Source is required"),
-  date: yup.string().required("Date is required"),
-});
+import { IncomeFormProps } from "../utils/interface/types";
+import TextField from "@mui/material/TextField";
+import { toast } from "react-toastify";
+import { validationSchemaIncome } from "../utils/validationSchema/validationSchema";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
 
-const incomeSources = [
-  { value: "Freelancing", label: "Freelancing" },
-  { value: "Business", label: "Business" },
-  { value: "Investment", label: "Investment" },
-  { value: "Salary", label: "Salary" },
-  { value: "Other sources", label: "Other sources" },
-];
 const IncomeForm: React.FC<IncomeFormProps> = ({
   initialValues,
   onSubmit,
@@ -30,28 +14,23 @@ const IncomeForm: React.FC<IncomeFormProps> = ({
 }) => {
   const formik = useFormik({
     initialValues,
-    validationSchema,
+    validationSchema: validationSchemaIncome,
     onSubmit: (values) => {
       onSubmit(values);
       formik.resetForm();
-       toast.success("Income Successfully Added");
+      toast.success("Income Successfully Added");
     },
     enableReinitialize: true,
   });
+  const incomeSources = [
+    { value: "Freelancing", label: "Freelancing" },
+    { value: "Business", label: "Business" },
+    { value: "Investment", label: "Investment" },
+    { value: "Salary", label: "Salary" },
+    { value: "Other sources", label: "Other sources" },
+  ];
   return (
     <form onSubmit={formik.handleSubmit}>
-      <TextField
-        id="amount"
-        name="amount"
-        label="Amount"
-        type="number"
-        fullWidth
-        variant="outlined"
-        value={formik.values.amount}
-        onChange={formik.handleChange}
-        error={formik.touched.amount && Boolean(formik.errors.amount)}
-        helperText={formik.touched.amount && formik.errors.amount}
-      />
       <TextField
         id="source"
         name="source"
@@ -63,7 +42,6 @@ const IncomeForm: React.FC<IncomeFormProps> = ({
         onChange={formik.handleChange}
         error={formik.touched.source && Boolean(formik.errors.source)}
         helperText={formik.touched.source && formik.errors.source}
-        sx={{ mt: 2 }}
       >
         {incomeSources.map((option) => (
           <MenuItem key={option.value} value={option.value}>
@@ -71,6 +49,19 @@ const IncomeForm: React.FC<IncomeFormProps> = ({
           </MenuItem>
         ))}
       </TextField>
+      <TextField
+        id="amount"
+        name="amount"
+        label="Amount"
+        type="number"
+        fullWidth
+        variant="outlined"
+        value={formik.values.amount}
+        onChange={formik.handleChange}
+        error={formik.touched.amount && Boolean(formik.errors.amount)}
+        helperText={formik.touched.amount && formik.errors.amount}
+        sx={{ mt: 2 }}
+      />
       <TextField
         id="date"
         name="date"

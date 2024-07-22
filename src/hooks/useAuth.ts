@@ -3,7 +3,7 @@ import { RootState } from "../redux/store";
 import { setUser } from "../redux/slice/userslice";
 import { User } from "../utils/interface/types";
 import localforage from "localforage";
-import { loginSchema } from "../utils/validationSchema/validationSchema";
+import { validationSchemaLogin } from "../utils/validationSchema/validationSchema";
 
 interface AuthState {
   currentUser: User | null;
@@ -14,16 +14,11 @@ interface AuthState {
 
 const useAuth = (): AuthState => {
   const dispatch = useDispatch();
-  const currentUser = useSelector(
-    (state: RootState) => state.users.currentUser
-  );
+  const currentUser = useSelector((state: RootState) => state.users.currentUser);
 
-  const login = async (
-    username: string,
-    password: string
-  ): Promise<boolean> => {
+  const login = async (username: string, password: string): Promise<boolean> => {
     try {
-      await loginSchema.validate({ username, password }, { abortEarly: false });
+      await validationSchemaLogin.validate({ username, password }, { abortEarly: false });
 
       const storedUsers = await localforage.getItem<User[]>("users");
       const parsedUsers: User[] = storedUsers || [];
@@ -33,15 +28,20 @@ const useAuth = (): AuthState => {
       );
 
       if (user) {
-        await localforage.setItem("currentUser", user);
+        await sessionStorage.setItem("currentUser", JSON.stringify(user));
         dispatch(setUser(user));
         return true;
       } else {
         throw new Error("Invalid username or password");
       }
-    } catch (error: any) {
-      console.error("Login error:", error.message || error);
-      throw error;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Login error:", error.message);
+        throw error;
+      } else {
+        console.error("Unknown error during login");
+        throw new Error("Unknown error during login");
+      }
     }
   };
 
@@ -77,4 +77,3 @@ const useAuth = (): AuthState => {
 };
 
 export default useAuth;
-

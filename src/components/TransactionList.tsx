@@ -1,20 +1,11 @@
-
-
-
 import React from 'react';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import { TransactionListProps } from '../utils/interface/types';
 
-import {
-    List,
-    ListItem,
-    ListItemText,
-    Box,
-    Typography,
-} from '@mui/material';
-import { Transaction } from '../utils/interface/types';
-
-interface TransactionListProps {
-    transactions: Transaction[];
-}
 
 const TransactionList: React.FC<TransactionListProps> = ({ transactions }) => {
     return (

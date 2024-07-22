@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
@@ -6,11 +6,15 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
-import { User } from "../utils/interface/types";
 import { updateUser, setUser } from "../redux/slice/userslice";
 import Layout from "./Layout";
 import { toast } from "react-toastify";
 import { RootState } from "../redux/store";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ProfileFormData, User } from "../utils/interface/types";
+import { validationSchemaForProfile } from "../utils/validationSchema/validationSchema";
+
 
 const Profile: React.FC = () => {
   const navigate = useNavigate();
@@ -19,38 +23,51 @@ const Profile: React.FC = () => {
   const currentUser = useSelector(
     (state: RootState) => state.users.currentUser
   );
-  const [formData, setFormData] = useState<User>({
-    id: "",
-    username: "",
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/dashboard");
+    }
+  }, [currentUser, navigate]);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<ProfileFormData>({
+    defaultValues: {
+      username: currentUser?.username || "",
+      email: currentUser?.email || "",
+      firstName: currentUser?.firstName || "",
+      lastName: currentUser?.lastName || "",
+      password: currentUser?.password || "",
+    },
+    resolver: yupResolver(validationSchemaForProfile),
   });
 
   useEffect(() => {
     if (currentUser) {
-      if (id && currentUser.id === id) {
-        setFormData(currentUser);
-      } else {
-        navigate("/dashboard");
-      }
+      setValue("username", currentUser.username);
+      setValue("email", currentUser.email);
+      setValue("firstName", currentUser.firstName);
+      setValue("lastName", currentUser.lastName);
     }
-  }, [id, currentUser, navigate]);
+  }, [currentUser, setValue]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async () => {
+  const onSubmit = async (data: ProfileFormData) => {
     try {
-      if (formData.id) {
-        await dispatch(updateUser(formData));
-        dispatch(setUser(formData));
+      if (currentUser?.id) {
+        const updatedUser: User = {
+          id: currentUser.id,
+          username: data.username,
+          email: data.email,
+          password: data.password,
+          firstName: data.firstName,
+          lastName: data.lastName,
+        };
+
+        await dispatch(updateUser(updatedUser));
+        dispatch(setUser(updatedUser));
         toast.success("Profile updated successfully");
         navigate("/dashboard");
       } else {
@@ -62,10 +79,6 @@ const Profile: React.FC = () => {
     }
   };
 
-  if (!currentUser) {
-    return <Typography variant="h5">Loading...</Typography>;
-  }
-
   return (
     <Layout>
       <Container maxWidth="xs">
@@ -73,63 +86,91 @@ const Profile: React.FC = () => {
           <Typography variant="h4" gutterBottom align="center">
             Profile
           </Typography>
-          <TextField
-            fullWidth
-            margin="dense"
-            label="Username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            variant="outlined"
-            disabled
-          />
-          <TextField
-            fullWidth
-            margin="dense"
-            label="Email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            variant="outlined"
-            disabled
-          />
-          <TextField
-            fullWidth
-            margin="dense"
-            label="First Name"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            variant="outlined"
-          />
-          <TextField
-            fullWidth
-            margin="dense"
-            label="Last Name"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            variant="outlined"
-          />
-          <TextField
-            fullWidth
-            margin="dense"
-            label="Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            variant="outlined"
-          />
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            style={{ marginTop: "16px" }}
-          >
-            Save Changes
-          </Button>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              name="username"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  label="Username"
+                  {...field}
+                  variant="outlined"
+                  disabled
+                />
+              )}
+            />
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  label="Email"
+                  {...field}
+                  variant="outlined"
+                  disabled
+                />
+              )}
+            />
+            <Controller
+              name="firstName"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  label="First Name"
+                  {...field}
+                  variant="outlined"
+                  error={!!errors.firstName}
+                  helperText={errors.firstName?.message}
+                />
+              )}
+            />
+            <Controller
+              name="lastName"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  label="Last Name"
+                  {...field}
+                  variant="outlined"
+                  error={!!errors.lastName}
+                  helperText={errors.lastName?.message}
+                />
+              )}
+            />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  margin="dense"
+                  label="Password"
+                  type="password"
+                  {...field}
+                  variant="outlined"
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
+                />
+              )}
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              type="submit"
+              style={{ marginTop: "16px" }}
+            >
+              Save Changes
+            </Button>
+          </form>
         </Paper>
       </Container>
     </Layout>
