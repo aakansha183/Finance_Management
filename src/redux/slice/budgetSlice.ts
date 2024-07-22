@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import localforage from "localforage";
-import { BudgetFormInput } from "../../utils/interface/types";
-
-interface BudgetState {
-  budgets: BudgetFormInput[];
-}
-
+import { BudgetFormInput, BudgetState } from "../../utils/interface/types";
 const initialState: BudgetState = {
   budgets: [],
 };

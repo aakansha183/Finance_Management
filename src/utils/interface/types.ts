@@ -127,3 +127,19 @@ export interface ProfileFormData {
 export interface BarChartProps {
   userId: string;
 }
+export interface ExpenseState {
+  expenses: Expense[];
+}
+export interface IncomeState {
+  incomes: Income[];
+}
+export interface TransactionState {
+  transactions: Transaction[];
+}
+export interface BudgetState {
+  budgets: BudgetFormInput[];
+}
+export interface TransactionSearchProps {
+  query: string;
+  setQuery: React.Dispatch<React.SetStateAction<string>>;
+}

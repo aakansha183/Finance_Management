@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import localforage from "localforage";
-import { Income } from "../../utils/interface/types";
-
-interface IncomeState {
-  incomes: Income[];
-}
-
+import { Income, IncomeState } from "../../utils/interface/types";
 const initialState: IncomeState = {
   incomes: [],
 };
