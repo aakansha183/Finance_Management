@@ -1,10 +1,12 @@
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import React from "react";
-import { Button, Container, Typography, Grid, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
-
   return (
     <Box
       sx={{
