@@ -224,8 +224,8 @@ const DashboardPage: React.FC = () => {
                   }}
                 >
                   <Typography variant="h6" color="textSecondary">
-                     Hi! {currentUser?.firstName || "User"} Kindly Add  your Budget,
-                    Income and Expense.
+                    Hi! {currentUser?.firstName || "User"} Kindly Add your
+                    Budget, Income and Expense.
                   </Typography>
                 </Box>
               </Grid>
