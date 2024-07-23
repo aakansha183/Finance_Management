@@ -6,8 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { categories, ExpenseFormProps } from "../utils/interface/types";
-import { toast } from "react-toastify";
+import { categories, ExpenseFormProps } from '../utils/interface/types';
 import { validationSchemaExpense } from "../utils/validationSchema/validationSchema";
 const ExpenseForm: React.FC<ExpenseFormProps> = ({
   initialValues,
@@ -20,7 +19,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
     onSubmit: (values) => {
       onSubmit(values);
       formik.resetForm();
-      toast.success("Expense Successfully Added");
+      
     },
     enableReinitialize: true,
   });
