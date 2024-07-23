@@ -1,10 +1,12 @@
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import React from "react";
-import { Button, Container, Typography, Grid, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
-
   return (
     <Box
       sx={{
@@ -21,10 +23,6 @@ const HomePage: React.FC = () => {
         padding: { xs: 2, sm: 3, md: 4 },
         boxSizing: "border-box",
         overflow: "hidden",
-<<<<<<< HEAD
-=======
-
->>>>>>> 9a50653e063fb3f3a50bcde090953394ed9c4ab1
       }}
     >
       <Container maxWidth="md">
@@ -34,10 +32,6 @@ const HomePage: React.FC = () => {
           sx={{
             mb: 2,
             fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
-<<<<<<< HEAD
-=======
-            
->>>>>>> 9a50653e063fb3f3a50bcde090953394ed9c4ab1
             fontWeight: "bold",
           }}
         >
@@ -49,10 +43,6 @@ const HomePage: React.FC = () => {
           sx={{
             mb: 3,
             fontSize: { xs: "1rem", sm: "1.125rem", md: "1.25rem" },
-<<<<<<< HEAD
-=======
-           
->>>>>>> 9a50653e063fb3f3a50bcde090953394ed9c4ab1
           }}
         >
           Manage your finances effortlessly. Kindly login or register to get started.
@@ -106,11 +96,6 @@ const HomePage: React.FC = () => {
                 }}
               >
                 <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
-<<<<<<< HEAD
-=======
-
-         
->>>>>>> 9a50653e063fb3f3a50bcde090953394ed9c4ab1
                   Income Tracking
                 </Typography>
                 <Typography>
@@ -121,10 +106,6 @@ const HomePage: React.FC = () => {
             <Grid item xs={12} sm={6} md={4}>
               <Box
                 sx={{
-<<<<<<< HEAD
-=======
-
->>>>>>> 9a50653e063fb3f3a50bcde090953394ed9c4ab1
                   p: 2,
                   bgcolor: "rgba(255, 255, 255, 0.8)",
                   borderRadius: 2,
@@ -136,10 +117,6 @@ const HomePage: React.FC = () => {
                 }}
               >
                 <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
-<<<<<<< HEAD
-=======
-
->>>>>>> 9a50653e063fb3f3a50bcde090953394ed9c4ab1
                   Expense Management
                 </Typography>
                 <Typography>
@@ -162,11 +139,6 @@ const HomePage: React.FC = () => {
                 }}
               >
                 <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
-<<<<<<< HEAD
-=======
-
-           
->>>>>>> 9a50653e063fb3f3a50bcde090953394ed9c4ab1
                   Budget Planning
                 </Typography>
                 <Typography>
@@ -174,11 +146,6 @@ const HomePage: React.FC = () => {
                 </Typography>
               </Box>
             </Grid>
-<<<<<<< HEAD
-=======
-
-           
->>>>>>> 9a50653e063fb3f3a50bcde090953394ed9c4ab1
           </Grid>
         </Box>
       </Container>

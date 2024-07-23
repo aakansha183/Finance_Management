@@ -1,11 +1,8 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import { TransactionSearchProps } from '../utils/interface/types';
 
-interface TransactionSearchProps {
-    query: string;
-    setQuery: React.Dispatch<React.SetStateAction<string>>;
-}
 
 const TransactionSearch: React.FC<TransactionSearchProps> = ({ query, setQuery }) => {
     return (
