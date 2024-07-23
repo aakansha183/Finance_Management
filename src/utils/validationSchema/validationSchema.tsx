@@ -32,10 +32,6 @@ export const ValidationSchemaBudget = yup.object().shape({
   category: yup.string().required('Category is required'),
   amountSet: yup.string().required('Amount Set is required').min(1, 'Amount Set must be greater than zero'),
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> 9a50653e063fb3f3a50bcde090953394ed9c4ab1
 export const validationSchemaForProfile = yup.object({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),
