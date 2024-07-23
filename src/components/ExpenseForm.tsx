@@ -17,7 +17,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSubmit, edit
     onSubmit: (values) => {
       onSubmit(values);
       formik.resetForm();
-      toast.success("Expense Successfully Added");
+      
     },
     enableReinitialize: true,
   });
