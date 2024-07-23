@@ -7,10 +7,12 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { categories, ExpenseFormProps } from '../utils/interface/types';
-import { toast } from 'react-toastify';
-import { validationSchemaExpense } from '../utils/validationSchema/validationSchema';
-
-const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSubmit, editMode }) => {
+import { validationSchemaExpense } from "../utils/validationSchema/validationSchema";
+const ExpenseForm: React.FC<ExpenseFormProps> = ({
+  initialValues,
+  onSubmit,
+  editMode,
+}) => {
   const formik = useFormik({
     initialValues,
     validationSchema: validationSchemaExpense,
