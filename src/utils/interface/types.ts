@@ -18,7 +18,6 @@ export interface User {
   lastName: string;
 }
 export interface BudgetFormInput {
-<<<<<<< HEAD
     category: string;
     amountSet: string;
     userId?: string;  
@@ -33,21 +32,6 @@ export interface BudgetFormInput {
   }
 
   
-=======
-  category: string;
-  amountSet: string;
-  userId?: string;
-}
-
-export interface FormData {
-  username: string;
-  password: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-}
-
->>>>>>> 9a50653e063fb3f3a50bcde090953394ed9c4ab1
 export const categories = [
   { value: "Food", label: "Food" },
   { value: "Transport", label: "Transport" },
