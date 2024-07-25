@@ -63,7 +63,6 @@ const Login: React.FC = () => {
     <Container maxWidth="xs">
       <Paper elevation={3} style={{ padding: "16px", marginTop: "50px" }}>
         <Box display="flex" flexDirection="column" alignItems="center">
-          {/* Branding Section */}
           <img
             src="/brand.png"
             alt="PennyPinch Logo"
