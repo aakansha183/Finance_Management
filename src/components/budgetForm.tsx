@@ -5,8 +5,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { BudgetFormInput, categories } from "../utils/interface/types";
-import { BudgetFormProps } from "../utils/interface/types";
+import { categories } from "../utils/MenuItems/categoryItem";
+import { BudgetFormInput, BudgetFormProps } from "../utils/interface/types";
 import { ValidationSchemaBudget } from "../utils/validationSchema/validationSchema";
 
 const BudgetForm: React.FC<BudgetFormProps> = ({

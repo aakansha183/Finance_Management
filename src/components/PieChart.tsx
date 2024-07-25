@@ -7,12 +7,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
-interface PieChartComponentProps {
-  data: { name: string; value: number }[];
-}
-
-const COLORS = ["#f44336", "#2196f3", "#ff9800", "#9c27b0", "#e91e63"];
+import { COLORS } from "../utils/colors/colors";
+import { PieChartComponentProps } from "../utils/interface/types";
 
 const PieChartComponent: React.FC<PieChartComponentProps> = ({ data }) => (
   <ResponsiveContainer width="100%" height={300} >

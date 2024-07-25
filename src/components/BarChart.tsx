@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { BarChartOptions } from "../utils/ChartOptions/ChartOptions";
+import { BarChartProps } from "../utils/interface/types";
 
 ChartJS.register(
   BarElement,
@@ -19,10 +20,6 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-
-interface BarChartProps {
-  data: { name: string; budgeted: number; remaining: number }[];
-}
 
 const BarChart: React.FC<BarChartProps> = ({ data }) => {
   const labels = data.map((item) => item.name);
