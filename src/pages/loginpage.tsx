@@ -14,6 +14,7 @@ import * as yup from "yup";
 import { useFormik, FormikErrors } from "formik";
 import { validationSchemaLogin } from "../utils/validationSchema/validationSchema";
 import { LoginFormValues } from "../utils/interface/types";
+
 const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -62,6 +63,15 @@ const Login: React.FC = () => {
     <Container maxWidth="xs">
       <Paper elevation={3} style={{ padding: "16px", marginTop: "50px" }}>
         <Box display="flex" flexDirection="column" alignItems="center">
+          {/* Branding Section */}
+          <img
+            src="/brand.png"
+            alt="PennyPinch Logo"
+            style={{ width: "100px", height: "auto", marginBottom: "16px" }}
+          />
+         
+         
+
           <Typography variant="h4" gutterBottom align="center" sx={{ marginTop: "8px" }}>
             Login
           </Typography>
@@ -129,4 +139,5 @@ const Login: React.FC = () => {
     </Container>
   );
 };
+
 export default Login;
