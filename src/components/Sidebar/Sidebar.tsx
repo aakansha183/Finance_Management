@@ -44,8 +44,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           {[
             { text: "Dashboard", path: "/dashboard" },
             { text: "Income Tracker", path: "/incomes" },
-            { text: "Expense Tracker", path: "/expenses" },
             { text: "Budget Management", path: "/budget" },
+            { text: "Expense Tracker", path: "/expenses" },
             { text: "Transaction History", path: "/transaction-history" },
           ].map(({ text, path }) => (
             <ListItem
