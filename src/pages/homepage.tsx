@@ -69,7 +69,8 @@ const HomePage: React.FC = () => {
             animation: "fadeIn 3s",
           }}
         >
-          Manage your finances effortlessly. Kindly login or register to get started.
+          Manage your finances effortlessly. Kindly login or register to get
+          started.
         </Typography>
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12} sm={6} md={3}>

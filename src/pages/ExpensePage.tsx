@@ -12,7 +12,7 @@ import {
 import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
 import useAuth from "../hooks/useAuth";
-import { Expense, BudgetFormInput } from "../utils/interface/types";
+import { Expense } from "../utils/interface/types";
 import Layout from "../components/Layout";
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
@@ -31,6 +31,9 @@ const ExpensePage: React.FC = () => {
   const budgets = useSelector((state: RootState) => state.budget.budgets);
   const [editMode, setEditMode] = useState(false);
   const [currentExpense, setCurrentExpense] = useState<Expense | null>(null);
+  const [prevExpenseAmount, setPrevExpenseAmount] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -73,7 +76,9 @@ const ExpensePage: React.FC = () => {
 
     const currentBudget = parseInt(checkBudgetForCategory.amountSet);
     const totalExpenseForCategory = expensesByCategory[values.category] || 0;
-    const newTotalExpense = totalExpenseForCategory + expenseAmount;
+
+    const newTotalExpense =
+      totalExpenseForCategory - (prevExpenseAmount || 0) + expenseAmount;
 
     if (newTotalExpense > currentBudget) {
       alert(
@@ -91,16 +96,18 @@ const ExpensePage: React.FC = () => {
 
     setEditMode(false);
     setCurrentExpense(null);
+    setPrevExpenseAmount(null);
   };
 
   const handleEdit = (expense: Expense) => {
     setEditMode(true);
     setCurrentExpense(expense);
+    setPrevExpenseAmount(parseInt(expense.amount));
   };
 
   const handleDelete = (date: string) => {
     dispatch(deleteExpense({ date, userId: currentUser?.id! }));
-    toast.success("Sucessfully Deleted");
+    toast.success("Successfully Deleted");
   };
 
   return (
@@ -136,11 +143,13 @@ const ExpensePage: React.FC = () => {
               onSubmit={handleFormSubmit}
               editMode={editMode}
             />
-            <Divider sx={{ marginY: "2rem" }} />
+            <Divider sx={{ marginY: "0.5rem" }} />
             <Box sx={{ textAlign: "center" }}>
-              <Typography variant="h5" gutterBottom>
-                Expenses
-              </Typography>
+              {allExpenses.length > 0 && (
+                <Typography variant="h6" gutterBottom>
+                  Expense
+                </Typography>
+              )}
               <ExpenseList
                 expenses={allExpenses.filter(
                   (expense) => expense.userId === currentUser?.id
@@ -157,5 +166,3 @@ const ExpensePage: React.FC = () => {
 };
 
 export default ExpensePage;
-
-
