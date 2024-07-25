@@ -17,21 +17,35 @@ export const validationSchemaLogin = yup.object().shape({
   username: yup.string().required("Username is required"),
   password: yup.string().required("Password is required"),
 });
+
 export const validationSchemaExpense = yup.object({
-  amount: yup.number().required('Amount is required'),
-  category: yup.string().required('Category is required'),
-  date: yup.string().required('Date is required'),
+  amount: yup
+    .number()
+    .required("Amount is required")
+    .positive("Amount must be a positive number")
+    .moreThan(0, "Amount must be greater than zero"),
+  category: yup.string().required("Category is required"),
+  date: yup.string().required("Date is required"),
 });
+
 export const validationSchemaIncome = yup.object({
-  amount: yup.number().required("Amount is required"),
+  amount: yup
+    .number()
+    .required("Amount is required")
+    .positive("Amount must be a positive number")
+    .moreThan(0, "Amount must be greater than zero"),
   source: yup.string().required("Source is required"),
   date: yup.string().required("Date is required"),
 });
 
 export const ValidationSchemaBudget = yup.object().shape({
-  category: yup.string().required('Category is required'),
-  amountSet: yup.string().required('Amount Set is required').min(1, 'Amount Set must be greater than zero'),
+  category: yup.string().required("Category is required"),
+  amountSet: yup
+    .string()
+    .required("Amount Set is required")
+    .min(1, "Amount Set must be greater than zero"),
 });
+
 export const validationSchemaForProfile = yup.object({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),

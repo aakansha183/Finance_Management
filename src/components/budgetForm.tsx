@@ -1,16 +1,19 @@
-import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { BudgetFormInput, categories } from '../utils/interface/types';
-import { BudgetFormProps } from '../utils/interface/types';
-import { ValidationSchemaBudget } from '../utils/validationSchema/validationSchema';
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { BudgetFormInput, categories } from "../utils/interface/types";
+import { BudgetFormProps } from "../utils/interface/types";
+import { ValidationSchemaBudget } from "../utils/validationSchema/validationSchema";
 
-
-const BudgetForm: React.FC<BudgetFormProps> = ({ onSubmit, editMode, defaultValues }) => {
+const BudgetForm: React.FC<BudgetFormProps> = ({
+  onSubmit,
+  editMode,
+  defaultValues,
+}) => {
   const { control, handleSubmit, reset } = useForm<BudgetFormInput>({
     resolver: yupResolver(ValidationSchemaBudget),
     defaultValues,
@@ -61,7 +64,7 @@ const BudgetForm: React.FC<BudgetFormProps> = ({ onSubmit, editMode, defaultValu
         )}
       />
       <Button type="submit" variant="contained" color="primary" fullWidth>
-        {editMode ? 'Update Budget' : 'Add Budget'}
+        {editMode ? "Update Budget" : "Add Budget"}
       </Button>
     </form>
   );
