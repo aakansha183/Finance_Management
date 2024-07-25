@@ -14,16 +14,17 @@ import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
 import { User, FormData } from "../utils/interface/types";
 import { validationSchemaRegister } from "../utils/validationSchema/validationSchema";
-
 const Register: React.FC = () => {
   const { register: registerUser } = useAuth();
   const navigate = useNavigate();
   const [registrationError, setRegistrationError] = useState<string>("");
-
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
-    resolver: yupResolver(validationSchemaRegister)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
+    resolver: yupResolver(validationSchemaRegister),
   });
-
   const onSubmit: SubmitHandler<FormData> = async (values) => {
     try {
       const newUser: User = {
@@ -34,7 +35,6 @@ const Register: React.FC = () => {
         firstName: values.firstName,
         lastName: values.lastName,
       };
-
       await registerUser(newUser);
       toast.success("Successfully Registered");
       navigate("/login");
@@ -46,18 +46,35 @@ const Register: React.FC = () => {
       }
     }
   };
-
   return (
     <Container maxWidth="xs">
-      <Paper elevation={3} style={{ padding: "16px", marginTop: "30px", height: "auto", maxHeight: "90vh" }}>
-        <Box display="flex" flexDirection="column" alignItems="center" style={{ height: "100%" }}>
+      <Paper
+        elevation={3}
+        style={{
+          padding: "16px",
+          marginTop: "30px",
+          height: "auto",
+          maxHeight: "90vh",
+        }}
+      >
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          style={{ height: "100%" }}
+        >
           {/* Branding Section */}
           <img
             src="/brand.png"
             alt="PennyPinch Logo"
             style={{ width: "100px", height: "auto", marginBottom: "16px" }}
           />
-          <Typography variant="h4" gutterBottom align="center" sx={{ marginTop: "8px" }}>
+          <Typography
+            variant="h4"
+            gutterBottom
+            align="center"
+            sx={{ marginTop: "8px" }}
+          >
             Register
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
@@ -139,14 +156,23 @@ const Register: React.FC = () => {
             </Grid>
           </form>
           {registrationError && (
-            <Typography variant="body1" color="error" style={{ marginTop: "1rem" }} align="center">
+            <Typography
+              variant="body1"
+              color="error"
+              style={{ marginTop: "1rem" }}
+              align="center"
+            >
               {registrationError}
             </Typography>
           )}
           <Grid container justifyContent="center" style={{ marginTop: "1rem" }}>
             <Grid item>
               Already registered?{" "}
-              <Link component="button" variant="body2" onClick={() => navigate("/login")}>
+              <Link
+                component="button"
+                variant="body2"
+                onClick={() => navigate("/login")}
+              >
                 Login
               </Link>
             </Grid>
@@ -156,5 +182,4 @@ const Register: React.FC = () => {
     </Container>
   );
 };
-
 export default Register;

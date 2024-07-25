@@ -11,7 +11,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
-import brand from "../utils/assets/brand.png"; // Adjust the path based on your project structure
+import brand from "../utils/assets/brand.png"; 
 
 interface NavbarProps {
   toggleSidebar: () => void;
