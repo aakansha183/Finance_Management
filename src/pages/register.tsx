@@ -49,14 +49,15 @@ const Register: React.FC = () => {
 
   return (
     <Container maxWidth="xs">
-      <Paper elevation={4} style={{ padding: "16px", marginTop: "16px" }}>
-        <Box display="flex" flexDirection="column" alignItems="center">
-          <Typography
-            variant="h4"
-            gutterBottom
-            align="center"
-            sx={{ marginTop: "6px" }}
-          >
+      <Paper elevation={3} style={{ padding: "16px", marginTop: "30px", height: "auto", maxHeight: "90vh" }}>
+        <Box display="flex" flexDirection="column" alignItems="center" style={{ height: "100%" }}>
+          {/* Branding Section */}
+          <img
+            src="/brand.png"
+            alt="PennyPinch Logo"
+            style={{ width: "100px", height: "auto", marginBottom: "16px" }}
+          />
+          <Typography variant="h4" gutterBottom align="center" sx={{ marginTop: "8px" }}>
             Register
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
@@ -67,7 +68,7 @@ const Register: React.FC = () => {
                   label="Username"
                   variant="outlined"
                   fullWidth
-                  margin="normal"
+                  margin="dense"
                   {...register("username")}
                   error={!!errors.username}
                   helperText={errors.username?.message}
@@ -80,7 +81,7 @@ const Register: React.FC = () => {
                   type="password"
                   variant="outlined"
                   fullWidth
-                  margin="normal"
+                  margin="dense"
                   {...register("password")}
                   error={!!errors.password}
                   helperText={errors.password?.message}
@@ -92,7 +93,7 @@ const Register: React.FC = () => {
                   label="Email"
                   variant="outlined"
                   fullWidth
-                  margin="normal"
+                  margin="dense"
                   {...register("email")}
                   error={!!errors.email}
                   helperText={errors.email?.message}
@@ -104,7 +105,7 @@ const Register: React.FC = () => {
                   label="First Name"
                   variant="outlined"
                   fullWidth
-                  margin="normal"
+                  margin="dense"
                   {...register("firstName")}
                   error={!!errors.firstName}
                   helperText={errors.firstName?.message}
@@ -116,7 +117,7 @@ const Register: React.FC = () => {
                   label="Last Name"
                   variant="outlined"
                   fullWidth
-                  margin="normal"
+                  margin="dense"
                   {...register("lastName")}
                   error={!!errors.lastName}
                   helperText={errors.lastName?.message}
@@ -138,23 +139,14 @@ const Register: React.FC = () => {
             </Grid>
           </form>
           {registrationError && (
-            <Typography
-              variant="body1"
-              color="error"
-              style={{ marginTop: "1rem" }}
-              align="center"
-            >
+            <Typography variant="body1" color="error" style={{ marginTop: "1rem" }} align="center">
               {registrationError}
             </Typography>
           )}
           <Grid container justifyContent="center" style={{ marginTop: "1rem" }}>
             <Grid item>
               Already registered?{" "}
-              <Link
-                component="button"
-                variant="body2"
-                onClick={() => navigate("/login")}
-              >
+              <Link component="button" variant="body2" onClick={() => navigate("/login")}>
                 Login
               </Link>
             </Grid>
