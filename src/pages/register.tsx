@@ -14,10 +14,12 @@ import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
 import { User, FormData } from "../utils/interface/types";
 import { validationSchemaRegister } from "../utils/validationSchema/validationSchema";
+
 const Register: React.FC = () => {
   const { register: registerUser } = useAuth();
   const navigate = useNavigate();
   const [registrationError, setRegistrationError] = useState<string>("");
+
   const {
     register,
     handleSubmit,
@@ -25,6 +27,7 @@ const Register: React.FC = () => {
   } = useForm<FormData>({
     resolver: yupResolver(validationSchemaRegister),
   });
+
   const onSubmit: SubmitHandler<FormData> = async (values) => {
     try {
       const newUser: User = {
@@ -46,13 +49,14 @@ const Register: React.FC = () => {
       }
     }
   };
+
   return (
     <Container maxWidth="xs">
       <Paper
         elevation={3}
         style={{
           padding: "16px",
-          marginTop: "30px",
+          marginTop: "22px",
           height: "auto",
           maxHeight: "90vh",
         }}
@@ -63,7 +67,6 @@ const Register: React.FC = () => {
           alignItems="center"
           style={{ height: "100%" }}
         >
-          {/* Branding Section */}
           <img
             src="/brand.png"
             alt="PennyPinch Logo"
@@ -78,14 +81,13 @@ const Register: React.FC = () => {
             Register
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
-            <Grid container spacing={2} justifyContent="center">
+            <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   id="username"
                   label="Username"
                   variant="outlined"
                   fullWidth
-                  margin="dense"
                   {...register("username")}
                   error={!!errors.username}
                   helperText={errors.username?.message}
@@ -98,7 +100,6 @@ const Register: React.FC = () => {
                   type="password"
                   variant="outlined"
                   fullWidth
-                  margin="dense"
                   {...register("password")}
                   error={!!errors.password}
                   helperText={errors.password?.message}
@@ -110,7 +111,6 @@ const Register: React.FC = () => {
                   label="Email"
                   variant="outlined"
                   fullWidth
-                  margin="dense"
                   {...register("email")}
                   error={!!errors.email}
                   helperText={errors.email?.message}
@@ -122,7 +122,6 @@ const Register: React.FC = () => {
                   label="First Name"
                   variant="outlined"
                   fullWidth
-                  margin="dense"
                   {...register("firstName")}
                   error={!!errors.firstName}
                   helperText={errors.firstName?.message}
@@ -134,7 +133,6 @@ const Register: React.FC = () => {
                   label="Last Name"
                   variant="outlined"
                   fullWidth
-                  margin="dense"
                   {...register("lastName")}
                   error={!!errors.lastName}
                   helperText={errors.lastName?.message}
@@ -159,7 +157,7 @@ const Register: React.FC = () => {
             <Typography
               variant="body1"
               color="error"
-              style={{ marginTop: "1rem" }}
+              style={{ marginTop: "1rem", width: "100%" }}
               align="center"
             >
               {registrationError}
@@ -167,14 +165,16 @@ const Register: React.FC = () => {
           )}
           <Grid container justifyContent="center" style={{ marginTop: "1rem" }}>
             <Grid item>
-              Already registered?{" "}
-              <Link
-                component="button"
-                variant="body2"
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </Link>
+              <Typography variant="body2">
+                Already registered?{" "}
+                <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => navigate("/login")}
+                >
+                  Login
+                </Link>
+              </Typography>
             </Grid>
           </Grid>
         </Box>
@@ -182,4 +182,5 @@ const Register: React.FC = () => {
     </Container>
   );
 };
+
 export default Register;
