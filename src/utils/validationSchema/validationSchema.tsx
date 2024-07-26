@@ -53,6 +53,7 @@ export const ValidationSchemaBudget = yup.object().shape({
       return !isNaN(numValue) && numValue > 0;
     }),
 });
+
 export const validationSchemaForProfile = yup.object({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),

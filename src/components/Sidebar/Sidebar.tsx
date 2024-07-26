@@ -6,6 +6,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
+import { menuItems } from "../../utils/MenuItems/SidebarMenuItems";
 import "./Sidebar.css";
 
 interface SidebarProps {
@@ -17,6 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const theme = useTheme();
+
   return (
     <Drawer
       anchor="left"
@@ -41,15 +43,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         className="sidebar"
       >
         <List>
-          {[
-            { text: "Dashboard", path: "/dashboard" },
-            { text: "Income Tracker", path: "/incomes" },
-            { text: "Budget Management", path: "/budget" },
-            { text: "Expense Tracker", path: "/expenses" },
-            { text: "Transaction History", path: "/transaction-history" },
-          ].map(({ text, path }) => (
+          {menuItems.map(({ text, path }) => (
             <ListItem
-              button
               key={text}
               component={Link}
               to={path}
