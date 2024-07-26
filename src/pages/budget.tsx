@@ -11,17 +11,19 @@ import {
   loadBudgetsFromStorage,
   saveBudgetsToStorage,
 } from "../redux/slice/budgetSlice";
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import { styled } from "@mui/material/styles";
 import BudgetForm from "../components/budgetForm";
 import BudgetListItem from "../components/budgetList";
 import Layout from "../components/Layout";
 import { toast } from "react-toastify";
 import { BudgetFormInput } from "../utils/interface/types";
+import { delayPromise } from "../utils/Delay/DelayPromise";
+import { CircularProgress } from "@mui/material";
 
 // Styled Components
 const Container = styled(Box)({
@@ -57,6 +59,7 @@ const Title = styled(Typography)({
 });
 
 const BudgetPage: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
   const currentUser = useSelector(
     (state: RootState) => state.users.currentUser
@@ -70,7 +73,10 @@ const BudgetPage: React.FC = () => {
 
   useEffect(() => {
     const loadBudgets = async () => {
+      setIsLoading(true);
       const loadedBudgets = await loadBudgetsFromStorage();
+      await delayPromise();
+      setIsLoading(false);
       dispatch(setBudgets(loadedBudgets));
     };
     loadBudgets();
@@ -130,41 +136,53 @@ const BudgetPage: React.FC = () => {
 
   return (
     <Layout>
-      <Container>
-        <ContentWrapper>
-          <StyledCard>
-            <Title variant="h4">Budget Management</Title>
-            <CardContent>
-              <BudgetForm
-                onSubmit={handleAddOrUpdateBudget}
-                editMode={editMode}
-                defaultValues={
-                  currentBudget || {
-                    category: "",
-                    amountSet: "",
-                    userId: "",
+      {isLoading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Container>
+          <ContentWrapper>
+            <StyledCard>
+              <Title variant="h4">Budget Management</Title>
+              <CardContent>
+                <BudgetForm
+                  onSubmit={handleAddOrUpdateBudget}
+                  editMode={editMode}
+                  defaultValues={
+                    currentBudget || {
+                      category: "",
+                      amountSet: "",
+                      userId: "",
+                    }
                   }
-                }
-              />
-            </CardContent>
-            <CardContent>
-              <List>
-                {userBudgets.map((budget, index) => (
-                  <BudgetListItem
-                    key={index}
-                    budget={budget}
-                    onEdit={handleEditClick}
-                    onDelete={handleDeleteBudget}
-                  />
-                ))}
-              </List>
-            </CardContent>
-          </StyledCard>
-        </ContentWrapper>
-      </Container>
+                />
+              </CardContent>
+              <CardContent>
+                <List>
+                  {userBudgets.map((budget, index) => (
+                    <BudgetListItem
+                      key={index}
+                      budget={budget}
+                      onEdit={handleEditClick}
+                      onDelete={handleDeleteBudget}
+                    />
+                  ))}
+                </List>
+              </CardContent>
+            </StyledCard>
+          </ContentWrapper>
+        </Container>
+      )}
     </Layout>
   );
 };
 
 export default BudgetPage;
-

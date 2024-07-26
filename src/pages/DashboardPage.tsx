@@ -5,6 +5,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress"; 
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import useAuth from "../hooks/useAuth";
@@ -12,22 +13,26 @@ import { loadIncomesFromStorage } from "../redux/slice/incomeSlice";
 import { loadExpensesFromStorage } from "../redux/slice/expensesSlice";
 import { loadBudgetsFromStorage } from "../redux/slice/budgetSlice";
 import SummaryCardsDetails from "../components/Dashboard/SummaryCardsDetails";
-import EmptyState from "../components/Dashboard/ EmptyState";
 import Charts from "../components/Dashboard/Charts";
+import { delayPromise } from "../utils/Delay/DelayPromise";
+import EmptyState from "../components/Dashboard/ EmptyState";
 
 const DashboardPage: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); 
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const [totalBudget, setTotalBudget] = useState(0);
   const [expenseData, setExpenseData] = useState<
-    { name: string; value: number }[]>([]);
+    { name: string; value: number }[]
+  >([]);
   const [budgetData, setBudgetData] = useState<
     {
       name: string;
       budgeted: number;
       remaining: number;
-    }[]>([]);
+    }[]
+  >([]);
   const [lineChartData, setLineChartData] = useState<{
     labels: string[];
     datasets: {
@@ -48,13 +53,16 @@ const DashboardPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (currentUser) {
+      try {
+        setIsLoading(true);
         const incomes = await loadIncomesFromStorage();
         const userIncomes = incomes.filter(
           (income) => income.userId === currentUser?.id
         );
         const totalIncome = userIncomes.reduce(
-          (sum, income) => sum + parseInt(income.amount), 0);
+          (sum, income) => sum + parseInt(income.amount),
+          0
+        );
         setTotalIncome(totalIncome);
 
         const monthlyIncome = Array(12).fill(0);
@@ -108,7 +116,9 @@ const DashboardPage: React.FC = () => {
             }
             acc[expense.category] += parseInt(expense.amount);
             return acc;
-          },{});
+          },
+          {}
+        );
 
         const pieChartData = Object.keys(expenseDistribution).map(
           (category) => ({
@@ -123,9 +133,12 @@ const DashboardPage: React.FC = () => {
 
         const budgets = await loadBudgetsFromStorage();
         const userBudgets = budgets.filter(
-          (budget) => budget.userId === currentUser?.id );
+          (budget) => budget.userId === currentUser?.id
+        );
         const totalBudget = userBudgets.reduce(
-          (sum, budget) => sum + parseInt(budget.amountSet),0);
+          (sum, budget) => sum + parseInt(budget.amountSet),
+          0
+        );
         setTotalBudget(totalBudget);
 
         const expenseByCategory = userExpenses.reduce(
@@ -135,7 +148,9 @@ const DashboardPage: React.FC = () => {
             }
             acc[expense.category] += parseInt(expense.amount);
             return acc;
-          },{});
+          },
+          {}
+        );
 
         const budgetDistribution = userBudgets.map((budget) => {
           const budgetedAmount = parseInt(budget.amountSet);
@@ -151,6 +166,10 @@ const DashboardPage: React.FC = () => {
         if (budgetDistribution.length > 0) {
           setBudgetData(budgetDistribution);
         }
+        await delayPromise();
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -180,21 +199,36 @@ const DashboardPage: React.FC = () => {
         }}
       >
         <Container maxWidth="lg">
-          <SummaryCardsDetails
-            totalIncome={totalIncome}
-            totalExpense={totalExpense}
-            totalBudget={totalBudget}
-          />
-          {!hasData ? (
-            <EmptyState currentUser={currentUser} />
+          {isLoading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh", 
+              }}
+            >
+              <CircularProgress />
+            </Box>
           ) : (
-            <Grid container spacing={3} sx={{marginTop:0.8}}>
-              <Charts
-                lineChartData={lineChartData}
-                budgetData={budgetData}
-                expenseData={expenseData}
+            <>
+              <SummaryCardsDetails
+                totalIncome={totalIncome}
+                totalExpense={totalExpense}
+                totalBudget={totalBudget}
               />
-            </Grid>
+              {!hasData ? (
+                <EmptyState currentUser={currentUser} />
+              ) : (
+                <Grid container spacing={3} sx={{ marginTop: 0.8 }}>
+                  <Charts
+                    lineChartData={lineChartData}
+                    budgetData={budgetData}
+                    expenseData={expenseData}
+                  />
+                </Grid>
+              )}
+            </>
           )}
         </Container>
       </Box>
