@@ -186,7 +186,7 @@ const DashboardPage: React.FC = () => {
           transition: "margin 0.3s ease",
           maxWidth: "100%",
           bgcolor: theme.palette.background.default,
-          marginTop: 7,
+          marginTop: 8,
         }}
       >
         <Container maxWidth="lg">

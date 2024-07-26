@@ -30,15 +30,6 @@ export interface FormData {
   firstName: string;
   lastName: string;
 }
-
-export const categories = [
-  { value: "Food", label: "Food" },
-  { value: "Transport", label: "Transport" },
-  { value: "Utilities", label: "Utilities" },
-  { value: "Entertainment", label: "Entertainment" },
-  { value: "Health", label: "Health" },
-];
-
 export interface Expense {
   amount: string;
   category: string;
@@ -125,5 +116,8 @@ export interface ProfileFormData {
   password: string;
 }
 export interface BarChartProps {
-  userId: string;
+  data: { name: string; budgeted: number; remaining: number }[];
+}
+export interface PieChartComponentProps {
+  data: { name: string; value: number }[];
 }
