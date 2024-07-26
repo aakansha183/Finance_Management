@@ -1,30 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
-import { setIncomes, addIncome, editIncome, deleteIncome, loadIncomesFromStorage, saveIncomesToStorage } from '../redux/slice/incomeSlice';
-import IncomeForm from '../components/IncomeForm';
-import IncomeList from '../components/IncomeList';
-import useAuth from '../hooks/useAuth';
-import { Income } from '../utils/interface/types';
-import Layout from '../components/Layout';
-import Container from '@mui/material/Container';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import Box from '@mui/material/Box';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import {
+  setIncomes,
+  addIncome,
+  editIncome,
+  deleteIncome,
+  loadIncomesFromStorage,
+  saveIncomesToStorage,
+} from "../redux/slice/incomeSlice";
+import IncomeForm from "../components/IncomeForm";
+import IncomeList from "../components/IncomeList";
+import useAuth from "../hooks/useAuth";
+import { Income } from "../utils/interface/types";
+import Layout from "../components/Layout";
+import Container from "@mui/material/Container";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import Box from "@mui/material/Box";
+import { delayPromise } from "../utils/Delay/DelayPromise";
+import { CircularProgress } from "@mui/material";
 
 const IncomePage: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const { currentUser } = useAuth();
   const dispatch = useDispatch();
   const allIncomes = useSelector((state: RootState) => state.incomes.incomes);
-  const incomes = allIncomes.filter(income => income.userId === currentUser?.id);
+  const incomes = allIncomes.filter(
+    (income) => income.userId === currentUser?.id
+  );
   const [editMode, setEditMode] = useState(false);
   const [currentIncome, setCurrentIncome] = useState<Income | null>(null);
 
   useEffect(() => {
     const fetchIncomes = async () => {
+      setIsLoading(true);
       const storedIncomes = await loadIncomesFromStorage();
+      await delayPromise();
+      setIsLoading(false);
       dispatch(setIncomes(storedIncomes));
     };
 
@@ -59,6 +74,18 @@ const IncomePage: React.FC = () => {
 
   return (
     <Layout>
+      {isLoading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
         <Container
           sx={{
             display: "flex",
@@ -72,7 +99,6 @@ const IncomePage: React.FC = () => {
               width: "100%",
               padding: "0.2rem",
               borderRadius: "8px",
-              
             }}
           >
             <CardContent>
@@ -80,20 +106,32 @@ const IncomePage: React.FC = () => {
                 Income Tracker
               </Typography>
               <IncomeForm
-                initialValues={currentIncome || { amount: '', source: '', date: '', userId: currentUser?.id! }}
+                initialValues={
+                  currentIncome || {
+                    amount: "",
+                    source: "",
+                    date: "",
+                    userId: currentUser?.id!,
+                  }
+                }
                 onSubmit={handleFormSubmit}
                 editMode={editMode}
               />
-              <Divider sx={{ marginY: '2rem' }} />
-              <Box sx={{ textAlign: 'center' }}>
+              <Divider sx={{ marginY: "2rem" }} />
+              <Box sx={{ textAlign: "center" }}>
                 <Typography variant="h5" gutterBottom>
                   Incomes
                 </Typography>
-                <IncomeList incomes={incomes} onEdit={handleEdit} onDelete={handleDelete} />
+                <IncomeList
+                  incomes={incomes}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
               </Box>
             </CardContent>
           </Card>
         </Container>
+      )}
     </Layout>
   );
 };

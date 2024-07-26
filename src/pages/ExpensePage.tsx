@@ -21,8 +21,11 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import { toast } from "react-toastify";
+import { delayPromise } from "../utils/Delay/DelayPromise";
+import { CircularProgress } from "@mui/material";
 
 const ExpensePage: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const { currentUser } = useAuth();
   const dispatch = useDispatch();
   const allExpenses = useSelector(
@@ -37,7 +40,10 @@ const ExpensePage: React.FC = () => {
 
   useEffect(() => {
     const fetchExpenses = async () => {
+      setIsLoading(true);
       const storedExpenses = await loadExpensesFromStorage();
+      await delayPromise();
+      setIsLoading(false);
       dispatch(setExpenses(storedExpenses));
     };
 
@@ -112,55 +118,68 @@ const ExpensePage: React.FC = () => {
 
   return (
     <Layout>
-      <Container
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Card
+      {isLoading ? (
+        <Box
           sx={{
-            maxWidth: 600,
-            width: "100%",
-            padding: "0.2rem",
-            borderRadius: "8px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
           }}
         >
-          <CardContent>
-            <Typography variant="h4" align="center" gutterBottom>
-              Expense Tracker
-            </Typography>
-            <ExpenseForm
-              initialValues={
-                currentExpense || {
-                  amount: "",
-                  category: "",
-                  date: "",
-                  userId: currentUser?.id!,
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Container
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Card
+            sx={{
+              maxWidth: 600,
+              width: "100%",
+              padding: "0.2rem",
+              borderRadius: "8px",
+            }}
+          >
+            <CardContent>
+              <Typography variant="h4" align="center" gutterBottom>
+                Expense Tracker
+              </Typography>
+              <ExpenseForm
+                initialValues={
+                  currentExpense || {
+                    amount: "",
+                    category: "",
+                    date: "",
+                    userId: currentUser?.id!,
+                  }
                 }
-              }
-              onSubmit={handleFormSubmit}
-              editMode={editMode}
-            />
-            <Divider sx={{ marginY: "0.5rem" }} />
-            <Box sx={{ textAlign: "center" }}>
-              {allExpenses.length > 0 && (
-                <Typography variant="h6" gutterBottom>
-                  Expense
-                </Typography>
-              )}
-              <ExpenseList
-                expenses={allExpenses.filter(
-                  (expense) => expense.userId === currentUser?.id
-                )}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
+                onSubmit={handleFormSubmit}
+                editMode={editMode}
               />
-            </Box>
-          </CardContent>
-        </Card>
-      </Container>
+              <Divider sx={{ marginY: "0.5rem" }} />
+              <Box sx={{ textAlign: "center" }}>
+                {allExpenses.length > 0 && (
+                  <Typography variant="h6" gutterBottom>
+                    Expense
+                  </Typography>
+                )}
+                <ExpenseList
+                  expenses={allExpenses.filter(
+                    (expense) => expense.userId === currentUser?.id
+                  )}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              </Box>
+            </CardContent>
+          </Card>
+        </Container>
+      )}
     </Layout>
   );
 };
