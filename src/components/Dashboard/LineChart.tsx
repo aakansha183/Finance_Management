@@ -10,8 +10,9 @@ import {
   Legend,
   PointElement,
 } from "chart.js";
-import { LineChartOptions } from "../utils/ChartOptions/ChartOptions";
-import {  LineChartProps } from "../utils/interface/types";
+import { LineChartProps } from "../../utils/interface/types";
+import { LineChartOptions } from "../../utils/ChartOptions/ChartOptions";
+
 
 ChartJS.register(
   LineElement,

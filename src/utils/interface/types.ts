@@ -121,3 +121,30 @@ export interface BarChartProps {
 export interface PieChartComponentProps {
   data: { name: string; value: number }[];
 }
+export interface EmptyStateProps {
+  currentUser?: {
+    firstName?: string;
+  } | null;
+}
+export interface ChartsProps {
+  lineChartData: {
+    labels: string[];
+    datasets: {
+      label: string;
+      data: number[];
+      borderColor: string;
+      backgroundColor: string;
+    }[];
+  };
+  budgetData: {
+    name: string;
+    budgeted: number;
+    remaining: number;
+  }[];
+  expenseData: { name: string; value: number }[];
+}
+export interface SummaryCardsProps {
+  totalIncome: number;
+  totalExpense: number;
+  totalBudget: number;
+}
