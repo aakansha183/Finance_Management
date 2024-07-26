@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import localforage from 'localforage';
-import { Expense, ExpenseState } from '../../utils/interface/types';
+import { Expense } from '../../utils/interface/types';
+interface ExpenseState {
+  expenses: Expense[];
+}
 
 const initialState: ExpenseState = {
   expenses: [],

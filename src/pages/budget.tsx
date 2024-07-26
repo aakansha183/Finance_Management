@@ -111,6 +111,7 @@ const BudgetPage: React.FC = () => {
     );
     dispatch(deleteBudget({ category, userId: currentUser.id }));
     await saveBudgetsToStorage(newBudgets);
+    toast.success("Successfully Deleted Budget");
   };
 
   const resetForm = () => {

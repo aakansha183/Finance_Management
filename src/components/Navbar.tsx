@@ -11,6 +11,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
+import brand from "../utils/assets/brand.png"; 
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -19,7 +20,6 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { logout, currentUser } = useAuth();
-
   const navigate = useNavigate();
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -49,6 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
       toast.error("Error logging out");
     }
   };
+
   const userInitial = currentUser
     ? currentUser.username.charAt(0).toUpperCase()
     : "";
@@ -61,15 +62,23 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
           color="inherit"
           aria-label="menu"
           onClick={toggleSidebar}
+          sx={{ mr: 2 }}
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          {/* <strong> Dashboard</strong> */}
-        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
+          <img
+            src={brand}
+            alt="PennyPinch Logo"
+            style={{ width: "40px", height: "auto", marginRight: "8px" }}
+          />
+          <Typography variant="h6" component="div">
+            PennyPinch
+          </Typography>
+        </Box>
         <Box>
           <IconButton color="inherit" onClick={handleMenu}>
-            <Avatar>{userInitial} </Avatar>
+            <Avatar>{userInitial}</Avatar>
           </IconButton>
           <Menu
             anchorEl={anchorEl}
@@ -81,7 +90,6 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar }) => {
             onClose={handleClose}
           >
             <MenuItem onClick={handleProfile}>Profile</MenuItem>
-
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Box>

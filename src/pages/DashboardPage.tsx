@@ -10,8 +10,8 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import SummaryCard from "../components/SummaryCard";
 import LineChart from "../components/LineChart";
-import BarChart from "../components/BarChart";
 import PieChartComponent from "../components/PieChart";
+import BarChart from "../components/BarChart";
 import useAuth from "../hooks/useAuth";
 import { loadIncomesFromStorage } from "../redux/slice/incomeSlice";
 import { loadExpensesFromStorage } from "../redux/slice/expensesSlice";
@@ -22,8 +22,11 @@ const DashboardPage: React.FC = () => {
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const [totalBudget, setTotalBudget] = useState(0);
-  const [budgetData, setBudgetData] = useState<
+  const [expenseData, setExpenseData] = useState<
     { name: string; value: number }[]
+  >([]);
+  const [budgetData, setBudgetData] = useState<
+    { name: string; budgeted: number; remaining: number }[]
   >([]);
   const [lineChartData, setLineChartData] = useState<{
     labels: string[];
@@ -33,10 +36,7 @@ const DashboardPage: React.FC = () => {
       borderColor: string;
       backgroundColor: string;
     }[];
-  }>({
-    labels: [],
-    datasets: [],
-  });
+  }>({ labels: [], datasets: [] });
 
   const { currentUser } = useAuth();
   const theme = useTheme();
@@ -49,7 +49,6 @@ const DashboardPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (currentUser) {
-        // Fetching Income
         const incomes = await loadIncomesFromStorage();
         const userIncomes = incomes.filter(
           (income) => income.userId === currentUser?.id
@@ -60,41 +59,41 @@ const DashboardPage: React.FC = () => {
         );
         setTotalIncome(totalIncome);
 
-        // Prepare Data for Line Chart
         const monthlyIncome = Array(12).fill(0);
         userIncomes.forEach((income) => {
           const month = new Date(income.date).getMonth();
-          monthlyIncome[month] += income.amount;
+          monthlyIncome[month] += parseInt(income.amount);
         });
 
-        const lineChartData = {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
-          datasets: [
-            {
-              label: "Monthly Income",
-              data: monthlyIncome,
-              borderColor: "#4caf50",
-              backgroundColor: "rgba(76, 175, 80, 0.2)",
-            },
-          ],
-        };
+        if (monthlyIncome.some((amount) => amount > 0)) {
+          const lineChartData = {
+            labels: [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec",
+            ],
+            datasets: [
+              {
+                label: "Monthly Income",
+                data: monthlyIncome,
+                borderColor: "#4caf50",
+                backgroundColor: "rgba(76, 175, 80, 0.2)",
+              },
+            ],
+          };
 
-        setLineChartData(lineChartData);
+          setLineChartData(lineChartData);
+        }
 
-        // Fetching Expense
         const expenses = await loadExpensesFromStorage();
         const userExpenses = expenses.filter(
           (expense) => expense.userId === currentUser?.id
@@ -105,9 +104,29 @@ const DashboardPage: React.FC = () => {
         );
         setTotalExpense(totalExpense);
 
-        // Fetching Budget
-        const budgets = await loadBudgetsFromStorage();
+        const expenseDistribution = userExpenses.reduce(
+          (acc: { [key: string]: number }, expense) => {
+            if (!acc[expense.category]) {
+              acc[expense.category] = 0;
+            }
+            acc[expense.category] += parseInt(expense.amount);
+            return acc;
+          },
+          {}
+        );
 
+        const pieChartData = Object.keys(expenseDistribution).map(
+          (category) => ({
+            name: category,
+            value: expenseDistribution[category],
+          })
+        );
+
+        if (pieChartData.length > 0) {
+          setExpenseData(pieChartData);
+        }
+
+        const budgets = await loadBudgetsFromStorage();
         const userBudgets = budgets.filter(
           (budget) => budget.userId === currentUser?.id
         );
@@ -117,31 +136,41 @@ const DashboardPage: React.FC = () => {
         );
         setTotalBudget(totalBudget);
 
-        // Preparing Data for Pie Chart
-        const budgetDistribution = userBudgets.reduce(
-          (acc: { [key: string]: number }, budget) => {
-            if (!acc[budget.category]) {
-              acc[budget.category] = 0;
+        const expenseByCategory = userExpenses.reduce(
+          (acc: { [key: string]: number }, expense) => {
+            if (!acc[expense.category]) {
+              acc[expense.category] = 0;
             }
-            acc[(budget.category)] += parseInt(budget.amountSet);
+            acc[expense.category] += parseInt(expense.amount);
             return acc;
           },
           {}
         );
 
-        const pieChartData = Object.keys(budgetDistribution).map(
-          (category) => ({
-            name: category,
-            value: budgetDistribution[category],
-          })
-        );
+        const budgetDistribution = userBudgets.map((budget) => {
+          const budgetedAmount = parseInt(budget.amountSet);
+          const spentAmount = expenseByCategory[budget.category] || 0;
+          const remainingAmount = budgetedAmount - spentAmount;
+          return {
+            name: budget.category,
+            budgeted: budgetedAmount,
+            remaining: remainingAmount,
+          };
+        });
 
-        setBudgetData(pieChartData);
+        if (budgetDistribution.length > 0) {
+          setBudgetData(budgetDistribution);
+        }
       }
     };
 
     fetchData();
   }, [currentUser]);
+
+  const hasData =
+    lineChartData.labels.length > 0 ||
+    budgetData.length > 0 ||
+    expenseData.length > 0;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -152,20 +181,16 @@ const DashboardPage: React.FC = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: 2,
           marginLeft: isSidebarOpen ? (isMobile ? "0" : "240px") : "0",
           transition: "margin 0.3s ease",
           maxWidth: "100%",
           bgcolor: theme.palette.background.default,
-          marginTop: 7,
+          marginTop: 8,
         }}
       >
         <Container maxWidth="lg">
-          {/* <Typography variant="h4" gutterBottom >
-            <strong> Dashboard</strong>
-          </Typography> */}
           <Grid container spacing={3}>
-            {/* Summary Cards */}
             <Grid item xs={12} sm={6} md={4}>
               <SummaryCard
                 title="Total Income"
@@ -187,35 +212,65 @@ const DashboardPage: React.FC = () => {
                 color="#2196f3"
               />
             </Grid>
-
-            {/* Charts */}
-            <Grid item xs={12} md={6}>
-              <Box sx={{ p: 2, bgcolor: "background.paper" }}>
-                <Typography variant="h6" gutterBottom>
-                  Monthly Income
-                </Typography>
-                <LineChart data={lineChartData} />
-              </Box>
-            </Grid>
-
-            {/* BarChart for Expense */}
-            <Grid item xs={12} md={6}>
-              <Box sx={{ p: 2, bgcolor: "background.paper" }}>
-                <Typography variant="h6" gutterBottom>
-                  Expenses Breakdown
-                </Typography>
-                <BarChart userId={currentUser?.id!} />
-              </Box>
-            </Grid>
-            {/* PieChart for Budget */}
-            <Grid item xs={12} md={6}>
-              <Box sx={{ p: 2, bgcolor: "background.paper" }}>
-                <Typography variant="h6" gutterBottom>
-                  Budget Distribution
-                </Typography>
-                <PieChartComponent data={budgetData} />
-              </Box>
-            </Grid>
+            {!hasData ? (
+              <Grid item xs={12}>
+                <Box
+                  sx={{
+                    p: 2,
+                    bgcolor: "background.paper",
+                    textAlign: "center",
+                    borderRadius: 1,
+                    boxShadow: 1,
+                  }}
+                >
+                  <Typography variant="h6" color="textSecondary">
+                    Hi! {currentUser?.firstName || "User"} Kindly Add your
+                    Budget, Income and Expense.
+                  </Typography>
+                </Box>
+              </Grid>
+            ) : (
+              <>
+                {lineChartData.labels.length > 0 && (
+                  <Grid item xs={12} md={6}>
+                    <Box sx={{ p: 2, bgcolor: "background.paper" }}>
+                      <Typography variant="h6" gutterBottom>
+                        Monthly Income
+                      </Typography>
+                      <LineChart data={lineChartData} />
+                    </Box>
+                  </Grid>
+                )}
+                {budgetData.length > 0 && (
+                  <Grid item xs={12} md={6}>
+                    <Box sx={{ p: 2, bgcolor: "background.paper" }}>
+                      <Typography variant="h6" gutterBottom>
+                        Budget Distribution
+                      </Typography>
+                      <BarChart data={budgetData} />
+                    </Box>
+                  </Grid>
+                )}
+                {expenseData.length > 0 && (
+                  <Grid item xs={12} md={6}>
+                    <Box
+                      sx={{
+                        p: 2,
+                        bgcolor: "background.paper",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <Typography variant="h6" gutterBottom>
+                        Expenses Breakdown
+                      </Typography>
+                      <PieChartComponent data={expenseData} />
+                    </Box>
+                  </Grid>
+                )}
+              </>
+            )}
           </Grid>
         </Container>
       </Box>

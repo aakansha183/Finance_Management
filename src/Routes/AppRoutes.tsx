@@ -8,20 +8,23 @@ import BudgetPage from "../pages/budget";
 import ExpensePage from "../pages/ExpensePage";
 import IncomePage from "../pages/IncomePage";
 import Profile from "../components/Profile";
-import ProtectedRoute from "./ProtectedRoute";
-import TransactionPage from "../pages/TransactionPage"; 
+import TransactionPage from "../pages/TransactionPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PrivateRoute from "./PrivateRoute";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes: React.FC = () => {
   return (
     <Router>
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/expenses" element={<ExpensePage />} />
           <Route path="/incomes" element={<IncomePage />} />
@@ -35,4 +38,3 @@ const AppRoutes: React.FC = () => {
 };
 
 export default AppRoutes;
-

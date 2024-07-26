@@ -20,8 +20,12 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const [registrationError, setRegistrationError] = useState<string>("");
 
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
-    resolver: yupResolver(validationSchemaRegister)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
+    resolver: yupResolver(validationSchemaRegister),
   });
 
   const onSubmit: SubmitHandler<FormData> = async (values) => {
@@ -34,7 +38,6 @@ const Register: React.FC = () => {
         firstName: values.firstName,
         lastName: values.lastName,
       };
-
       await registerUser(newUser);
       toast.success("Successfully Registered");
       navigate("/login");
@@ -49,25 +52,42 @@ const Register: React.FC = () => {
 
   return (
     <Container maxWidth="xs">
-      <Paper elevation={4} style={{ padding: "16px", marginTop: "16px" }}>
-        <Box display="flex" flexDirection="column" alignItems="center">
+      <Paper
+        elevation={3}
+        style={{
+          padding: "16px",
+          marginTop: "22px",
+          height: "auto",
+          maxHeight: "90vh",
+        }}
+      >
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          style={{ height: "100%" }}
+        >
+          <img
+            src="/brand.png"
+            alt="PennyPinch Logo"
+            style={{ width: "100px", height: "auto", marginBottom: "16px" }}
+          />
           <Typography
             variant="h4"
             gutterBottom
             align="center"
-            sx={{ marginTop: "6px" }}
+            sx={{ marginTop: "8px" }}
           >
             Register
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
-            <Grid container spacing={2} justifyContent="center">
+            <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   id="username"
                   label="Username"
                   variant="outlined"
                   fullWidth
-                  margin="normal"
                   {...register("username")}
                   error={!!errors.username}
                   helperText={errors.username?.message}
@@ -80,7 +100,6 @@ const Register: React.FC = () => {
                   type="password"
                   variant="outlined"
                   fullWidth
-                  margin="normal"
                   {...register("password")}
                   error={!!errors.password}
                   helperText={errors.password?.message}
@@ -92,7 +111,6 @@ const Register: React.FC = () => {
                   label="Email"
                   variant="outlined"
                   fullWidth
-                  margin="normal"
                   {...register("email")}
                   error={!!errors.email}
                   helperText={errors.email?.message}
@@ -104,7 +122,6 @@ const Register: React.FC = () => {
                   label="First Name"
                   variant="outlined"
                   fullWidth
-                  margin="normal"
                   {...register("firstName")}
                   error={!!errors.firstName}
                   helperText={errors.firstName?.message}
@@ -116,7 +133,6 @@ const Register: React.FC = () => {
                   label="Last Name"
                   variant="outlined"
                   fullWidth
-                  margin="normal"
                   {...register("lastName")}
                   error={!!errors.lastName}
                   helperText={errors.lastName?.message}
@@ -141,7 +157,7 @@ const Register: React.FC = () => {
             <Typography
               variant="body1"
               color="error"
-              style={{ marginTop: "1rem" }}
+              style={{ marginTop: "1rem", width: "100%" }}
               align="center"
             >
               {registrationError}
@@ -149,14 +165,16 @@ const Register: React.FC = () => {
           )}
           <Grid container justifyContent="center" style={{ marginTop: "1rem" }}>
             <Grid item>
-              Already registered?{" "}
-              <Link
-                component="button"
-                variant="body2"
-                onClick={() => navigate("/login")}
-              >
-                Login
-              </Link>
+              <Typography variant="body2">
+                Already registered?{" "}
+                <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => navigate("/login")}
+                >
+                  Login
+                </Link>
+              </Typography>
             </Grid>
           </Grid>
         </Box>

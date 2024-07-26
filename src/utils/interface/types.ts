@@ -18,27 +18,18 @@ export interface User {
   lastName: string;
 }
 export interface BudgetFormInput {
-    category: string;
-    amountSet: string;
-    userId?: string;  
-  }
-  
-  export interface FormData {
-    username: string;
-    password: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-  }
-  
-export const categories = [
-  { value: "Food", label: "Food" },
-  { value: "Transport", label: "Transport" },
-  { value: "Utilities", label: "Utilities" },
-  { value: "Entertainment", label: "Entertainment" },
-  { value: "Health", label: "Health" },
-];
+  category: string;
+  amountSet: string;
+  userId?: string;
+}
 
+export interface FormData {
+  username: string;
+  password: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+}
 export interface Expense {
   amount: string;
   category: string;
@@ -124,9 +115,7 @@ export interface ProfileFormData {
   lastName: string;
   password: string;
 }
-export interface BarChartProps {
-  userId: string;
-}
+
 export interface ExpenseState {
   expenses: Expense[];
 }
@@ -142,4 +131,10 @@ export interface BudgetState {
 export interface TransactionSearchProps {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
+}
+export interface BarChartProps{
+  data: { name: string; budgeted: number; remaining: number }[];
+}
+export interface PieChartComponentProps {
+  data: { name: string; value: number }[];
 }

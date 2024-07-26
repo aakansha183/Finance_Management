@@ -62,6 +62,14 @@ const Login: React.FC = () => {
     <Container maxWidth="xs">
       <Paper elevation={3} style={{ padding: "16px", marginTop: "50px" }}>
         <Box display="flex" flexDirection="column" alignItems="center">
+          <img
+            src="/brand.png"
+            alt="PennyPinch Logo"
+            style={{ width: "100px", height: "auto", marginBottom: "16px" }}
+          />
+         
+         
+
           <Typography variant="h4" gutterBottom align="center" sx={{ marginTop: "8px" }}>
             Login
           </Typography>
