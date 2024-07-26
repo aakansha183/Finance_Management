@@ -9,8 +9,9 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { BarChartOptions } from "../utils/ChartOptions/ChartOptions";
-import { BarChartProps } from "../utils/interface/types";
+import { BarChartProps } from "../../utils/interface/types";
+import { BarChartOptions } from "../../utils/ChartOptions/ChartOptions";
+
 
 ChartJS.register(
   BarElement,

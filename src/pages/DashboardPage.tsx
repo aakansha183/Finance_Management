@@ -2,23 +2,24 @@ import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress"; 
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
-import SummaryCard from "../components/SummaryCard";
-import LineChart from "../components/LineChart";
-import PieChartComponent from "../components/PieChart";
-import BarChart from "../components/BarChart";
 import useAuth from "../hooks/useAuth";
 import { loadIncomesFromStorage } from "../redux/slice/incomeSlice";
 import { loadExpensesFromStorage } from "../redux/slice/expensesSlice";
 import { loadBudgetsFromStorage } from "../redux/slice/budgetSlice";
+import SummaryCardsDetails from "../components/Dashboard/SummaryCardsDetails";
+import Charts from "../components/Dashboard/Charts";
+import { delayPromise } from "../utils/Delay/DelayPromise";
+import EmptyState from "../components/Dashboard/ EmptyState";
 
 const DashboardPage: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); 
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const [totalBudget, setTotalBudget] = useState(0);
@@ -26,7 +27,11 @@ const DashboardPage: React.FC = () => {
     { name: string; value: number }[]
   >([]);
   const [budgetData, setBudgetData] = useState<
-    { name: string; budgeted: number; remaining: number }[]
+    {
+      name: string;
+      budgeted: number;
+      remaining: number;
+    }[]
   >([]);
   const [lineChartData, setLineChartData] = useState<{
     labels: string[];
@@ -48,7 +53,8 @@ const DashboardPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (currentUser) {
+      try {
+        setIsLoading(true);
         const incomes = await loadIncomesFromStorage();
         const userIncomes = incomes.filter(
           (income) => income.userId === currentUser?.id
@@ -90,7 +96,6 @@ const DashboardPage: React.FC = () => {
               },
             ],
           };
-
           setLineChartData(lineChartData);
         }
 
@@ -161,6 +166,10 @@ const DashboardPage: React.FC = () => {
         if (budgetDistribution.length > 0) {
           setBudgetData(budgetDistribution);
         }
+        await delayPromise();
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -190,88 +199,37 @@ const DashboardPage: React.FC = () => {
         }}
       >
         <Container maxWidth="lg">
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} md={4}>
-              <SummaryCard
-                title="Total Income"
-                value={`$${totalIncome.toFixed(2)}`}
-                color="#4caf50"
+          {isLoading ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh", 
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            <>
+              <SummaryCardsDetails
+                totalIncome={totalIncome}
+                totalExpense={totalExpense}
+                totalBudget={totalBudget}
               />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <SummaryCard
-                title="Total Expenses"
-                value={`$${totalExpense.toFixed(2)}`}
-                color="#f44336"
-              />
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <SummaryCard
-                title="Budget Balance"
-                value={`$${totalBudget.toFixed(2)}`}
-                color="#2196f3"
-              />
-            </Grid>
-            {!hasData ? (
-              <Grid item xs={12}>
-                <Box
-                  sx={{
-                    p: 2,
-                    bgcolor: "background.paper",
-                    textAlign: "center",
-                    borderRadius: 1,
-                    boxShadow: 1,
-                  }}
-                >
-                  <Typography variant="h6" color="textSecondary">
-                    Hi! {currentUser?.firstName || "User"} Kindly Add your
-                    Budget, Income and Expense.
-                  </Typography>
-                </Box>
-              </Grid>
-            ) : (
-              <>
-                {lineChartData.labels.length > 0 && (
-                  <Grid item xs={12} md={6}>
-                    <Box sx={{ p: 2, bgcolor: "background.paper" }}>
-                      <Typography variant="h6" gutterBottom>
-                        Monthly Income
-                      </Typography>
-                      <LineChart data={lineChartData} />
-                    </Box>
-                  </Grid>
-                )}
-                {budgetData.length > 0 && (
-                  <Grid item xs={12} md={6}>
-                    <Box sx={{ p: 2, bgcolor: "background.paper" }}>
-                      <Typography variant="h6" gutterBottom>
-                        Budget Distribution
-                      </Typography>
-                      <BarChart data={budgetData} />
-                    </Box>
-                  </Grid>
-                )}
-                {expenseData.length > 0 && (
-                  <Grid item xs={12} md={6}>
-                    <Box
-                      sx={{
-                        p: 2,
-                        bgcolor: "background.paper",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <Typography variant="h6" gutterBottom>
-                        Expenses Breakdown
-                      </Typography>
-                      <PieChartComponent data={expenseData} />
-                    </Box>
-                  </Grid>
-                )}
-              </>
-            )}
-          </Grid>
+              {!hasData ? (
+                <EmptyState currentUser={currentUser} />
+              ) : (
+                <Grid container spacing={3} sx={{ marginTop: 0.8 }}>
+                  <Charts
+                    lineChartData={lineChartData}
+                    budgetData={budgetData}
+                    expenseData={expenseData}
+                  />
+                </Grid>
+              )}
+            </>
+          )}
         </Container>
       </Box>
     </Box>
